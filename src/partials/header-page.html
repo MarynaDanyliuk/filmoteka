@@ -1,6 +1,22 @@
-<div class="header">
+<header class="header">
   <div class="container">
-    <h1>Header page</h1>
+    <div class="header_nav">
+      <a href="./index.html" class="logo">
+        <svg class="icon" style="margin-right: 8px">
+          <use href="./images/icons.svg#icon-film"></use></svg
+        >Filmoteka</a
+      >
+      <nav class="navigation">
+        <ul class="nav_list">
+          <li>
+            <a href="./index.html" class="nav_item nav_item--current">Home</a>
+          </li>
+          <li class="nav_item">
+            <a href="./library.html">My Library</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
 
     <form class="form">
       <input
@@ -8,12 +24,19 @@
         id="search-input"
         name="searchQuery"
         autocomplete="off"
-        placeholder="Search images..."
+        placeholder="Search films..."
       />
-      <button type="submit" class="search-button">Search</button>
+      <!-- <svg class="icon">
+        <use href="./images/icons.svg#icon-search"></use>
+      </svg> -->
+      <button type="submit" class="search-button">
+        <svg class="icon">
+          <use href="./images/icons.svg#icon-search"></use>
+        </svg>
+      </button>
     </form>
 
     <!-- <div class="gallery"></div> -->
     <!-- <button type="button" class="load-more not-visible">Load more</button> -->
   </div>
-</div>
+</header>
