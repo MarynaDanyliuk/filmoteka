@@ -4,12 +4,12 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-import GetImagesApiService from './apiService';
+// import GetImagesApiService from './apiService';
 
-const API_KEY = '31808257-b1d1bead71ab6681d9f118ecf';
-const BASE_URL = 'https://pixabay.com/api/';
+const BASE_URL = 'https://api.themoviedb.org/3/';
+const API_KEY = '6de1479941bef67a0c224787b78603f1';
 
-const getImagesApiService = new GetImagesApiService();
+// const getImagesApiService = new GetImagesApiService();
 
 const lightbox = new SimpleLightbox(`.gallery a`, {
   captionsData: `alt`,
@@ -24,56 +24,143 @@ const refs = {
   buttonLoadMore: document.querySelector(`.load-more`),
 };
 
-refs.form.addEventListener(`submit`, onFormSubmit);
+let query = ``;
 
-let word = ``;
+query = document.getElementById('search-input').value.trim();
 
-async function onFormSubmit(event) {
-  event.preventDefault();
+console.log(query);
 
-  clearGallery();
-  hideButtonLoad();
+refs.form.addEventListener(`submit`, fetchMoviesById(query));
 
-  getImagesApiService.query =
-    event.currentTarget.elements.searchQuery.value.trim();
+async function fetchMovies() {
+  return await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)
+    .then(res => res.json())
+    .then(res => {
+      const movies = res.results;
 
-  getImagesApiService.resetPage();
+      console.log(movies);
 
-  if (getImagesApiService.query === ``) {
-    return;
-  }
-  // ________________FUNCTION async await___________________
-  try {
-    const images = await getImagesApiService.fetchImages(word);
-
-    if (images.length === 0) {
-      Notiflix.Notify.failure(
-        'Sorry, there are no images matching your search query. Please try again.'
-      );
-      hideButtonLoad();
-      clearGallery();
-      return;
-    }
-
-    if ((getImagesApiService.page = 1 && images.length !== 0)) {
-      Notiflix.Notify.success(
-        `Hooray! We found ${getImagesApiService.totalHits} images.`
-      );
-
-      getImagesApiService.incrementPage();
-
-      renderGallary(images);
-      showButtonLoad();
-      console.log(
-        `После запроса, если все ок - наш объект`,
-        getImagesApiService
-      );
-    }
-  } catch (error) {
-    console.log(`Error`);
-  }
-  // __________________________________________________
+      renderGallary(movies);
+      //       const markup = movies.results.map(({ poster_path, original_title }) => {
+      //         return `<div class="galery__card">
+      //   <a
+      //     class="gallery__link"
+      //     href=https://image.tmdb.org/t/p/w500/${poster_path}
+      //   >
+      //     <img
+      //       class="details__img"
+      //       src=https://image.tmdb.org/t/p/w500/${poster_path}
+      //     alt=${original_title}
+      //       width="300px"
+      //       height="450px"
+      //       loading="lazy"
+      //     />
+      //   </a>
+      // </div>`;
+      //       });
+      // refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+    })
+    .catch(error => {
+      console.log(error);
+    });
 }
+
+async function fetchMoviesById(query) {
+  return await fetch(
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&include_adult=false&language=en-US&page=1`
+  )
+    .then(res => res.json())
+    .then(res => {
+      const movie = res.results;
+      console.log(movie);
+
+      //       const markup = movie.result(({ poster_path, original_title }) => {
+      //         return `<div class="galery__card">
+      //   <a
+      //     class="gallery__link"
+      //     href=https://image.tmdb.org/t/p/w500/${poster_path}
+      //   >
+      //     <img
+      //       class="details__img"
+      //       src=https://image.tmdb.org/t/p/w500/${poster_path}
+      //     alt=${original_title}
+      //       width="300px"
+      //       height="450px"
+      //       loading="lazy"
+      //     />
+      //   </a>
+      // </div>`;
+      //       });
+      //       refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+}
+
+fetchMovies();
+
+// fetchMoviesById(query);
+
+// fetchMoviesById(query);
+
+// console.log(fetchMovies);
+
+// async function onFormSubmit(event) {
+//   event.preventDefault();
+//   const instance = axios.create({
+//     baseURL: 'https://api.themoviedb.org/3',
+//   });
+//   const { results } = await instance.get(
+//     `https://api.themoviedb.org/3/trending/movie/day?api_key=6de1479941bef67a0c224787b78603f1`
+//   );
+
+//   console.log(results);
+//   // return results;
+
+//   clearGallery();
+//   hideButtonLoad();
+
+//   getImagesApiService.query =
+//     event.currentTarget.elements.searchQuery.value.trim();
+
+//   getImagesApiService.resetPage();
+
+//   if (getImagesApiService.query === ``) {
+//     return;
+//   }
+//   // ________________FUNCTION async await___________________
+//   try {
+//     const images = await getImagesApiService.fetchImages(word);
+
+//     if (images.length === 0) {
+//       Notiflix.Notify.failure(
+//         'Sorry, there are no images matching your search query. Please try again.'
+//       );
+//       hideButtonLoad();
+//       clearGallery();
+//       return;
+//     }
+
+//     if ((getImagesApiService.page = 1 && images.length !== 0)) {
+//       Notiflix.Notify.success(
+//         `Hooray! We found ${getImagesApiService.totalHits} images.`
+//       );
+
+//       getImagesApiService.incrementPage();
+
+//       renderGallary(images);
+//       showButtonLoad();
+//       console.log(
+//         `После запроса, если все ок - наш объект`,
+//         getImagesApiService
+//       );
+//     }
+//   } catch (error) {
+//     console.log(`Error`);
+//   }
+//   // __________________________________________________
+// }
 
 // ________FUNCTION Promise____________
 // getImagesApiService.fetchImages(word).then(images => {
@@ -177,39 +264,25 @@ function onGalleryClick(event) {
 
 // ___________FUNCTIONS_______________
 
-function renderGallary(images) {
-  const markup = images
-    .map(
-      ({
-        webformatURL,
-        likes,
-        views,
-        comments,
-        tags,
-        downloads,
-        largeImageURL,
-      }) => {
-        return `<div class="galery__card">
-    <a class="gallery__link" href="${largeImageURL}">
-    <img class="gallery__image" src="${webformatURL}" alt="${tags}" title="${tags}" loading="lazy" />
-    <div class="info">
-      <p class="info__item">
-        <b class="info__item-name">Likes</b>${likes}
-      </p>
-      <p class="info__item">
-        <b class="info__item-name">Views</b>${views}
-      </p>
-      <p class="info__item">
-        <b class="info__item-name">Comments</b>${comments}
-      </p>
-      <p class="info__item">
-        <b class="info__item-name">Downloads</b>${downloads}
-      </p>
-    </div>
-    </a>
-  </div>`;
-      }
-    )
+function renderGallary(movies) {
+  const markup = movies
+    .map(({ poster_path, original_title }) => {
+      return `<div class="galery__card">
+  <a
+    class="gallery__link"
+    href=https://image.tmdb.org/t/p/w500/${poster_path}
+  >
+    <img
+      class="details__img"
+      src=https://image.tmdb.org/t/p/w500/${poster_path}
+    alt=${original_title}
+      width="300px"
+      height="450px"
+      loading="lazy"
+    />
+  </a>
+</div>`;
+    })
     .join(``);
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
   lightbox.refresh();
