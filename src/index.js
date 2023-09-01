@@ -4,12 +4,8 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-// import GetImagesApiService from './apiService';
-
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '6de1479941bef67a0c224787b78603f1';
-
-// const getImagesApiService = new GetImagesApiService();
 
 const lightbox = new SimpleLightbox(`.gallery a`, {
   captionsData: `alt`,
@@ -26,85 +22,92 @@ const refs = {
 
 let query = ``;
 
-query = document.getElementById('search-input').value.trim();
-
-console.log(query);
-
-refs.form.addEventListener(`submit`, fetchMoviesById(query));
+refs.form.addEventListener(`submit`, onFormSubmit);
 
 async function fetchMovies() {
   return await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)
     .then(res => res.json())
     .then(res => {
       const movies = res.results;
-
-      console.log(movies);
-
+      // console.log(movies);
       renderGallary(movies);
-      //       const markup = movies.results.map(({ poster_path, original_title }) => {
-      //         return `<div class="galery__card">
-      //   <a
-      //     class="gallery__link"
-      //     href=https://image.tmdb.org/t/p/w500/${poster_path}
-      //   >
-      //     <img
-      //       class="details__img"
-      //       src=https://image.tmdb.org/t/p/w500/${poster_path}
-      //     alt=${original_title}
-      //       width="300px"
-      //       height="450px"
-      //       loading="lazy"
-      //     />
-      //   </a>
-      // </div>`;
-      //       });
-      // refs.gallery.insertAdjacentHTML(`beforeend`, markup);
     })
     .catch(error => {
       console.log(error);
     });
 }
 
-async function fetchMoviesById(query) {
+async function fetchMoviesByQuery(query) {
   return await fetch(
     `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&include_adult=false&language=en-US&page=1`
   )
     .then(res => res.json())
     .then(res => {
       const movie = res.results;
-      console.log(movie);
+      // console.log(movie);
 
-      //       const markup = movie.result(({ poster_path, original_title }) => {
-      //         return `<div class="galery__card">
-      //   <a
-      //     class="gallery__link"
-      //     href=https://image.tmdb.org/t/p/w500/${poster_path}
-      //   >
-      //     <img
-      //       class="details__img"
-      //       src=https://image.tmdb.org/t/p/w500/${poster_path}
-      //     alt=${original_title}
-      //       width="300px"
-      //       height="450px"
-      //       loading="lazy"
-      //     />
-      //   </a>
-      // </div>`;
-      //       });
-      //       refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+      if (query === ``) {
+        return;
+      }
+
+      if (movie.length === 0) {
+        return;
+      }
+
+      const markup = movie.map(({ poster_path, original_title }) => {
+        return poster_path
+          ? `<div class="galery__card">
+        <a
+          class="gallery__link"
+          href=https://image.tmdb.org/t/p/w500/${poster_path}
+        >
+          <img
+            class="details__img"
+            src=https://image.tmdb.org/t/p/w500/${poster_path}
+          alt=${original_title}
+            width="300px"
+            height="450px"
+            loading="lazy"
+          />
+        </a>
+      </div>`
+          : `<div class="galery__card">
+        <a
+          class="gallery__link"
+          href="../src/images/default_image_large.jpg"
+        >
+          <img
+            class="details__img"
+            src="../src/images/default_image_large.jpg"
+          alt=${original_title}
+            width="300px"
+            height="450px"
+            loading="lazy"
+          />
+        </a>
+      </div>`;
+      });
+      refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+      lightbox.refresh();
     })
     .catch(error => {
       console.log(error);
     });
 }
 
+async function onFormSubmit(event) {
+  event.preventDefault();
+
+  clearGallery();
+
+  query = document.getElementById('search-input').value.trim();
+
+  console.log(query);
+
+  fetchMoviesByQuery(query);
+}
+
 fetchMovies();
-
-// fetchMoviesById(query);
-
-// fetchMoviesById(query);
-
-// console.log(fetchMovies);
 
 // async function onFormSubmit(event) {
 //   event.preventDefault();
@@ -267,21 +270,37 @@ function onGalleryClick(event) {
 function renderGallary(movies) {
   const markup = movies
     .map(({ poster_path, original_title }) => {
-      return `<div class="galery__card">
-  <a
-    class="gallery__link"
-    href=https://image.tmdb.org/t/p/w500/${poster_path}
-  >
-    <img
-      class="details__img"
-      src=https://image.tmdb.org/t/p/w500/${poster_path}
-    alt=${original_title}
-      width="300px"
-      height="450px"
-      loading="lazy"
-    />
-  </a>
-</div>`;
+      return poster_path
+        ? `<div class="galery__card">
+        <a
+          class="gallery__link"
+          href=https://image.tmdb.org/t/p/w500/${poster_path}
+        >
+          <img
+            class="details__img"
+            src=https://image.tmdb.org/t/p/w500/${poster_path}
+          alt=${original_title}
+            width="300px"
+            height="450px"
+            loading="lazy"
+          />
+        </a>
+      </div>`
+        : `<div class="galery__card">
+        <a
+          class="gallery__link"
+          href="../src/images/default_image_large.jpg"
+        >
+          <img
+            class="details__img"
+            src="../src/images/default_image_large.jpg"
+          alt=${original_title}
+            width="300px"
+            height="450px"
+            loading="lazy"
+          />
+        </a>
+      </div>`;
     })
     .join(``);
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
