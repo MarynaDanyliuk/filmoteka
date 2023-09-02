@@ -26,10 +26,11 @@ refs.form.addEventListener(`submit`, onFormSubmit);
 
 async function fetchMovies() {
   return await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)
-    .then(res => res.json())
+    .then(res => {
+      return res.json();
+    })
     .then(res => {
       const movies = res.results;
-      // console.log(movies);
       renderGallary(movies);
     })
     .catch(error => {
