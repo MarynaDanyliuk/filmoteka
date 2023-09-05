@@ -67,15 +67,14 @@ async function onFormSubmit(event) {
   await fetchMovieByQueryAndRender(query);
 }
 
-function onGalleryClick(event) {
+async function onGalleryClick(event) {
   event.preventDefault();
 
   if (event.target.nodeName !== `IMG`) {
     return;
   }
-
   const CurrentActiveImg = document.querySelector(`.img--active`);
-  console.log(CurrentActiveImg);
+  // console.log(CurrentActiveImg);
 
   if (CurrentActiveImg) {
     event.target.classList.remove(`.img--active`);
@@ -83,10 +82,16 @@ function onGalleryClick(event) {
 
   const nextImgActive = event.target;
   nextImgActive.classList.add(`.img--active`);
-  console.log(event.target);
+  // console.log(event.target);
 
-  ImgActive = nextImgActive.getAttribute(`src`);
+  ImgActive = nextImgActive.getAttribute(`alt`);
   console.log(ImgActive);
+
+  await fetchMovies().then(movies => {
+    const movieActive = movies.filter(movie => movie.title === ImgActive);
+    const movieId = movieActive[0].id;
+    return movieId;
+  });
 }
 
 // ___________FUNCTIONS_______________

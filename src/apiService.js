@@ -80,17 +80,15 @@ export async function fetchMovieDetailsById(movieId) {
   //   .catch(err => console.error(err));
 
   const response = await fetch(
-    `${BASE_URL}/movie/&movie/${movieId}?api_key=${API_KEY}`,
+    `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`,
     options
   );
 
   const res = await response.json();
 
-  const movie = await res.results;
+  console.log(res);
 
-  console.log(movie);
-
-  return movie;
+  return res;
 }
 
 // return await fetch(
