@@ -4,8 +4,14 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const BASE_URL = 'https://api.themoviedb.org/3/';
-const API_KEY = '6de1479941bef67a0c224787b78603f1';
+import {
+  fetchMovies,
+  fetchMoviesByQuery,
+  fetchMovieDetailsById,
+} from './apiService';
+
+// const BASE_URL = 'https://api.themoviedb.org/3/';
+// const API_KEY = '6de1479941bef67a0c224787b78603f1';
 
 const lightbox = new SimpleLightbox(`.gallery a`, {
   captionsData: `alt`,
@@ -20,44 +26,76 @@ const refs = {
   buttonLoadMore: document.querySelector(`.load-more`),
 };
 
-let query = ``;
+// let query = ``;
+let ImgActive = null;
 
 refs.form.addEventListener(`submit`, onFormSubmit);
+refs.gallery.addEventListener(`click`, onGalleryClick);
 
-async function fetchMovies() {
-  return await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)
-    .then(res => {
-      return res.json();
-    })
-    .then(res => {
-      const movies = res.results;
+fetchMoviesAndRender();
+
+async function fetchMoviesAndRender() {
+  try {
+    fetchMovies().then(movies => {
       renderGallary(movies);
-    })
-    .catch(error => {
-      console.log(error);
     });
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
-async function fetchMoviesByQuery(query) {
-  return await fetch(
-    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&include_adult=false&language=en-US&page=1`
-  )
-    .then(res => res.json())
-    .then(res => {
-      const movie = res.results;
-      // console.log(movie);
+async function fetchMovieByQueryAndRender(query) {
+  try {
+    fetchMoviesByQuery(query).then(movies => {
+      renderGallary(movies);
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
-      if (query === ``) {
-        return;
-      }
+async function onFormSubmit(event) {
+  event.preventDefault();
+  clearGallery();
 
-      if (movie.length === 0) {
-        return;
-      }
+  // const form = event.currentTarget;
+  // const searchQuery = form.elements.searchQuery.value;
+  // console.log(searchQuery);
 
-      const markup = movie.map(({ poster_path, original_title }) => {
-        return poster_path
-          ? `<div class="galery__card">
+  query = document.getElementById('search-input').value.trim();
+  console.log(query);
+  await fetchMovieByQueryAndRender(query);
+}
+
+function onGalleryClick(event) {
+  event.preventDefault();
+
+  if (event.target.nodeName !== `IMG`) {
+    return;
+  }
+
+  const CurrentActiveImg = document.querySelector(`.img--active`);
+  console.log(CurrentActiveImg);
+
+  if (CurrentActiveImg) {
+    event.target.classList.remove(`.img--active`);
+  }
+
+  const nextImgActive = event.target;
+  nextImgActive.classList.add(`.img--active`);
+  console.log(event.target);
+
+  ImgActive = nextImgActive.getAttribute(`src`);
+  console.log(ImgActive);
+}
+
+// ___________FUNCTIONS_______________
+
+function renderGallary(movies) {
+  const markup = movies
+    .map(({ poster_path, original_title }) => {
+      return poster_path
+        ? `<div class="galery__card">
         <a
           class="gallery__link"
           href=https://image.tmdb.org/t/p/w500/${poster_path}
@@ -72,7 +110,7 @@ async function fetchMoviesByQuery(query) {
           />
         </a>
       </div>`
-          : `<div class="galery__card">
+        : `<div class="galery__card">
         <a
           class="gallery__link"
           href="../src/images/default_image_large.jpg"
@@ -87,28 +125,175 @@ async function fetchMoviesByQuery(query) {
           />
         </a>
       </div>`;
-      });
-      refs.gallery.insertAdjacentHTML(`beforeend`, markup);
-      lightbox.refresh();
     })
-    .catch(error => {
-      console.log(error);
-    });
+    .join(``);
+  refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+  lightbox.refresh();
 }
 
-async function onFormSubmit(event) {
-  event.preventDefault();
-
-  clearGallery();
-
-  query = document.getElementById('search-input').value.trim();
-
-  console.log(query);
-
-  fetchMoviesByQuery(query);
+function clearGallery() {
+  refs.gallery.innerHTML = '';
 }
 
-fetchMovies();
+// async function fetchMovies() {
+//   // return await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)
+//   //   .then(res => {
+//   //     return res.json();
+//   //   })
+//   //   .then(res => {
+//   //     const movies = res.results;
+//   //     renderGallary(movies);
+//   //   })
+//   //   .catch(error => {
+//   //     console.log(error);
+//   //   });
+
+//   // ______________________async await_____________________
+
+//   const options = {
+//     method: 'GET',
+//     headers: { accept: 'application/json' },
+//   };
+
+//   const response = await fetch(
+//     `${BASE_URL}/trending/movie/day?api_key=${API_KEY}`,
+//     options
+//   );
+
+//   const res = await response.json();
+
+//   const movies = await res.results;
+
+//   console.log(movies);
+
+//   return movies;
+// }
+
+// async function fetchMoviesByQuery(query) {
+//   const options = {
+//     method: 'GET',
+//     headers: { accept: 'application/json' },
+//   };
+
+//   const response = await fetch(
+//     `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&include_adult=false&language=en-US&page=1`,
+//     options
+//   );
+
+//   const res = await response.json();
+
+//   const movie = await res.results;
+
+//   console.log(movie);
+
+//   return movie;
+// }
+
+// async function fetchMoviesByQuery(query) {
+
+//   return await fetch(
+//     `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&include_adult=false&language=en-US&page=1`
+//   )
+//     .then(res => res.json())
+//     .then(res => {
+//       const movie = res.results;
+//       if (query === ``) {
+//         return;
+//       }
+
+//       if (movie.length === 0) {
+//         return;
+//       }
+
+//       const markup = movie.map(({ poster_path, original_title }) => {
+//         return poster_path
+//           ? `<div class="gallery__card">
+//         <a
+//           class="gallery__link"
+//           href=https://image.tmdb.org/t/p/w500/${poster_path}
+//         >
+//           <img
+//             class="details__img"
+//             src=https://image.tmdb.org/t/p/w500/${poster_path}
+//           alt=${original_title}
+//             width="300px"
+//             height="450px"
+//             loading="lazy"
+//           />
+//         </a>
+//       </div>`
+//           : `<div class="gallery__card">
+//         <a
+//           class="gallery__link"
+//           href="../src/images/default_image_large.jpg"
+//         >
+//           <img
+//             class="details__img"
+//             src="../src/images/default_image_large.jpg"
+//           alt=${original_title}
+//             width="300px"
+//             height="450px"
+//             loading="lazy"
+//           />
+//         </a>
+//       </div>`;
+//       });
+//       refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+//       lightbox.refresh();
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     });
+// }
+
+// async function fetchMovieDetailsById(movieId) {
+//   return await fetch(
+//     `${BASE_URL}/search/movie?api_key=${API_KEY}&movie/${movieId}`
+//   )
+//     .then(res => res.json())
+//     .then(res => {
+//       const movieDetails = res.results;
+
+//       const markup = movieDetails.map(({ poster_path, original_title }) => {
+//         return poster_path
+//           ? `<div class="galery__card">
+//         <a
+//           class="gallery__link"
+//           href=https://image.tmdb.org/t/p/w500/${poster_path}
+//         >
+//           <img
+//             class="details__img"
+//             src=https://image.tmdb.org/t/p/w500/${poster_path}
+//           alt=${original_title}
+//             width="300px"
+//             height="450px"
+//             loading="lazy"
+//           />
+//         </a>
+//       </div>`
+//           : `<div class="galery__card">
+//         <a
+//           class="gallery__link"
+//           href="../src/images/default_image_large.jpg"
+//         >
+//           <img
+//             class="details__img"
+//             src="../src/images/default_image_large.jpg"
+//           alt=${original_title}
+//             width="300px"
+//             height="450px"
+//             loading="lazy"
+//           />
+//         </a>
+//       </div>`;
+//       });
+//       refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+//       lightbox.refresh();
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     });
+// }
 
 // async function onFormSubmit(event) {
 //   event.preventDefault();
@@ -240,73 +425,31 @@ async function onButtonLoadMoreClick(event) {
 }
 // ______________________________________________________
 
-refs.gallery.addEventListener(`click`, onGalleryClick);
+// refs.gallery.addEventListener(`click`, onGalleryClick);
 
-let ImgActive = null;
+// let ImgActive = null;
 
-function onGalleryClick(event) {
-  event.preventDefault();
+// function onGalleryClick(event) {
+//   event.preventDefault();
 
-  if (event.target.nodeName !== `IMG`) {
-    return;
-  }
+//   if (event.target.nodeName !== `IMG`) {
+//     return;
+//   }
 
-  const CurrentActiveImg = document.querySelector(`.img--active`);
-  console.log(CurrentActiveImg);
+//   const CurrentActiveImg = document.querySelector(`.img--active`);
+//   console.log(CurrentActiveImg);
 
-  if (CurrentActiveImg) {
-    event.target.classList.remove(`.img--active`);
-  }
+//   if (CurrentActiveImg) {
+//     event.target.classList.remove(`.img--active`);
+//   }
 
-  const nextImgActive = event.target;
-  nextImgActive.classList.add(`.img--active`);
-  console.log(event.target);
+//   const nextImgActive = event.target;
+//   nextImgActive.classList.add(`.img--active`);
+//   console.log(event.target);
 
-  ImgActive = nextImgActive.getAttribute(`src`);
-  console.log(ImgActive);
-}
-
-// ___________FUNCTIONS_______________
-
-function renderGallary(movies) {
-  const markup = movies
-    .map(({ poster_path, original_title }) => {
-      return poster_path
-        ? `<div class="galery__card">
-        <a
-          class="gallery__link"
-          href=https://image.tmdb.org/t/p/w500/${poster_path}
-        >
-          <img
-            class="details__img"
-            src=https://image.tmdb.org/t/p/w500/${poster_path}
-          alt=${original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
-      </div>`
-        : `<div class="galery__card">
-        <a
-          class="gallery__link"
-          href="../src/images/default_image_large.jpg"
-        >
-          <img
-            class="details__img"
-            src="../src/images/default_image_large.jpg"
-          alt=${original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
-      </div>`;
-    })
-    .join(``);
-  refs.gallery.insertAdjacentHTML(`beforeend`, markup);
-  lightbox.refresh();
-}
+//   ImgActive = nextImgActive.getAttribute(`src`);
+//   console.log(ImgActive);
+// }
 
 function smoothScrolling() {
   const { height: cardHeight } = document
@@ -326,8 +469,4 @@ function showButtonLoad() {
 
 function hideButtonLoad() {
   refs.buttonLoadMore.classList.add(`not-visible`);
-}
-
-function clearGallery() {
-  refs.gallery.innerHTML = '';
 }
