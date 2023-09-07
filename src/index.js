@@ -36,7 +36,8 @@ fetchMoviesAndRender();
 
 async function fetchMoviesAndRender() {
   try {
-    fetchMovies().then(movies => {
+    await fetchMovies().then(movies => {
+      console.log(movies);
       renderGallary(movies);
     });
   } catch (error) {
@@ -46,13 +47,34 @@ async function fetchMoviesAndRender() {
 
 async function fetchMovieByQueryAndRender(query) {
   try {
-    fetchMoviesByQuery(query).then(movies => {
+    await fetchMoviesByQuery(query).then(movies => {
       renderGallary(movies);
     });
   } catch (error) {
     console.log(error.message);
   }
 }
+
+async function fetchMovieDetailsByIdAndRender(movieId) {
+  try {
+    await fetchMovieDetailsById(movieId).then(movie => {
+      // renderMovieDetails(movie);
+      console.log(movie);
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+// async function fetchMovieByIdAndRender(onGalleryClick) {
+//   try {
+//     onGalleryClick().then(movies => {
+//       renderGallary(movies);
+//     });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }
 
 async function onFormSubmit(event) {
   event.preventDefault();
@@ -74,7 +96,7 @@ async function onGalleryClick(event) {
     return;
   }
   const CurrentActiveImg = document.querySelector(`.img--active`);
-  // console.log(CurrentActiveImg);
+  console.log(CurrentActiveImg);
 
   if (CurrentActiveImg) {
     event.target.classList.remove(`.img--active`);
@@ -82,16 +104,30 @@ async function onGalleryClick(event) {
 
   const nextImgActive = event.target;
   nextImgActive.classList.add(`.img--active`);
-  // console.log(event.target);
+  console.log(event.target);
 
-  ImgActive = nextImgActive.getAttribute(`alt`);
+  ImgActive = nextImgActive.getAttribute(`src`).slice(30);
   console.log(ImgActive);
 
-  await fetchMovies().then(movies => {
-    const movieActive = movies.filter(movie => movie.title === ImgActive);
-    const movieId = movieActive[0].id;
-    return movieId;
-  });
+  await fetchMovies()
+    .then(movies => {
+      console.log(movies);
+      const movieActive = movies.filter(
+        movie => movie.poster_path === ImgActive
+      );
+      const movieId = movieActive[0].id;
+      console.log(movieId);
+      return movieId;
+    })
+    .then(movieId => {
+      fetchMovieDetailsByIdAndRender(movieId);
+    })
+    .catch(error => {
+      console.log(error.message);
+    })
+    .finally(() => {
+      console.log('Experiment completed');
+    });
 }
 
 // ___________FUNCTIONS_______________
@@ -103,11 +139,11 @@ function renderGallary(movies) {
         ? `<div class="galery__card">
         <a
           class="gallery__link"
-          href=https://image.tmdb.org/t/p/w500/${poster_path}
+          href=https:/image.tmdb.org/t/p/w500${poster_path}
         >
           <img
             class="details__img"
-            src=https://image.tmdb.org/t/p/w500/${poster_path}
+            src=https:/image.tmdb.org/t/p/w500${poster_path}
           alt=${original_title}
             width="300px"
             height="450px"
@@ -138,6 +174,46 @@ function renderGallary(movies) {
 
 function clearGallery() {
   refs.gallery.innerHTML = '';
+}
+
+function renderMovieDetails(movie) {
+  const markup = movie => {
+    return (
+      movie
+        ? `<div class="galery__card">
+        <a
+          class="gallery__link"
+          href=https://image.tmdb.org/t/p/w500/${movie.poster_path}
+        >
+          <img
+            class="details__img"
+            src=https://image.tmdb.org/t/p/w500/${movie.poster_path}
+          alt=${movie.original_title}
+            width="300px"
+            height="450px"
+            loading="lazy"
+          />
+        </a>
+      </div>`
+        : `<div class="galery__card">
+        <a
+          class="gallery__link"
+          href="../src/images/default_image_large.jpg"
+        >
+          <img
+            class="details__img"
+            src="../src/images/default_image_large.jpg"
+          alt=${movie.original_title}
+            width="300px"
+            height="450px"
+            loading="lazy"
+          />
+        </a>
+      </div>`
+    ).join(``);
+  };
+  refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+  // lightbox.refresh();
 }
 
 // async function fetchMovies() {

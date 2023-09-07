@@ -4,11 +4,11 @@ import Notiflix from 'notiflix';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-var lightbox = new SimpleLightbox(`.gallery a`, {
-  captionsData: `alt`,
-  captionPosition: `bottom`,
-  captionDelay: `250 ms`,
-});
+// var lightbox = new SimpleLightbox(`.gallery a`, {
+//   captionsData: `alt`,
+//   captionPosition: `bottom`,
+//   captionDelay: `250 ms`,
+// });
 
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '6de1479941bef67a0c224787b78603f1';
@@ -44,8 +44,6 @@ export async function fetchMovies() {
 
   const movies = await res.results;
 
-  console.log(movies);
-
   return movies;
 }
 
@@ -64,20 +62,11 @@ export async function fetchMoviesByQuery(query) {
 
   const movies = await res.results;
 
-  console.log(movies);
-
   return movies;
 }
 
 export async function fetchMovieDetailsById(movieId) {
   const options = { method: 'GET', headers: { accept: 'application/json' } };
-
-  // `https://api.themoviedb.org/3/movie/346698?api_key=6de1479941bef67a0c224787b78603f1`;
-
-  // fetch('https://api.themoviedb.org/3/movie/movie_id?language=en-US', options)
-  //   .then(response => response.json())
-  //   .then(response => console.log(response))
-  //   .catch(err => console.error(err));
 
   const response = await fetch(
     `${BASE_URL}/movie/${movieId}?api_key=${API_KEY}`,
@@ -85,8 +74,6 @@ export async function fetchMovieDetailsById(movieId) {
   );
 
   const res = await response.json();
-
-  console.log(res);
 
   return res;
 }
