@@ -1,8 +1,8 @@
-import axios from 'axios';
+// import axios from 'axios';
 
-import Notiflix from 'notiflix';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
+// import Notiflix from 'notiflix';
+// import SimpleLightbox from 'simplelightbox';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
 
 // var lightbox = new SimpleLightbox(`.gallery a`, {
 //   captionsData: `alt`,
@@ -13,7 +13,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '6de1479941bef67a0c224787b78603f1';
 
-let query = ``;
+// let query = ``;
 
 export async function fetchMovies() {
   // return await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)

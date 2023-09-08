@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 import Notiflix from 'notiflix';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
+// import SimpleLightbox from 'simplelightbox';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import {
   fetchMovies,
@@ -13,11 +13,11 @@ import {
 // const BASE_URL = 'https://api.themoviedb.org/3/';
 // const API_KEY = '6de1479941bef67a0c224787b78603f1';
 
-const lightbox = new SimpleLightbox(`.gallery a`, {
-  captionsData: `alt`,
-  captionPosition: `bottom`,
-  captionDelay: `250 ms`,
-});
+// const lightbox = new SimpleLightbox(`.gallery a`, {
+//   captionsData: `alt`,
+//   captionPosition: `bottom`,
+//   captionDelay: `250 ms`,
+// });
 
 const refs = {
   form: document.querySelector(`.form`),
@@ -31,8 +31,11 @@ let ImgActive = null;
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.gallery.addEventListener(`click`, onGalleryClick);
+refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
 
 fetchMoviesAndRender();
+
+// _____________fetch and render FUNCTIONS_____________
 
 async function fetchMoviesAndRender() {
   try {
@@ -55,26 +58,19 @@ async function fetchMovieByQueryAndRender(query) {
   }
 }
 
-async function fetchMovieDetailsByIdAndRender(movieId) {
+async function fetchMovieDetailsByIdAndRender(MovieId) {
   try {
-    await fetchMovieDetailsById(movieId).then(movie => {
-      // renderMovieDetails(movie);
+    await fetchMovieDetailsById(MovieId).then(movie => {
       console.log(movie);
+
+      renderMovieDetails(movie);
     });
   } catch (error) {
     console.log(error.message);
   }
 }
 
-// async function fetchMovieByIdAndRender(onGalleryClick) {
-//   try {
-//     onGalleryClick().then(movies => {
-//       renderGallary(movies);
-//     });
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// }
+// ________________event FUNC_______________________
 
 async function onFormSubmit(event) {
   event.preventDefault();
@@ -109,25 +105,61 @@ async function onGalleryClick(event) {
   ImgActive = nextImgActive.getAttribute(`src`).slice(30);
   console.log(ImgActive);
 
-  await fetchMovies()
-    .then(movies => {
-      console.log(movies);
-      const movieActive = movies.filter(
-        movie => movie.poster_path === ImgActive
+  const MovieId = await fetchMovies().then(movies => {
+    console.log(movies);
+    const movieActive = movies.filter(movie => movie.poster_path === ImgActive);
+    const movieId = movieActive[0].id;
+    // console.log(movieId);
+    return movieId;
+  });
+
+  await fetchMovieDetailsByIdAndRender(MovieId);
+}
+
+async function onButtonLoadMoreClick(event) {
+  const limit = getImagesApiService.totalHits;
+  // ________COUNTER___________________
+  // console.log(getImagesApiService.page * getImagesApiService.per_page);
+
+  // console.log(getImagesApiService.page);
+  // ______________________________________
+
+  // ___________FUNCTION Promise__________________
+  // getImagesApiService.fetchImages(word).then(images => {
+  //   if (getImagesApiService.page * getImagesApiService.per_page >= limit) {
+  //     Notiflix.Notify.info(
+  //       `We're sorry, but you've reached the end of search results.`
+  //     );
+  //     console.log(`Вы достигли лимита`);
+  //     hideButtonLoad();
+  //   }
+
+  //   getImagesApiService.incrementPage();
+  //   console.log(`После запроса, если все ок - наш объект`, getImagesApiService);
+  //   renderGallary(images);
+  //   smoothScrolling();
+  // });
+  // _________________________________________________
+
+  // ____________FUNCTION acync await_________________
+
+  try {
+    const images = await getImagesApiService.fetchImages(word);
+    if (getImagesApiService.page * getImagesApiService.per_page >= limit) {
+      Notiflix.Notify.info(
+        `We're sorry, but you've reached the end of search results.`
       );
-      const movieId = movieActive[0].id;
-      console.log(movieId);
-      return movieId;
-    })
-    .then(movieId => {
-      fetchMovieDetailsByIdAndRender(movieId);
-    })
-    .catch(error => {
-      console.log(error.message);
-    })
-    .finally(() => {
-      console.log('Experiment completed');
-    });
+      console.log(`Вы достигли лимита`);
+      hideButtonLoad();
+    }
+
+    getImagesApiService.incrementPage();
+    console.log(`После запроса, если все ок - наш объект`, getImagesApiService);
+    renderGallary(images);
+    smoothScrolling();
+  } catch (error) {
+    console.log(`Error`);
+  }
 }
 
 // ___________FUNCTIONS_______________
@@ -169,7 +201,7 @@ function renderGallary(movies) {
     })
     .join(``);
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
-  lightbox.refresh();
+  // lightbox.refresh();
 }
 
 function clearGallery() {
@@ -177,10 +209,7 @@ function clearGallery() {
 }
 
 function renderMovieDetails(movie) {
-  const markup = movie => {
-    return (
-      movie
-        ? `<div class="galery__card">
+  const movieMarkup = `<div class="galery__card">
         <a
           class="gallery__link"
           href=https://image.tmdb.org/t/p/w500/${movie.poster_path}
@@ -194,27 +223,32 @@ function renderMovieDetails(movie) {
             loading="lazy"
           />
         </a>
-      </div>`
-        : `<div class="galery__card">
-        <a
-          class="gallery__link"
-          href="../src/images/default_image_large.jpg"
-        >
-          <img
-            class="details__img"
-            src="../src/images/default_image_large.jpg"
-          alt=${movie.original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
-      </div>`
-    ).join(``);
-  };
-  refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+      </div>`;
+  refs.gallery.insertAdjacentHTML(`beforeend`, movieMarkup);
+  console.log('повертаю Муві');
+}
+
+function smoothScrolling() {
+  const { height: cardHeight } = document
+    .querySelector('.gallery')
+    .firstElementChild.getBoundingClientRect();
+
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: 'smooth',
+  });
+}
+
+function showButtonLoad() {
+  refs.buttonLoadMore.classList.remove(`not-visible`);
   // lightbox.refresh();
 }
+
+function hideButtonLoad() {
+  refs.buttonLoadMore.classList.add(`not-visible`);
+}
+
+// lightbox.refresh();
 
 // async function fetchMovies() {
 //   // return await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)
@@ -457,53 +491,6 @@ function renderMovieDetails(movie) {
 // });
 // ________________________________________
 
-refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
-
-async function onButtonLoadMoreClick(event) {
-  const limit = getImagesApiService.totalHits;
-  // ________COUNTER___________________
-  // console.log(getImagesApiService.page * getImagesApiService.per_page);
-
-  // console.log(getImagesApiService.page);
-  // ______________________________________
-
-  // ___________FUNCTION Promise__________________
-  // getImagesApiService.fetchImages(word).then(images => {
-  //   if (getImagesApiService.page * getImagesApiService.per_page >= limit) {
-  //     Notiflix.Notify.info(
-  //       `We're sorry, but you've reached the end of search results.`
-  //     );
-  //     console.log(`Вы достигли лимита`);
-  //     hideButtonLoad();
-  //   }
-
-  //   getImagesApiService.incrementPage();
-  //   console.log(`После запроса, если все ок - наш объект`, getImagesApiService);
-  //   renderGallary(images);
-  //   smoothScrolling();
-  // });
-  // _________________________________________________
-
-  // ____________FUNCTION acync await_________________
-
-  try {
-    const images = await getImagesApiService.fetchImages(word);
-    if (getImagesApiService.page * getImagesApiService.per_page >= limit) {
-      Notiflix.Notify.info(
-        `We're sorry, but you've reached the end of search results.`
-      );
-      console.log(`Вы достигли лимита`);
-      hideButtonLoad();
-    }
-
-    getImagesApiService.incrementPage();
-    console.log(`После запроса, если все ок - наш объект`, getImagesApiService);
-    renderGallary(images);
-    smoothScrolling();
-  } catch (error) {
-    console.log(`Error`);
-  }
-}
 // ______________________________________________________
 
 // refs.gallery.addEventListener(`click`, onGalleryClick);
@@ -532,22 +519,24 @@ async function onButtonLoadMoreClick(event) {
 //   console.log(ImgActive);
 // }
 
-function smoothScrolling() {
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
+// console.log(MovieId);
 
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
-}
-
-function showButtonLoad() {
-  refs.buttonLoadMore.classList.remove(`not-visible`);
-  // lightbox.refresh();
-}
-
-function hideButtonLoad() {
-  refs.buttonLoadMore.classList.add(`not-visible`);
-}
+// await fetchMovies()
+//   .then(movies => {
+//     console.log(movies);
+//     const movieActive = movies.filter(
+//       movie => movie.poster_path === ImgActive
+//     );
+//     const movieId = movieActive[0].id;
+//     console.log(movieId);
+//     return movieId;
+//   })
+//   .then(movieId => {
+//     fetchMovieDetailsByIdAndRender(movieId);
+//   })
+//   .catch(error => {
+//     console.log(error.message);
+//   })
+//   .finally(() => {
+//     console.log('Experiment completed');
+//   });
