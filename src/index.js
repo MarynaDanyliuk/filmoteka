@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 import Notiflix from 'notiflix';
-// import SimpleLightbox from 'simplelightbox';
-// import 'simplelightbox/dist/simple-lightbox.min.css';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import {
   fetchMovies,
@@ -13,11 +13,11 @@ import {
 // const BASE_URL = 'https://api.themoviedb.org/3/';
 // const API_KEY = '6de1479941bef67a0c224787b78603f1';
 
-// const lightbox = new SimpleLightbox(`.gallery a`, {
-//   captionsData: `alt`,
-//   captionPosition: `bottom`,
-//   captionDelay: `250 ms`,
-// });
+const lightbox = new SimpleLightbox(`.gallery a`, {
+  captionsData: `alt`,
+  captionPosition: `bottom`,
+  captionDelay: `250 ms`,
+});
 
 const refs = {
   form: document.querySelector(`.form`),
@@ -171,11 +171,11 @@ function renderGallary(movies) {
         ? `<div class="galery__card">
         <a
           class="gallery__link"
-          href=https:/image.tmdb.org/t/p/w500${poster_path}
+          href='https:/image.tmdb.org/t/p/w500${poster_path}'
         >
           <img
             class="details__img"
-            src=https:/image.tmdb.org/t/p/w500${poster_path}
+            src='https:/image.tmdb.org/t/p/w500${poster_path}'
           alt=${original_title}
             width="300px"
             height="450px"
@@ -212,11 +212,11 @@ function renderMovieDetails(movie) {
   const movieMarkup = `<div class="galery__card">
         <a
           class="gallery__link"
-          href=https://image.tmdb.org/t/p/w500/${movie.poster_path}
+          href='https://image.tmdb.org/t/p/w500/${movie.poster_path}'
         >
           <img
             class="details__img"
-            src=https://image.tmdb.org/t/p/w500/${movie.poster_path}
+            src='https://image.tmdb.org/t/p/w500/${movie.poster_path}'
           alt=${movie.original_title}
             width="300px"
             height="450px"
