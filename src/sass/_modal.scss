@@ -37,6 +37,8 @@
   position: absolute;
   padding: 18px;
   right: 0;
+
+  // color: #fff;
 }
 
 .movie_card {
@@ -51,3 +53,9 @@
   object-fit: cover;
   margin-right: 16px;
 }
+
+// .not-visible {
+//   visibility: hidden;
+//   opacity: 0;
+//   pointer-events: none;
+// }

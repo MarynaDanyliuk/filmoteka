@@ -14,6 +14,8 @@ const BASE_URL = 'https://api.themoviedb.org/3/';
 const API_KEY = '6de1479941bef67a0c224787b78603f1';
 
 // let query = ``;
+let page = 1;
+let results = 20;
 
 export async function fetchMovies() {
   // return await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)
@@ -74,6 +76,24 @@ export async function fetchMovieDetailsById(movieId) {
   );
 
   const res = await response.json();
+
+  return res;
+}
+
+export async function fetchMoviesByPage(page) {
+  const options = {
+    method: 'GET',
+    headers: { accept: 'application/json' },
+  };
+
+  const response = await fetch(
+    `${BASE_URL}/trending/movie/day?api_key=${API_KEY}&page=${page}`,
+    options
+  );
+
+  const res = await response.json();
+
+  // const movies = await res.results;
 
   return res;
 }

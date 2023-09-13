@@ -1,23 +1,11 @@
-// import axios from 'axios';
-
 import Notiflix from 'notiflix';
-// import SimpleLightbox from 'simplelightbox';
-// import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import {
   fetchMovies,
   fetchMoviesByQuery,
   fetchMovieDetailsById,
+  fetchMoviesByPage,
 } from './js/apiService';
-
-// const BASE_URL = 'https://api.themoviedb.org/3/';
-// const API_KEY = '6de1479941bef67a0c224787b78603f1';
-
-// const lightbox = new SimpleLightbox(`.gallery a`, {
-//   captionsData: `alt`,
-//   captionPosition: `bottom`,
-//   captionDelay: `250 ms`,
-// });
 
 const refs = {
   form: document.querySelector(`.form`),
@@ -31,20 +19,21 @@ const refs = {
 
 // let query = ``;
 let ImgActive = null;
+let page = 1;
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.gallery.addEventListener(`click`, onGalleryClick);
 refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
-refs.buttonClose.addEventListener(`click`, onButtonModalCloseClick);
 
 fetchMoviesAndRender();
+showButtonLoad();
 
 // _____________fetch and render FUNCTIONS_____________
 
 async function fetchMoviesAndRender() {
   try {
     await fetchMovies().then(movies => {
-      console.log(movies);
+      // console.log(movies);
       renderGallary(movies);
     });
   } catch (error) {
@@ -65,11 +54,7 @@ async function fetchMovieByQueryAndRender(query) {
 async function fetchMovieDetailsByIdAndRender(MovieId) {
   try {
     await fetchMovieDetailsById(MovieId).then(movie => {
-      console.log(movie);
-
-      // renderGallary(movie);
-
-      // renderMovieDetails(movie);
+      renderModalMovieDetails(movie);
     });
   } catch (error) {
     console.log(error.message);
@@ -98,7 +83,6 @@ async function onGalleryClick(event) {
     return;
   }
   const CurrentActiveImg = document.querySelector(`.img--active`);
-  refs.modal.classList.add(`open`);
 
   console.log(CurrentActiveImg);
 
@@ -118,64 +102,61 @@ async function onGalleryClick(event) {
     const movieActive = movies.filter(movie => movie.poster_path === ImgActive);
     console.log(movieActive);
 
-    renderGallary(movieActive);
     const movieId = movieActive[0].id;
     console.log(movieId);
     return movieId;
   });
 
   await fetchMovieDetailsByIdAndRender(MovieId);
+  refs.modal.classList.add(`open`);
 }
 
 async function onButtonLoadMoreClick(event) {
-  const limit = getImagesApiService.totalHits;
-  // ________COUNTER___________________
-  // console.log(getImagesApiService.page * getImagesApiService.per_page);
+  event.preventDefault();
 
-  // console.log(getImagesApiService.page);
-  // ______________________________________
-
-  // ___________FUNCTION Promise__________________
-  // getImagesApiService.fetchImages(word).then(images => {
-  //   if (getImagesApiService.page * getImagesApiService.per_page >= limit) {
-  //     Notiflix.Notify.info(
-  //       `We're sorry, but you've reached the end of search results.`
-  //     );
-  //     console.log(`Вы достигли лимита`);
-  //     hideButtonLoad();
-  //   }
-
-  //   getImagesApiService.incrementPage();
-  //   console.log(`После запроса, если все ок - наш объект`, getImagesApiService);
-  //   renderGallary(images);
-  //   smoothScrolling();
-  // });
-  // _________________________________________________
-
-  // ____________FUNCTION acync await_________________
-
+  page += 1;
   try {
-    const images = await getImagesApiService.fetchImages(word);
-    if (getImagesApiService.page * getImagesApiService.per_page >= limit) {
-      Notiflix.Notify.info(
-        `We're sorry, but you've reached the end of search results.`
-      );
-      console.log(`Вы достигли лимита`);
-      hideButtonLoad();
-    }
+    await fetchMoviesByPage(page).then(res => {
+      const movies = res.results;
+      Notiflix.Notify.success(`Congratulation! We find 20 results for You!.`);
+      renderGallary(movies);
 
-    getImagesApiService.incrementPage();
-    console.log(`После запроса, если все ок - наш объект`, getImagesApiService);
-    renderGallary(images);
-    smoothScrolling();
+      const limit = res.total_results;
+
+      if (page >= limit) {
+        Notiflix.Notify.info(
+          `We're sorry, but you've reached the end of search results.`
+        );
+        hideButtonLoad();
+      }
+    });
   } catch (error) {
     console.log(`Error`);
   }
 }
 
-function onButtonModalCloseClick(event) {
+async function pagination(event) {
   event.preventDefault();
-  refs.modal.classList.remove('open');
+
+  page += 1;
+  try {
+    await fetchMoviesByPage(page).then(res => {
+      const movies = res.results;
+      Notiflix.Notify.success(`Congratulation! We find 20 results for You!.`);
+      renderGallary(movies);
+
+      const limit = res.total_results;
+
+      if (page >= limit) {
+        Notiflix.Notify.info(
+          `We're sorry, but you've reached the end of search results.`
+        );
+        hideButtonLoad();
+      }
+    });
+  } catch (error) {
+    console.log(`Error`);
+  }
 }
 
 // ___________FUNCTIONS_______________
@@ -217,26 +198,26 @@ function renderGallary(movies) {
     })
     .join(``);
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
-  // lightbox.refresh();
 }
 
 function clearGallery() {
   refs.gallery.innerHTML = '';
 }
 
-function renderModalMovieDetails(movie) {
-  const movieMarkup = `<div class="modal">
-  <div class="modal_body">
+function renderModalMovieDetails({ poster_path, original_title }) {
+  const movieCardMarkup = `
+    <div class="modal_body">
     <div class="modal_content">
-      <a href="" class="modal_close">X</a>
-      <div class="movie_card">
+  <a href="" class="modal_close">X</a>
+  <div class="movie_card">
+  
         <img
-          src="https://image.tmdb.org/t/p/w500/4Y1WNkd88JXmGfhtWR7dmDAo1T2.jpg"
+          src="https://image.tmdb.org/t/p/w500${poster_path}"
           alt=${original_title}
           class="image"
         />
         <div class="movie_descr">
-          <p class="movie_title">"Barbie"</p>
+          <p class="movie_title">${original_title}</p>
           <table class="movie_info">
             <tr class="movie_info_item">
               <td>11</td>
@@ -265,27 +246,10 @@ function renderModalMovieDetails(movie) {
           <button type="submit" class="button">Add to watched</button>
           <button type="submit" class="button">Add to queue</button>
         </div>
-      </div>
-    </div>
-  </div>
-</div>`;
-  // const movieMarkup = `<div class="galery__card">
-  //       <a
-  //         class="gallery__link"
-  //         href="https://image.tmdb.org/t/p/w500${movie.poster_path}"
-  //       >
-  //         <img
-  //           class="details__img"
-  //           src="https://image.tmdb.org/t/p/w500/${movie.poster_path}"
-  //         alt=${movie.original_title}
-  //           width="300px"
-  //           height="450px"
-  //           loading="lazy"
-  //         />
-  //       </a>
-  //     </div>`;
-  refs.modal.insertAdjacentHTML(`beforeend`, movieMarkup);
-  // refs.gallery.insertAdjacentHTML(`beforeend`, movieMarkup);
+        </div>
+        </div>
+      </div>`;
+  refs.modal.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   console.log('повертаю Муві');
 }
 
@@ -302,12 +266,57 @@ function smoothScrolling() {
 
 function showButtonLoad() {
   refs.buttonLoadMore.classList.remove(`not-visible`);
-  // lightbox.refresh();
 }
 
 function hideButtonLoad() {
   refs.buttonLoadMore.classList.add(`not-visible`);
 }
+
+// const limit = getImagesApiService.totalHits;
+// ________COUNTER___________________
+// console.log(getImagesApiService.page * getImagesApiService.per_page);
+
+// console.log(getImagesApiService.page);
+// ______________________________________
+
+// ___________FUNCTION Promise__________________
+// getImagesApiService.fetchImages(word).then(images => {
+//   if (getImagesApiService.page * getImagesApiService.per_page >= limit) {
+//     Notiflix.Notify.info(
+//       `We're sorry, but you've reached the end of search results.`
+//     );
+//     console.log(`Вы достигли лимита`);
+//     hideButtonLoad();
+//   }
+
+//   getImagesApiService.incrementPage();
+//   console.log(`После запроса, если все ок - наш объект`, getImagesApiService);
+//   renderGallary(images);
+//   smoothScrolling();
+// });
+// _________________________________________________
+// ____________________________________________________________
+
+// function onButtonModalCloseClick(event) {
+//   event.preventDefault();
+//   refs.modal.classList.remove('open');
+// }
+
+// _____________________________________________________________
+
+// import axios from 'axios';
+// import SimpleLightbox from 'simplelightbox';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
+
+// const BASE_URL = 'https://api.themoviedb.org/3/';
+// const API_KEY = '6de1479941bef67a0c224787b78603f1';
+
+// const lightbox = new SimpleLightbox(`.gallery a`, {
+//   captionsData: `alt`,
+//   captionPosition: `bottom`,
+//   captionDelay: `250 ms`,
+// });
+// _____________________________________________________________
 
 // function bodyLock() {
 

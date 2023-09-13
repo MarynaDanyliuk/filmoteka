@@ -68,12 +68,6 @@
 }
 
 .load-more {
-  // position: relative;
-  // top: 0;
-  // left: 0;
-  // left: 559px;
-  // bottom: -70px;
-  // top: 1380px;
   display: block;
   font-weight: 400;
   font-size: 14px;
@@ -87,8 +81,8 @@
   border: none;
   border-color: transparent;
   margin-top: 40px;
-  // margin-left: auto;
-  // margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 
   padding: 10px 32px;
   width: 160px;
@@ -118,4 +112,28 @@
 
 .not-visible {
   display: none;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pagination_list {
+  display: flex;
+  list-style: none;
+}
+
+.pagination_item {
+  cursor: pointer;
+  padding: 8px;
+  margin: 8px;
+}
+
+.pagination_item--active {
+  color: red;
+  font-weight: bolder;
 }
