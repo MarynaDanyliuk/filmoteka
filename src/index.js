@@ -1,29 +1,32 @@
-import axios from 'axios';
+// import axios from 'axios';
 
 import Notiflix from 'notiflix';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
+// import SimpleLightbox from 'simplelightbox';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
 
 import {
   fetchMovies,
   fetchMoviesByQuery,
   fetchMovieDetailsById,
-} from './apiService';
+} from './js/apiService';
 
 // const BASE_URL = 'https://api.themoviedb.org/3/';
 // const API_KEY = '6de1479941bef67a0c224787b78603f1';
 
-const lightbox = new SimpleLightbox(`.gallery a`, {
-  captionsData: `alt`,
-  captionPosition: `bottom`,
-  captionDelay: `250 ms`,
-});
+// const lightbox = new SimpleLightbox(`.gallery a`, {
+//   captionsData: `alt`,
+//   captionPosition: `bottom`,
+//   captionDelay: `250 ms`,
+// });
 
 const refs = {
   form: document.querySelector(`.form`),
   button: document.querySelector(`.search-button`),
   gallery: document.querySelector(`.gallery`),
   buttonLoadMore: document.querySelector(`.load-more`),
+  modal: document.querySelector(`.modal`),
+  buttonClose: document.querySelector(`.modal_close`),
+  body: document.querySelector(`body`),
 };
 
 // let query = ``;
@@ -32,6 +35,7 @@ let ImgActive = null;
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.gallery.addEventListener(`click`, onGalleryClick);
 refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
+refs.buttonClose.addEventListener(`click`, onButtonModalCloseClick);
 
 fetchMoviesAndRender();
 
@@ -63,7 +67,9 @@ async function fetchMovieDetailsByIdAndRender(MovieId) {
     await fetchMovieDetailsById(MovieId).then(movie => {
       console.log(movie);
 
-      renderMovieDetails(movie);
+      // renderGallary(movie);
+
+      // renderMovieDetails(movie);
     });
   } catch (error) {
     console.log(error.message);
@@ -92,6 +98,8 @@ async function onGalleryClick(event) {
     return;
   }
   const CurrentActiveImg = document.querySelector(`.img--active`);
+  refs.modal.classList.add(`open`);
+
   console.log(CurrentActiveImg);
 
   if (CurrentActiveImg) {
@@ -102,14 +110,17 @@ async function onGalleryClick(event) {
   nextImgActive.classList.add(`.img--active`);
   console.log(event.target);
 
-  ImgActive = nextImgActive.getAttribute(`src`).slice(30);
+  ImgActive = nextImgActive.getAttribute(`src`).slice(31);
   console.log(ImgActive);
 
   const MovieId = await fetchMovies().then(movies => {
     console.log(movies);
     const movieActive = movies.filter(movie => movie.poster_path === ImgActive);
+    console.log(movieActive);
+
+    renderGallary(movieActive);
     const movieId = movieActive[0].id;
-    // console.log(movieId);
+    console.log(movieId);
     return movieId;
   });
 
@@ -162,6 +173,11 @@ async function onButtonLoadMoreClick(event) {
   }
 }
 
+function onButtonModalCloseClick(event) {
+  event.preventDefault();
+  refs.modal.classList.remove('open');
+}
+
 // ___________FUNCTIONS_______________
 
 function renderGallary(movies) {
@@ -185,7 +201,7 @@ function renderGallary(movies) {
       </div>`
         : `<div class="galery__card">
         <a
-          class="gallery__link"
+          class="gallery__link modal_open"
           href="../src/images/default_image_large.jpg"
         >
           <img
@@ -208,23 +224,68 @@ function clearGallery() {
   refs.gallery.innerHTML = '';
 }
 
-function renderMovieDetails(movie) {
-  const movieMarkup = `<div class="galery__card">
-        <a
-          class="gallery__link"
-          href="{https://image.tmdb.org/t/p/w500${movie.poster_path}}"
-        >
-          <img
-            class="details__img"
-            src="{https://image.tmdb.org/t/p/w500/${movie.poster_path}}"
-          alt=${movie.original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
-      </div>`;
-  refs.gallery.insertAdjacentHTML(`beforeend`, movieMarkup);
+function renderModalMovieDetails(movie) {
+  const movieMarkup = `<div class="modal">
+  <div class="modal_body">
+    <div class="modal_content">
+      <a href="" class="modal_close">X</a>
+      <div class="movie_card">
+        <img
+          src="https://image.tmdb.org/t/p/w500/4Y1WNkd88JXmGfhtWR7dmDAo1T2.jpg"
+          alt=${original_title}
+          class="image"
+        />
+        <div class="movie_descr">
+          <p class="movie_title">"Barbie"</p>
+          <table class="movie_info">
+            <tr class="movie_info_item">
+              <td>11</td>
+              <td>12</td>
+            </tr>
+            <tr class="movie_info_item">
+              <td>21</td>
+              <td>22</td>
+            </tr>
+            <tr class="movie_info_item">
+              <td>31</td>
+              <td>32</td>
+            </tr>
+            <tr class="movie_info_item">
+              <td>41</td>
+              <td>42</td>
+            </tr>
+          </table>
+          <p>About</p>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus
+            nostrum inventore sint, consectetur i ncidunt rerum, adipisci
+            suscipit fugit at similique sequi explicabo tempora provident harum
+            eaque dolorem dignissimos, praesentium architecto!
+          </p>
+          <button type="submit" class="button">Add to watched</button>
+          <button type="submit" class="button">Add to queue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`;
+  // const movieMarkup = `<div class="galery__card">
+  //       <a
+  //         class="gallery__link"
+  //         href="https://image.tmdb.org/t/p/w500${movie.poster_path}"
+  //       >
+  //         <img
+  //           class="details__img"
+  //           src="https://image.tmdb.org/t/p/w500/${movie.poster_path}"
+  //         alt=${movie.original_title}
+  //           width="300px"
+  //           height="450px"
+  //           loading="lazy"
+  //         />
+  //       </a>
+  //     </div>`;
+  refs.modal.insertAdjacentHTML(`beforeend`, movieMarkup);
+  // refs.gallery.insertAdjacentHTML(`beforeend`, movieMarkup);
   console.log('повертаю Муві');
 }
 
@@ -247,6 +308,10 @@ function showButtonLoad() {
 function hideButtonLoad() {
   refs.buttonLoadMore.classList.add(`not-visible`);
 }
+
+// function bodyLock() {
+
+// }
 
 // lightbox.refresh();
 
