@@ -1,37 +1,63 @@
-// import axios from 'axios';
-
-// import Notiflix from 'notiflix';
-// import SimpleLightbox from 'simplelightbox';
-// import 'simplelightbox/dist/simple-lightbox.min.css';
-
-// var lightbox = new SimpleLightbox(`.gallery a`, {
-//   captionsData: `alt`,
-//   captionPosition: `bottom`,
-//   captionDelay: `250 ms`,
-// });
-
-const BASE_URL = 'https://api.themoviedb.org/3/';
+import axios from 'axios';
 const API_KEY = '6de1479941bef67a0c224787b78603f1';
 
-// let query = ``;
-let page = 1;
-let results = 20;
+const instance = axios.create({
+  baseURL: 'https://api.themoviedb.org/3/',
+});
+
+export default class fetchApiMovies {
+  constructor() {
+    this.page = 1;
+    this.word = '';
+  }
+
+  async fetchMovies() {
+    const response = await instance.get(
+      `/trending/movie/day?api_key=${API_KEY}`
+    );
+    return response.data.results;
+  }
+
+  async fetchMovieDetailsById(MovieId) {
+    const response = await instance.get(`movie/${MovieId}?api_key=${API_KEY}`);
+
+    return response.data;
+  }
+
+  async fetchMoviesByQuery(query) {
+    const response = await instance.get(
+      `/search/movie?api_key=${API_KEY}&query=${query}`
+    );
+    return response.data.results;
+  }
+
+  async fetchMoviesByPage(page) {
+    const response = await instance.get(
+      `/trending/movie/day?api_key=${API_KEY}&page=${page}`
+    );
+    return response.data.results;
+  }
+
+  incrementPage() {
+    this.page += 1;
+  }
+
+  resetPage() {
+    this.page = 1;
+  }
+
+  get query() {
+    return this.word;
+  }
+
+  set query(newQuery) {
+    return (this.word = newQuery);
+  }
+}
+
+// ________________________async fetch FUNCTIONS__________________________
 
 export async function fetchMovies() {
-  // return await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)
-  //   .then(res => {
-  //     return res.json();
-  //   })
-  //   .then(res => {
-  //     const movies = res.results;
-  //     renderGallary(movies);
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //   });
-
-  // ______________________async await_____________________
-
   const options = {
     method: 'GET',
     headers: { accept: 'application/json' },
@@ -93,10 +119,10 @@ export async function fetchMoviesByPage(page) {
 
   const res = await response.json();
 
-  // const movies = await res.results;
-
   return res;
 }
+
+// ______________________ TRASH________________________________
 
 // return await fetch(
 //   `${BASE_URL}/search/movie?api_key=${API_KEY}&movie/${movieId}`
@@ -217,3 +243,17 @@ export async function fetchMoviesByPage(page) {
 //     return this.totalPages;
 //   }
 // }
+
+// return await fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`)
+//   .then(res => {
+//     return res.json();
+//   })
+//   .then(res => {
+//     const movies = res.results;
+//     renderGallary(movies);
+//   })
+//   .catch(error => {
+//     console.log(error);
+//   });
+
+// ______________________async await_____________________

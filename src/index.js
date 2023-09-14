@@ -1,25 +1,15 @@
 import Notiflix from 'notiflix';
 
-import {
-  fetchMovies,
-  fetchMoviesByQuery,
-  fetchMovieDetailsById,
-  fetchMoviesByPage,
-} from './js/apiService';
+import fetchApiMovies from './js/apiService';
 
-const refs = {
-  form: document.querySelector(`.form`),
-  button: document.querySelector(`.search-button`),
-  gallery: document.querySelector(`.gallery`),
-  buttonLoadMore: document.querySelector(`.load-more`),
-  modal: document.querySelector(`.modal`),
-  buttonClose: document.querySelector(`.modal_close`),
-  body: document.querySelector(`body`),
-};
+const FetchApiMovies = new fetchApiMovies();
 
-// let query = ``;
+import { renderGallary, renderModalMovieDetails } from './js/renderServies';
+import { refs } from './js/refs';
+
 let ImgActive = null;
-let page = 1;
+// let page = 1;
+let query = '';
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.gallery.addEventListener(`click`, onGalleryClick);
@@ -32,8 +22,8 @@ showButtonLoad();
 
 async function fetchMoviesAndRender() {
   try {
-    await fetchMovies().then(movies => {
-      // console.log(movies);
+    await FetchApiMovies.fetchMovies().then(movies => {
+      console.log(movies);
       renderGallary(movies);
     });
   } catch (error) {
@@ -43,7 +33,7 @@ async function fetchMoviesAndRender() {
 
 async function fetchMovieByQueryAndRender(query) {
   try {
-    await fetchMoviesByQuery(query).then(movies => {
+    await FetchApiMovies.fetchMoviesByQuery(query).then(movies => {
       renderGallary(movies);
     });
   } catch (error) {
@@ -53,7 +43,7 @@ async function fetchMovieByQueryAndRender(query) {
 
 async function fetchMovieDetailsByIdAndRender(MovieId) {
   try {
-    await fetchMovieDetailsById(MovieId).then(movie => {
+    await FetchApiMovies.fetchMovieDetailsById(MovieId).then(movie => {
       renderModalMovieDetails(movie);
     });
   } catch (error) {
@@ -65,14 +55,27 @@ async function fetchMovieDetailsByIdAndRender(MovieId) {
 
 async function onFormSubmit(event) {
   event.preventDefault();
+
   clearGallery();
+  hideButtonLoad();
 
   // const form = event.currentTarget;
   // const searchQuery = form.elements.searchQuery.value;
   // console.log(searchQuery);
 
-  query = document.getElementById('search-input').value.trim();
+  // query = document.getElementById('search-input').value.trim();
+
+  query = event.currentTarget.elements.searchQuery.value.trim();
+
+  FetchApiMovies.query = query;
+
+  FetchApiMovies.resetPage();
   console.log(query);
+
+  if (FetchApiMovies.query === ``) {
+    return;
+  }
+
   await fetchMovieByQueryAndRender(query);
 }
 
@@ -97,7 +100,7 @@ async function onGalleryClick(event) {
   ImgActive = nextImgActive.getAttribute(`src`).slice(31);
   console.log(ImgActive);
 
-  const MovieId = await fetchMovies().then(movies => {
+  const MovieId = await FetchApiMovies.fetchMovies().then(movies => {
     console.log(movies);
     const movieActive = movies.filter(movie => movie.poster_path === ImgActive);
     console.log(movieActive);
@@ -161,96 +164,8 @@ async function pagination(event) {
 
 // ___________FUNCTIONS_______________
 
-function renderGallary(movies) {
-  const markup = movies
-    .map(({ poster_path, original_title }) => {
-      return poster_path
-        ? `<div class="galery__card">
-        <a
-          class="gallery__link"
-          href="https://image.tmdb.org/t/p/w500${poster_path}"
-        >
-          <img
-            class="details__img"
-            src="https://image.tmdb.org/t/p/w500${poster_path}"
-          alt=${original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
-      </div>`
-        : `<div class="galery__card">
-        <a
-          class="gallery__link modal_open"
-          href="../src/images/default_image_large.jpg"
-        >
-          <img
-            class="details__img"
-            src="../src/images/default_image_large.jpg"
-          alt=${original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
-      </div>`;
-    })
-    .join(``);
-  refs.gallery.insertAdjacentHTML(`beforeend`, markup);
-}
-
 function clearGallery() {
   refs.gallery.innerHTML = '';
-}
-
-function renderModalMovieDetails({ poster_path, original_title }) {
-  const movieCardMarkup = `
-    <div class="modal_body">
-    <div class="modal_content">
-  <a href="" class="modal_close">X</a>
-  <div class="movie_card">
-  
-        <img
-          src="https://image.tmdb.org/t/p/w500${poster_path}"
-          alt=${original_title}
-          class="image"
-        />
-        <div class="movie_descr">
-          <p class="movie_title">${original_title}</p>
-          <table class="movie_info">
-            <tr class="movie_info_item">
-              <td>11</td>
-              <td>12</td>
-            </tr>
-            <tr class="movie_info_item">
-              <td>21</td>
-              <td>22</td>
-            </tr>
-            <tr class="movie_info_item">
-              <td>31</td>
-              <td>32</td>
-            </tr>
-            <tr class="movie_info_item">
-              <td>41</td>
-              <td>42</td>
-            </tr>
-          </table>
-          <p>About</p>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus
-            nostrum inventore sint, consectetur i ncidunt rerum, adipisci
-            suscipit fugit at similique sequi explicabo tempora provident harum
-            eaque dolorem dignissimos, praesentium architecto!
-          </p>
-          <button type="submit" class="button">Add to watched</button>
-          <button type="submit" class="button">Add to queue</button>
-        </div>
-        </div>
-        </div>
-      </div>`;
-  refs.modal.insertAdjacentHTML(`beforeend`, movieCardMarkup);
-  console.log('повертаю Муві');
 }
 
 function smoothScrolling() {
@@ -271,6 +186,113 @@ function showButtonLoad() {
 function hideButtonLoad() {
   refs.buttonLoadMore.classList.add(`not-visible`);
 }
+
+// function renderGallary(movies) {
+//   const markup = movies
+//     .map(({ poster_path, original_title }) => {
+//       return poster_path
+//         ? `<div class="galery__card">
+//         <a
+//           class="gallery__link"
+//           href="https://image.tmdb.org/t/p/w500${poster_path}"
+//         >
+//           <img
+//             class="details__img"
+//             src="https://image.tmdb.org/t/p/w500${poster_path}"
+//           alt=${original_title}
+//             width="300px"
+//             height="450px"
+//             loading="lazy"
+//           />
+//         </a>
+//       </div>`
+//         : `<div class="galery__card">
+//         <a
+//           class="gallery__link modal_open"
+//           href="../src/images/default_image_large.jpg"
+//         >
+//           <img
+//             class="details__img"
+//             src="../src/images/default_image_large.jpg"
+//           alt=${original_title}
+//             width="300px"
+//             height="450px"
+//             loading="lazy"
+//           />
+//         </a>
+//       </div>`;
+//     })
+//     .join(``);
+//   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+// }
+
+// function renderModalMovieDetails({ poster_path, original_title }) {
+//   const movieCardMarkup = `
+//     <div class="modal_body">
+//     <div class="modal_content">
+//   <a href="" class="modal_close">X</a>
+//   <div class="movie_card">
+
+//         <img
+//           src="https://image.tmdb.org/t/p/w500${poster_path}"
+//           alt=${original_title}
+//           class="image"
+//         />
+//         <div class="movie_descr">
+//           <p class="movie_title">${original_title}</p>
+//           <table class="movie_info">
+//             <tr class="movie_info_item">
+//               <td>11</td>
+//               <td>12</td>
+//             </tr>
+//             <tr class="movie_info_item">
+//               <td>21</td>
+//               <td>22</td>
+//             </tr>
+//             <tr class="movie_info_item">
+//               <td>31</td>
+//               <td>32</td>
+//             </tr>
+//             <tr class="movie_info_item">
+//               <td>41</td>
+//               <td>42</td>
+//             </tr>
+//           </table>
+//           <p>About</p>
+//           <p>
+//             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus
+//             nostrum inventore sint, consectetur i ncidunt rerum, adipisci
+//             suscipit fugit at similique sequi explicabo tempora provident harum
+//             eaque dolorem dignissimos, praesentium architecto!
+//           </p>
+//           <button type="submit" class="button">Add to watched</button>
+//           <button type="submit" class="button">Add to queue</button>
+//         </div>
+//         </div>
+//         </div>
+//       </div>`;
+//   refs.modal.insertAdjacentHTML(`beforeend`, movieCardMarkup);
+//   console.log('повертаю Муві');
+// }
+
+// ______________________________________________________________
+
+// const refs = {
+//   form: document.querySelector(`.form`),
+//   button: document.querySelector(`.search-button`),
+//   gallery: document.querySelector(`.gallery`),
+//   buttonLoadMore: document.querySelector(`.load-more`),
+//   modal: document.querySelector(`.modal`),
+//   buttonClose: document.querySelector(`.modal_close`),
+//   body: document.querySelector(`body`),
+// };
+
+// import {
+//   fetchMovies,
+//   fetchMoviesByQuery,
+//   fetchMovieDetailsById,
+//   fetchMoviesByPage,
+// } from './js/apiService';
 
 // const limit = getImagesApiService.totalHits;
 // ________COUNTER___________________
