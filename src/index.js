@@ -8,32 +8,31 @@ import { renderGallary, renderModalMovieDetails } from './js/renderServies';
 import { refs } from './js/refs';
 
 let ImgActive = null;
-// let page = 1;
-let query = '';
+let page = 1;
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.gallery.addEventListener(`click`, onGalleryClick);
 refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
 
-fetchMoviesAndRender();
+fetchMoviesByPageAndRender(page);
 showButtonLoad();
 
 // _____________fetch and render FUNCTIONS_____________
 
-async function fetchMoviesAndRender() {
-  try {
-    await FetchApiMovies.fetchMovies().then(movies => {
-      console.log(movies);
-      renderGallary(movies);
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-}
+// async function fetchMoviesAndRender() {
+//   try {
+//     await FetchApiMovies.fetchMovies().then(movies => {
+//       console.log(movies);
+//       renderGallary(movies);
+//     });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }
 
-async function fetchMovieByQueryAndRender(query) {
+async function fetchMovieByQueryAndPageRender(query, page) {
   try {
-    await FetchApiMovies.fetchMoviesByQuery(query).then(movies => {
+    await FetchApiMovies.fetchMoviesByQueryAndPage(query, page).then(movies => {
       renderGallary(movies);
     });
   } catch (error) {
@@ -51,32 +50,37 @@ async function fetchMovieDetailsByIdAndRender(MovieId) {
   }
 }
 
+async function fetchMoviesByPageAndRender(page) {
+  try {
+    await FetchApiMovies.fetchMoviesByPage(page).then(movies => {
+      renderGallary(movies);
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
 // ________________event FUNC_______________________
 
 async function onFormSubmit(event) {
   event.preventDefault();
 
   clearGallery();
-  hideButtonLoad();
-
-  // const form = event.currentTarget;
-  // const searchQuery = form.elements.searchQuery.value;
-  // console.log(searchQuery);
-
-  // query = document.getElementById('search-input').value.trim();
+  FetchApiMovies.resetPage();
+  showButtonLoad();
 
   query = event.currentTarget.elements.searchQuery.value.trim();
-
   FetchApiMovies.query = query;
+  page = FetchApiMovies.page;
 
   FetchApiMovies.resetPage();
-  console.log(query);
+  console.log(query, page);
 
   if (FetchApiMovies.query === ``) {
     return;
   }
 
-  await fetchMovieByQueryAndRender(query);
+  await fetchMovieByQueryAndPageRender(query, page);
 }
 
 async function onGalleryClick(event) {
@@ -117,25 +121,19 @@ async function onGalleryClick(event) {
 async function onButtonLoadMoreClick(event) {
   event.preventDefault();
 
-  page += 1;
-  try {
-    await fetchMoviesByPage(page).then(res => {
-      const movies = res.results;
-      Notiflix.Notify.success(`Congratulation! We find 20 results for You!.`);
-      renderGallary(movies);
+  page = FetchApiMovies.page + 1;
+  query = FetchApiMovies.query;
+  console.log(page, query);
 
-      const limit = res.total_results;
-
-      if (page >= limit) {
-        Notiflix.Notify.info(
-          `We're sorry, but you've reached the end of search results.`
-        );
-        hideButtonLoad();
-      }
-    });
-  } catch (error) {
-    console.log(`Error`);
+  if (query === '') {
+    await fetchMoviesByPageAndRender(page);
   }
+
+  await fetchMovieByQueryAndPageRender(query, page);
+
+  FetchApiMovies.incrementPage();
+
+  console.log(FetchApiMovies);
 }
 
 async function pagination(event) {
@@ -187,6 +185,36 @@ function hideButtonLoad() {
   refs.buttonLoadMore.classList.add(`not-visible`);
 }
 
+// _________________________________________________________________________
+// try {
+//   // if (page >= 500) {
+//   //   Notiflix.Notify.info(
+//   //     `We're sorry, but you've reached the end of search results.`
+//   //   );
+//   //   hideButtonLoad();
+//   // }
+//   //  await FetchApiMovies.fetchMoviesByPage(page).then(res => {
+//   // const movies = res.results;
+//   // Notiflix.Notify.success(`Congratulation! We find 20 results for You!.`);
+//   // renderGallary(movies);
+//   // const limit = res.total_results;
+//   // if (page >= limit) {
+//   //   Notiflix.Notify.info(
+//   //     `We're sorry, but you've reached the end of search results.`
+//   //   );
+//   //   hideButtonLoad();
+//   // }
+//   // });
+// } catch (error) {
+//   console.log(`Error`);
+// }
+// ___________________________________________________________________
+// const form = event.currentTarget;
+// const searchQuery = form.elements.searchQuery.value;
+// console.log(searchQuery);
+
+// query = document.getElementById('search-input').value.trim();
+// ___________________________________________________________________
 // function renderGallary(movies) {
 //   const markup = movies
 //     .map(({ poster_path, original_title }) => {
