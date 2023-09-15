@@ -70,7 +70,7 @@ async function onFormSubmit(event) {
   FetchApiMovies.resetPage();
   showButtonLoad();
 
-  const query = event.currentTarget.elements.searchQuery.value.trim();
+  query = event.currentTarget.elements.searchQuery.value.trim();
   fetchApiMovies.query = query;
   page = FetchApiMovies.page;
 
