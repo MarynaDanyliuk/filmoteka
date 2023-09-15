@@ -24,7 +24,7 @@ export default class fetchApiMovies {
     return response.data;
   }
 
-  async fetchMoviesByQueryAndPage(query, page) {
+  async fetchMoviesByQuery(query, page) {
     const response = await instance.get(
       `/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`
     );

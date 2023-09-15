@@ -8,32 +8,34 @@ import { renderGallary, renderModalMovieDetails } from './js/renderServies';
 import { refs } from './js/refs';
 
 let ImgActive = null;
-let page = 1;
 let query = '';
+let page = 1;
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.gallery.addEventListener(`click`, onGalleryClick);
 refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
 
-fetchMoviesByPageAndRender(page);
+fetchMoviesAndRender();
+// fetchMoviesByPageAndRender();
 showButtonLoad();
 
 // _____________fetch and render FUNCTIONS_____________
 
-// async function fetchMoviesAndRender() {
-//   try {
-//     await FetchApiMovies.fetchMovies().then(movies => {
-//       console.log(movies);
-//       renderGallary(movies);
-//     });
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// }
-
-async function fetchMovieByQueryAndPageRender(query, page) {
+async function fetchMoviesAndRender() {
   try {
-    await FetchApiMovies.fetchMoviesByQueryAndPage(query, page).then(movies => {
+    await FetchApiMovies.fetchMovies().then(movies => {
+      console.log(movies);
+      renderGallary(movies);
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+async function fetchMoviesByQueryAndRender(query, page) {
+  try {
+    await FetchApiMovies.fetchMoviesByQuery(query, page).then(movies => {
+      console.log(movies);
       renderGallary(movies);
     });
   } catch (error) {
@@ -70,18 +72,45 @@ async function onFormSubmit(event) {
   FetchApiMovies.resetPage();
   showButtonLoad();
 
-  query = event.currentTarget.elements.searchQuery.value.trim();
-  fetchApiMovies.query = query;
-  page = FetchApiMovies.page;
+  FetchApiMovies.query = event.currentTarget.elements.searchQuery.value.trim();
+  query = FetchApiMovies.query;
 
-  FetchApiMovies.resetPage();
-  console.log(query, page);
-
+  // fetchApiMovies.query = word;
   if (FetchApiMovies.query === ``) {
     return;
   }
 
-  await fetchMovieByQueryAndPageRender(query, page);
+  await fetchMoviesByQueryAndRender(query, page);
+
+  console.log(FetchApiMovies);
+  // FetchApiMovies.resetPage();
+
+  // query = event.currentTarget.elements.searchQuery.value.trim();
+
+  // page = FetchApiMovies.page;
+
+  // FetchApiMovies.resetPage();
+  // console.log(query, page);
+
+  // await fetchMoviesByQueryAndRender(query);
+}
+
+async function onButtonLoadMoreClick(event) {
+  event.preventDefault();
+  console.log('BEFORE FETCH', FetchApiMovies);
+  FetchApiMovies.incrementPage();
+  page = FetchApiMovies.page;
+
+  if (query === '') {
+    await fetchMoviesByPageAndRender(page);
+    FetchApiMovies.incrementPage();
+  }
+
+  query = FetchApiMovies.query;
+
+  await fetchMoviesByQueryAndRender(query, page);
+
+  console.log('AFTER FETCH', FetchApiMovies);
 }
 
 async function onGalleryClick(event) {
@@ -117,24 +146,6 @@ async function onGalleryClick(event) {
 
   await fetchMovieDetailsByIdAndRender(MovieId);
   refs.modal.classList.add(`open`);
-}
-
-async function onButtonLoadMoreClick(event) {
-  event.preventDefault();
-
-  page = FetchApiMovies.page + 1;
-  query = FetchApiMovies.query;
-  console.log(page, query);
-
-  if (query === '') {
-    await fetchMoviesByPageAndRender(page);
-  }
-
-  await fetchMovieByQueryAndPageRender(query, page);
-
-  FetchApiMovies.incrementPage();
-
-  console.log(FetchApiMovies);
 }
 
 async function pagination(event) {
