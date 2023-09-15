@@ -9,6 +9,7 @@ import { refs } from './js/refs';
 
 let ImgActive = null;
 let page = 1;
+let query = '';
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.gallery.addEventListener(`click`, onGalleryClick);
@@ -69,14 +70,14 @@ async function onFormSubmit(event) {
   FetchApiMovies.resetPage();
   showButtonLoad();
 
-  query = event.currentTarget.elements.searchQuery.value.trim();
+  const query = event.currentTarget.elements.searchQuery.value.trim();
   fetchApiMovies.query = query;
-  page = fetchApiMovies.page;
+  page = FetchApiMovies.page;
 
   FetchApiMovies.resetPage();
   console.log(query, page);
 
-  if (fetchApiMovies.query === ``) {
+  if (FetchApiMovies.query === ``) {
     return;
   }
 
@@ -121,8 +122,8 @@ async function onGalleryClick(event) {
 async function onButtonLoadMoreClick(event) {
   event.preventDefault();
 
-  page = fetchApiMovies.page + 1;
-  query = fetchApiMovies.query;
+  page = FetchApiMovies.page + 1;
+  query = FetchApiMovies.query;
   console.log(page, query);
 
   if (query === '') {
