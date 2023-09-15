@@ -69,14 +69,14 @@ async function onFormSubmit(event) {
   FetchApiMovies.resetPage();
   showButtonLoad();
 
-  const query = event.currentTarget.elements.searchQuery.value.trim();
-  FetchApiMovies.query = query;
-  page = FetchApiMovies.page;
+  query = event.currentTarget.elements.searchQuery.value.trim();
+  fetchApiMovies.query = query;
+  page = fetchApiMovies.page;
 
   FetchApiMovies.resetPage();
   console.log(query, page);
 
-  if (FetchApiMovies.query === ``) {
+  if (fetchApiMovies.query === ``) {
     return;
   }
 
@@ -121,8 +121,8 @@ async function onGalleryClick(event) {
 async function onButtonLoadMoreClick(event) {
   event.preventDefault();
 
-  page = FetchApiMovies.page + 1;
-  query = FetchApiMovies.query;
+  page = fetchApiMovies.page + 1;
+  query = fetchApiMovies.query;
   console.log(page, query);
 
   if (query === '') {
