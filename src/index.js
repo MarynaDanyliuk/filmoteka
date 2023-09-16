@@ -11,13 +11,22 @@ let ImgActive = null;
 let query = '';
 let page = 1;
 
+window.addEventListener('scroll', smoothScrolling);
+// window.scrollTo(0, 1000);
+
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.gallery.addEventListener(`click`, onGalleryClick);
 refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
 
-fetchMoviesAndRender();
-// fetchMoviesByPageAndRender();
-showButtonLoad();
+// fetchMoviesAndRender();
+
+// smoothScrolling();
+fetchMoviesByPageAndRender(page);
+
+// window.scrollTo({
+//   top: 1000,
+//   behavior: 'smooth',
+// });
 
 // _____________fetch and render FUNCTIONS_____________
 
@@ -35,7 +44,7 @@ async function fetchMoviesAndRender() {
 async function fetchMoviesByQueryAndRender(query, page) {
   try {
     await FetchApiMovies.fetchMoviesByQuery(query, page).then(movies => {
-      console.log(movies);
+      // console.log(movies);
       renderGallary(movies);
     });
   } catch (error) {
@@ -75,24 +84,11 @@ async function onFormSubmit(event) {
   FetchApiMovies.query = event.currentTarget.elements.searchQuery.value.trim();
   query = FetchApiMovies.query;
 
-  // fetchApiMovies.query = word;
   if (FetchApiMovies.query === ``) {
     return;
   }
 
   await fetchMoviesByQueryAndRender(query, page);
-
-  console.log(FetchApiMovies);
-  // FetchApiMovies.resetPage();
-
-  // query = event.currentTarget.elements.searchQuery.value.trim();
-
-  // page = FetchApiMovies.page;
-
-  // FetchApiMovies.resetPage();
-  // console.log(query, page);
-
-  // await fetchMoviesByQueryAndRender(query);
 }
 
 async function onButtonLoadMoreClick(event) {
@@ -179,14 +175,22 @@ function clearGallery() {
 }
 
 function smoothScrolling() {
-  const { height: cardHeight } = document
-    .querySelector('.gallery')
-    .firstElementChild.getBoundingClientRect();
+  const documentRect = refs.gallery.getBoundingClientRect();
 
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: 'smooth',
-  });
+  console.log(documentRect.bottom);
+
+  if (documentRect.bottom < document.documentElement.clientHeight + 150) {
+    FetchApiMovies.incrementPage();
+    // page = FetchApiMovies.page;
+    fetchMoviesByPageAndRender(FetchApiMovies.page);
+
+    console.log('DONE');
+  }
+
+  // window.scrollBy({
+  //   top: cardHeight * 2,
+  //   behavior: 'smooth',
+  // });
 }
 
 function showButtonLoad() {

@@ -4,7 +4,7 @@ export function renderGallary(movies) {
   const markup = movies
     .map(({ poster_path, original_title }) => {
       return poster_path
-        ? `<div class="galery__card">
+        ? `<li class="galery__card">
         <a
           class="gallery__link"
           href="https://image.tmdb.org/t/p/w500${poster_path}"
@@ -18,11 +18,11 @@ export function renderGallary(movies) {
             loading="lazy"
           />
         </a>
-      </div>`
-        : `<div class="galery__card">
+      </li>`
+        : `<li class="galery__card">
         <a
           class="gallery__link modal_open"
-          href="../src/images/default_image_large.jpg"
+          href='../src/images/default_image_large.jpg'
         >
           <img
             class="details__img"
@@ -33,7 +33,7 @@ export function renderGallary(movies) {
             loading="lazy"
           />
         </a>
-      </div>`;
+      </li>`;
     })
     .join(``);
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
