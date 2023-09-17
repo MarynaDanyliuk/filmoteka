@@ -11,22 +11,14 @@ let ImgActive = null;
 let query = '';
 let page = 1;
 
-window.addEventListener('scroll', smoothScrolling);
-// window.scrollTo(0, 1000);
-
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.gallery.addEventListener(`click`, onGalleryClick);
 refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
+window.addEventListener('scroll', smoothScrolling);
 
 // fetchMoviesAndRender();
 
-// smoothScrolling();
 fetchMoviesByPageAndRender(page);
-
-// window.scrollTo({
-//   top: 1000,
-//   behavior: 'smooth',
-// });
 
 // _____________fetch and render FUNCTIONS_____________
 
@@ -87,6 +79,8 @@ async function onFormSubmit(event) {
   if (FetchApiMovies.query === ``) {
     return;
   }
+
+  console.log('BEFORE FETCH', FetchApiMovies);
 
   await fetchMoviesByQueryAndRender(query, page);
 }
@@ -174,23 +168,27 @@ function clearGallery() {
   refs.gallery.innerHTML = '';
 }
 
-function smoothScrolling() {
+async function smoothScrolling() {
   const documentRect = refs.gallery.getBoundingClientRect();
 
-  console.log(documentRect.bottom);
-
   if (documentRect.bottom < document.documentElement.clientHeight + 150) {
-    FetchApiMovies.incrementPage();
-    // page = FetchApiMovies.page;
-    fetchMoviesByPageAndRender(FetchApiMovies.page);
+    console.log(FetchApiMovies);
+    await unlimitedScroll();
+  }
+}
 
-    console.log('DONE');
+async function unlimitedScroll() {
+  FetchApiMovies.incrementPage();
+  query = FetchApiMovies.query;
+  page = FetchApiMovies.page;
+
+  if (query === '') {
+    await fetchMoviesByPageAndRender(page);
+    console.log('AFTER FETCH', FetchApiMovies);
   }
 
-  // window.scrollBy({
-  //   top: cardHeight * 2,
-  //   behavior: 'smooth',
-  // });
+  await fetchMoviesByQueryAndRender(query, page);
+  console.log('AFTER FETCH', FetchApiMovies);
 }
 
 function showButtonLoad() {
