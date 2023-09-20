@@ -6,4 +6,5 @@ export const refs = {
   modal: document.querySelector(`.modal`),
   buttonClose: document.querySelector(`.modal_close`),
   body: document.querySelector(`body`),
+  content: document.getElementById('content'),
 };

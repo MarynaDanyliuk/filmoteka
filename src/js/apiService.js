@@ -5,6 +5,8 @@ const instance = axios.create({
   baseURL: 'https://api.themoviedb.org/3/',
 });
 
+// _____________________ async fetch CLASS _____________________________
+
 export default class fetchApiMovies {
   constructor() {
     this.page = 1;

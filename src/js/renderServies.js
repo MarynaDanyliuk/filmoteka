@@ -36,7 +36,9 @@ export function renderGallary(movies) {
       </li>`;
     })
     .join(``);
-  refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+  // refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+  // contentDiv.insertAdjacentHTML(`beforeend`, markup);
+  refs.content.insertAdjacentHTML(`beforeend`, markup);
 }
 
 export function renderModalMovieDetails({ poster_path, original_title }) {
@@ -86,4 +88,8 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
       </div>`;
   refs.modal.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   console.log('повертаю Муві');
+}
+
+export function clearPage() {
+  refs.content.innerHTML = '';
 }
