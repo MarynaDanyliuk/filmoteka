@@ -7,4 +7,5 @@ export const refs = {
   buttonClose: document.querySelector(`.modal_close`),
   body: document.querySelector(`body`),
   content: document.getElementById('content'),
+  headerContent: document.getElementById('header-content'),
 };

@@ -78,6 +78,10 @@ svg:not(:root) {
   padding-bottom: 80px;
 }
 
+.form_wrap {
+  padding-bottom: 80px;
+}
+
 #search-input {
   height: 30px;
   width: 394px;
@@ -103,6 +107,33 @@ svg:not(:root) {
   border-bottom: 1px solid white;
   background-color: transparent;
   cursor: pointer;
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+
+.content-thumb {
+  color: white;
+  // border: 1px solid white;
+}
+
+.button {
+  border: 1px solid white;
+  border-radius: 8px;
+  width: 148px;
+  height: 42px;
+  background-color: transparent;
+  cursor: pointer;
   min-width: 30px;
   color: white;
 }
+
+.nav_list_button {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 60px;
+}
+
+// .form_btn {
+//   padding-bottom: 60px;
+// }

@@ -8,13 +8,16 @@ import {
   renderGallary,
   renderModalMovieDetails,
   clearPage,
+  renderHeaderHome,
+  renderHeaderLibrary,
 } from './js/renderServies';
 
-// import {
-//   showButtonLoad,
-//   hideButtonLoad,
-//   unlimitedScroll,
-// } from './js/pagination';
+import {
+  showButtonLoad,
+  hideButtonLoad,
+  // unlimitedScroll,
+  // smoothScrolling,
+} from './js/pagination';
 
 import { refs } from './js/refs';
 
@@ -24,24 +27,27 @@ let page = 1;
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.gallery.addEventListener(`click`, onGalleryClick);
-refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
+// refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
 window.addEventListener('scroll', smoothScrolling);
 window.addEventListener('hashchange', renderContent);
 
 renderContent();
 
-// Функція, яка буде відображати вміст на основі поточного маршруту
 async function renderContent() {
-  const route = window.location.hash.substring(1); // Отримайте поточний маршрут без символу #
+  const route = window.location.hash.substring(1);
+
   console.log(route);
-  // Визначте, який вміст відображати на основі маршруту
+
   if (route === '/' || route === '') {
     clearPage();
-    // refs.content.textContent = 'Це головна сторінка';
+    // renderHeaderHome();
     await fetchMoviesByPageAndRender(page);
+
+    console.log('BEFORE', FetchApiMovies);
   } else if (route === '/library') {
-    // refs.content.textContent = 'Це сторінка "Бібліотека"';
     clearPage();
+    // renderHeaderLibrary();
+    // refs.gallery.textContent = 'Це сторінка "Бібліотека"';
     await fetchMoviesByPageAndRender(page);
   } else {
     clearPage();
@@ -63,7 +69,7 @@ export async function fetchMoviesAndRender() {
   }
 }
 
-async function fetchMoviesByQueryAndRender(query, page) {
+export async function fetchMoviesByQueryAndRender(query, page) {
   try {
     await FetchApiMovies.fetchMoviesByQuery(query, page).then(movies => {
       // console.log(movies);
@@ -74,7 +80,7 @@ async function fetchMoviesByQueryAndRender(query, page) {
   }
 }
 
-async function fetchMovieDetailsByIdAndRender(MovieId) {
+export async function fetchMovieDetailsByIdAndRender(MovieId) {
   try {
     await FetchApiMovies.fetchMovieDetailsById(MovieId).then(movie => {
       renderModalMovieDetails(movie);
@@ -84,9 +90,10 @@ async function fetchMovieDetailsByIdAndRender(MovieId) {
   }
 }
 
-async function fetchMoviesByPageAndRender(page) {
+export async function fetchMoviesByPageAndRender(page) {
   try {
     await FetchApiMovies.fetchMoviesByPage(page).then(movies => {
+      // renderGallaryCard(movies);
       renderGallary(movies);
     });
   } catch (error) {
@@ -99,18 +106,21 @@ async function fetchMoviesByPageAndRender(page) {
 async function onFormSubmit(event) {
   event.preventDefault();
 
-  clearGallery();
+  clearPage();
   FetchApiMovies.resetPage();
-  // showButtonLoad();
 
+  // showButtonLoad();
+  console.log(event.currentTarget.elements);
   FetchApiMovies.query = event.currentTarget.elements.searchQuery.value.trim();
   query = FetchApiMovies.query;
+
+  console.log('BEFORE', FetchApiMovies);
 
   if (FetchApiMovies.query === ``) {
     return;
   }
 
-  console.log('BEFORE FETCH', FetchApiMovies);
+  // console.log('BEFORE scroll', FetchApiMovies);
 
   await fetchMoviesByQueryAndRender(query, page);
 }
@@ -172,7 +182,6 @@ async function smoothScrolling() {
   const documentRect = refs.gallery.getBoundingClientRect();
 
   if (documentRect.bottom < document.documentElement.clientHeight + 200) {
-    // console.log(FetchApiMovies);
     await unlimitedScroll();
   }
 }
@@ -185,17 +194,17 @@ async function unlimitedScroll() {
   page = FetchApiMovies.page;
 
   if (query === '') {
+    console.log('befor new FETCH', FetchApiMovies);
     await fetchMoviesByPageAndRender(page);
-    console.log('AFTER FETCH', FetchApiMovies);
   }
 
+  console.log('before new FETCH', FetchApiMovies);
   await fetchMoviesByQueryAndRender(query, page);
-  console.log('AFTER FETCH', FetchApiMovies);
 }
 
-function clearGallery() {
-  refs.gallery.innerHTML = '';
-}
+// function clearGallery() {
+//   refs.gallery.innerHTML = '';
+// }
 
 // async function pagination(event) {
 //   event.preventDefault();

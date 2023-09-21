@@ -4,8 +4,10 @@ import fetchApiMovies from './apiService';
 
 const FetchApiMovies = new fetchApiMovies();
 
-// refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
-// window.addEventListener('scroll', smoothScrolling);
+import {
+  fetchMoviesByPageAndRender,
+  fetchMoviesByQueryAndRender,
+} from '../index.js';
 
 export async function onButtonLoadMoreClick(event) {
   event.preventDefault();
@@ -29,7 +31,7 @@ export async function smoothScrolling() {
   const documentRect = refs.gallery.getBoundingClientRect();
 
   if (documentRect.bottom < document.documentElement.clientHeight + 200) {
-    // console.log(FetchApiMovies);
+    console.log(FetchApiMovies);
     await unlimitedScroll();
   }
 }
@@ -50,10 +52,10 @@ export async function unlimitedScroll() {
   console.log('AFTER FETCH', FetchApiMovies);
 }
 
-function showButtonLoad() {
+export function showButtonLoad() {
   refs.buttonLoadMore.classList.remove(`not-visible`);
 }
 
-function hideButtonLoad() {
+export function hideButtonLoad() {
   refs.buttonLoadMore.classList.add(`not-visible`);
 }

@@ -36,9 +36,84 @@ export function renderGallary(movies) {
       </li>`;
     })
     .join(``);
+  refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+  // contentDiv.insertAdjacentHTML(`beforeend`, markup);
+  // refs.content.insertAdjacentHTML(`beforeend`, markup);
+}
+
+export function renderHeaderHome() {
+  const markup = `
+
+    <input
+          type="text"
+          id="search-input"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search films..."
+        />
+        <button type="submit" class="search-button">
+          <svg class="icon">
+            <use href="./images/icons.svg#icon-search"></use>
+          </svg>
+        </button>
+`;
+  refs.headerContent.insertAdjacentHTML(`beforeend`, markup);
+}
+
+export function renderHeaderLibrary() {
+  const markup = `
+
+  <ul class="nav_list_button">
+    <li class="nav_button"> 
+        <button type="submit" class="button">Watched</button>
+    </li>
+  <li class="nav_button"> 
+        <button type="submit" class="button">QUEUE</button>
+    </li>
+  </ul>
+  `;
+  refs.headerContent.insertAdjacentHTML(`beforeend`, markup);
+}
+
+export function renderGallaryCard(movies) {
+  const markup = movies
+    .map(({ poster_path, original_title }) => {
+      return poster_path
+        ? `<li class="galery__card">
+        <a
+          class="gallery__link"
+          href="https://image.tmdb.org/t/p/w500${poster_path}"
+        >
+          <img
+            class="details__img"
+            src="https://image.tmdb.org/t/p/w500${poster_path}"
+          alt=${original_title}
+            width="300px"
+            height="450px"
+            loading="lazy"
+          />
+        </a>
+      </li>`
+        : `<li class="galery__card">
+        <a
+          class="gallery__link modal_open"
+          href='../src/images/default_image_large.jpg'
+        >
+          <img
+            class="details__img"
+            src="../src/images/default_image_large.jpg"
+          alt=${original_title}
+            width="300px"
+            height="450px"
+            loading="lazy"
+          />
+        </a>
+      </li>`;
+    })
+    .join(``);
   // refs.gallery.insertAdjacentHTML(`beforeend`, markup);
   // contentDiv.insertAdjacentHTML(`beforeend`, markup);
-  refs.content.insertAdjacentHTML(`beforeend`, markup);
+  refs.gallery.insertAdjacentHTML(`beforeend`, markup);
 }
 
 export function renderModalMovieDetails({ poster_path, original_title }) {
@@ -91,5 +166,6 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
 }
 
 export function clearPage() {
-  refs.content.innerHTML = '';
+  // refs.headerContent.innerHTML = '';
+  refs.gallery.innerHTML = '';
 }
