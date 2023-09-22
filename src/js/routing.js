@@ -10,9 +10,9 @@ import {
   fetchMoviesByPageAndRender,
   fetchMoviesByQueryAndRender,
 } from './fetchAndRender';
-import { smoothScrolling } from './pagination';
+import { smoothScrolling } from './searchByQuery';
 
-let page = 1;
+// let page = 1;
 let query = '';
 
 // window.addEventListener('scroll', smoothScrolling);
