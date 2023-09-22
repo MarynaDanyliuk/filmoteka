@@ -130,6 +130,7 @@ svg:not(:root) {
 
 .nav_list_button {
   display: flex;
+  justify-content: center;
   gap: 12px;
   padding-bottom: 60px;
 }
@@ -137,3 +138,9 @@ svg:not(:root) {
 // .form_btn {
 //   padding-bottom: 60px;
 // }
+
+.not-visible {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}

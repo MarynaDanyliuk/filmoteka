@@ -11,14 +11,14 @@
           <li>
             <a href="#/" class="nav_item nav_item--current">Home</a>
           </li>
-          <li class="nav_item">
-            <a href="#/library">My Library</a>
+          <li>
+            <a href="#/library" class="nav_item">My Library</a>
           </li>
         </ul>
       </nav>
     </div>
-    <!-- <div class="content-thumb"> -->
-    <form class="form" id="header-content">
+
+    <form class="form active" id="header-content">
       <input
         type="text"
         id="search-input"
@@ -32,6 +32,13 @@
         </svg>
       </button>
     </form>
-    <!-- </div> -->
+    <ul class="nav_list_button not-visible">
+      <li class="nav_button">
+        <button type="submit" class="button">Watched</button>
+      </li>
+      <li class="nav_button">
+        <button type="submit" class="button">QUEUE</button>
+      </li>
+    </ul>
   </div>
 </header>

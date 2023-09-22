@@ -166,6 +166,6 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
 }
 
 export function clearPage() {
-  // refs.headerContent.innerHTML = '';
+  refs.input.innerHTML = '';
   refs.gallery.innerHTML = '';
 }
