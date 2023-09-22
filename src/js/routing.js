@@ -12,7 +12,7 @@ import {
 } from './fetchAndRender';
 import { smoothScrolling } from './searchByQuery';
 
-// let page = 1;
+let page = 1;
 let query = '';
 
 // window.addEventListener('scroll', smoothScrolling);
