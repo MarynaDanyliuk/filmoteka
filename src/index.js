@@ -1,206 +1,215 @@
-import Notiflix from 'notiflix';
+import './js/modal';
+import './js/refs';
+import './js/apiService';
+import './js/renderServies';
+import './js/fetchAndRender';
+import './js/routing';
+import './js/searchByQuery';
+import './js/pagination';
 
-import fetchApiMovies from './js/apiService';
+// import Notiflix from 'notiflix';
 
-const FetchApiMovies = new fetchApiMovies();
+// import fetchApiMovies from './js/apiService';
 
-import {
-  renderGallary,
-  renderModalMovieDetails,
-  clearPage,
-  renderHeaderHome,
-  renderHeaderLibrary,
-} from './js/renderServies';
+// const FetchApiMovies = new fetchApiMovies();
 
-import {
-  showButtonLoad,
-  hideButtonLoad,
-  // unlimitedScroll,
-  // smoothScrolling,
-} from './js/pagination';
+// import {
+//   renderGallary,
+//   renderModalMovieDetails,
+//   clearPage,
+// } from './js/renderServies';
 
-import { refs } from './js/refs';
+// import {
+//   showButtonLoad,
+//   hideButtonLoad,
+//   // unlimitedScroll,
+//   // smoothScrolling,
+// } from './js/pagination';
 
-let ImgActive = null;
-let query = '';
-let page = 1;
+// import { renderContent } from './js/routing';
 
-refs.form.addEventListener(`submit`, onFormSubmit);
-refs.gallery.addEventListener(`click`, onGalleryClick);
+// import { refs } from './js/refs';
+
+// let ImgActive = null;
+// let query = '';
+// let page = 1;
+
+// refs.form.addEventListener(`submit`, onFormSubmit);
+// refs.gallery.addEventListener(`click`, onGalleryClick);
 // refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
-window.addEventListener('scroll', smoothScrolling);
-window.addEventListener('hashchange', renderContent);
+// window.addEventListener('scroll', smoothScrolling);
+// window.addEventListener('hashchange', renderContent);
 
-renderContent();
+// renderContent();
 
-async function renderContent() {
-  const route = window.location.hash.substring(1);
+// async function renderContent() {
+//   const route = window.location.hash.substring(1);
 
-  console.log(route);
+//   console.log(route);
 
-  if (route === '/' || route === '') {
-    clearPage();
-    // renderHeaderHome();
-    await fetchMoviesByPageAndRender(page);
+//   if (route === '/' || route === '') {
+//     clearPage();
+//     // renderHeaderHome();
+//     await fetchMoviesByPageAndRender(page);
 
-    console.log('BEFORE', FetchApiMovies);
-  } else if (route === '/library') {
-    clearPage();
-    // renderHeaderLibrary();
-    // refs.gallery.textContent = 'Це сторінка "Бібліотека"';
-    await fetchMoviesByPageAndRender(page);
-  } else {
-    clearPage();
-    window.removeEventListener('scroll', smoothScrolling);
-    refs.content.textContent = 'Сторінка не знайдена';
-  }
-}
+//     console.log('BEFORE', FetchApiMovies);
+//   } else if (route === '/library') {
+//     clearPage();
+//     // renderHeaderLibrary();
+//     // refs.gallery.textContent = 'Це сторінка "Бібліотека"';
+//     await fetchMoviesByPageAndRender(page);
+//   } else {
+//     clearPage();
+//     window.removeEventListener('scroll', smoothScrolling);
+//     refs.content.textContent = 'Сторінка не знайдена';
+//   }
+// }
 
 // _____________fetch and render FUNCTIONS_____________
 
-export async function fetchMoviesAndRender() {
-  try {
-    await FetchApiMovies.fetchMovies().then(movies => {
-      console.log(movies);
-      renderGallary(movies);
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-}
+// export async function fetchMoviesAndRender() {
+//   try {
+//     await FetchApiMovies.fetchMovies().then(movies => {
+//       console.log(movies);
+//       renderGallary(movies);
+//     });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }
 
-export async function fetchMoviesByQueryAndRender(query, page) {
-  try {
-    await FetchApiMovies.fetchMoviesByQuery(query, page).then(movies => {
-      // console.log(movies);
-      renderGallary(movies);
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-}
+// export async function fetchMoviesByQueryAndRender(query, page) {
+//   try {
+//     await FetchApiMovies.fetchMoviesByQuery(query, page).then(movies => {
+//       // console.log(movies);
+//       renderGallary(movies);
+//     });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }
 
-export async function fetchMovieDetailsByIdAndRender(MovieId) {
-  try {
-    await FetchApiMovies.fetchMovieDetailsById(MovieId).then(movie => {
-      renderModalMovieDetails(movie);
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-}
+// export async function fetchMovieDetailsByIdAndRender(MovieId) {
+//   try {
+//     await FetchApiMovies.fetchMovieDetailsById(MovieId).then(movie => {
+//       renderModalMovieDetails(movie);
+//     });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }
 
-export async function fetchMoviesByPageAndRender(page) {
-  try {
-    await FetchApiMovies.fetchMoviesByPage(page).then(movies => {
-      // renderGallaryCard(movies);
-      renderGallary(movies);
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-}
+// export async function fetchMoviesByPageAndRender(page) {
+//   try {
+//     await FetchApiMovies.fetchMoviesByPage(page).then(movies => {
+//       // renderGallaryCard(movies);
+//       renderGallary(movies);
+//     });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }
 
 // ________________event FUNC_______________________
 
-async function onFormSubmit(event) {
-  event.preventDefault();
+// async function onFormSubmit(event) {
+//   event.preventDefault();
 
-  clearPage();
-  FetchApiMovies.resetPage();
+//   clearPage();
+//   FetchApiMovies.resetPage();
 
-  // showButtonLoad();
-  console.log(event.currentTarget.elements);
-  FetchApiMovies.query = event.currentTarget.elements.searchQuery.value.trim();
-  query = FetchApiMovies.query;
+//   // showButtonLoad();
+//   console.log(event.currentTarget.elements);
+//   FetchApiMovies.query = event.currentTarget.elements.searchQuery.value.trim();
+//   query = FetchApiMovies.query;
 
-  console.log('BEFORE', FetchApiMovies);
+//   console.log('BEFORE', FetchApiMovies);
 
-  if (FetchApiMovies.query === ``) {
-    return;
-  }
+//   if (FetchApiMovies.query === ``) {
+//     return;
+//   }
 
-  // console.log('BEFORE scroll', FetchApiMovies);
+//   // console.log('BEFORE scroll', FetchApiMovies);
 
-  await fetchMoviesByQueryAndRender(query, page);
-}
+//   await fetchMoviesByQueryAndRender(query, page);
+// }
 
-async function onButtonLoadMoreClick(event) {
-  event.preventDefault();
-  console.log('BEFORE FETCH', FetchApiMovies);
-  FetchApiMovies.incrementPage();
-  page = FetchApiMovies.page;
+// async function onButtonLoadMoreClick(event) {
+//   event.preventDefault();
+//   console.log('BEFORE FETCH', FetchApiMovies);
+//   FetchApiMovies.incrementPage();
+//   page = FetchApiMovies.page;
 
-  if (query === '') {
-    await fetchMoviesByPageAndRender(page);
-    FetchApiMovies.incrementPage();
-  }
+//   if (query === '') {
+//     await fetchMoviesByPageAndRender(page);
+//     FetchApiMovies.incrementPage();
+//   }
 
-  query = FetchApiMovies.query;
+//   query = FetchApiMovies.query;
 
-  await fetchMoviesByQueryAndRender(query, page);
+//   await fetchMoviesByQueryAndRender(query, page);
 
-  console.log('AFTER FETCH', FetchApiMovies);
-}
+//   console.log('AFTER FETCH', FetchApiMovies);
+// }
 
-async function onGalleryClick(event) {
-  event.preventDefault();
+// async function onGalleryClick(event) {
+//   event.preventDefault();
 
-  if (event.target.nodeName !== `IMG`) {
-    return;
-  }
-  const CurrentActiveImg = document.querySelector(`.img--active`);
+//   if (event.target.nodeName !== `IMG`) {
+//     return;
+//   }
+//   const CurrentActiveImg = document.querySelector(`.img--active`);
 
-  console.log(CurrentActiveImg);
+//   console.log(CurrentActiveImg);
 
-  if (CurrentActiveImg) {
-    event.target.classList.remove(`.img--active`);
-  }
+//   if (CurrentActiveImg) {
+//     event.target.classList.remove(`.img--active`);
+//   }
 
-  const nextImgActive = event.target;
-  nextImgActive.classList.add(`.img--active`);
-  console.log(event.target);
+//   const nextImgActive = event.target;
+//   nextImgActive.classList.add(`.img--active`);
+//   console.log(event.target);
 
-  ImgActive = nextImgActive.getAttribute(`src`).slice(31);
-  console.log(ImgActive);
+//   ImgActive = nextImgActive.getAttribute(`src`).slice(31);
+//   console.log(ImgActive);
 
-  const MovieId = await FetchApiMovies.fetchMovies().then(movies => {
-    console.log(movies);
-    const movieActive = movies.filter(movie => movie.poster_path === ImgActive);
-    console.log(movieActive);
+//   const MovieId = await FetchApiMovies.fetchMovies().then(movies => {
+//     console.log(movies);
+//     const movieActive = movies.filter(movie => movie.poster_path === ImgActive);
+//     console.log(movieActive);
 
-    const movieId = movieActive[0].id;
-    console.log(movieId);
-    return movieId;
-  });
+//     const movieId = movieActive[0].id;
+//     console.log(movieId);
+//     return movieId;
+//   });
 
-  await fetchMovieDetailsByIdAndRender(MovieId);
-  refs.modal.classList.add(`open`);
-}
+//   await fetchMovieDetailsByIdAndRender(MovieId);
+//   refs.modal.classList.add(`open`);
+// }
 
-async function smoothScrolling() {
-  const documentRect = refs.gallery.getBoundingClientRect();
+// async function smoothScrolling() {
+//   const documentRect = refs.gallery.getBoundingClientRect();
 
-  if (documentRect.bottom < document.documentElement.clientHeight + 200) {
-    await unlimitedScroll();
-  }
-}
+//   if (documentRect.bottom < document.documentElement.clientHeight + 200) {
+//     await unlimitedScroll();
+//   }
+// }
 
 // ___________FUNCTIONS_______________
 
-async function unlimitedScroll() {
-  FetchApiMovies.incrementPage();
-  query = FetchApiMovies.query;
-  page = FetchApiMovies.page;
+// async function unlimitedScroll() {
+//   FetchApiMovies.incrementPage();
+//   query = FetchApiMovies.query;
+//   page = FetchApiMovies.page;
 
-  if (query === '') {
-    console.log('befor new FETCH', FetchApiMovies);
-    await fetchMoviesByPageAndRender(page);
-  }
+//   if (query === '') {
+//     console.log('befor new FETCH', FetchApiMovies);
+//     await fetchMoviesByPageAndRender(page);
+//   }
 
-  console.log('before new FETCH', FetchApiMovies);
-  await fetchMoviesByQueryAndRender(query, page);
-}
+//   console.log('before new FETCH', FetchApiMovies);
+//   await fetchMoviesByQueryAndRender(query, page);
+// }
 
 // function clearGallery() {
 //   refs.gallery.innerHTML = '';
