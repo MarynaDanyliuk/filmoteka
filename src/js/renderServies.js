@@ -41,40 +41,6 @@ export function renderGallary(movies) {
   // refs.content.insertAdjacentHTML(`beforeend`, markup);
 }
 
-export function renderHeaderHome() {
-  const markup = `
-
-    <input
-          type="text"
-          id="search-input"
-          name="searchQuery"
-          autocomplete="off"
-          placeholder="Search films..."
-        />
-        <button type="submit" class="search-button">
-          <svg class="icon">
-            <use href="./images/icons.svg#icon-search"></use>
-          </svg>
-        </button>
-`;
-  refs.headerContent.insertAdjacentHTML(`beforeend`, markup);
-}
-
-export function renderHeaderLibrary() {
-  const markup = `
-
-  <ul class="nav_list_button">
-    <li class="nav_button"> 
-        <button type="submit" class="button">Watched</button>
-    </li>
-  <li class="nav_button"> 
-        <button type="submit" class="button">QUEUE</button>
-    </li>
-  </ul>
-  `;
-  refs.headerContent.insertAdjacentHTML(`beforeend`, markup);
-}
-
 export function renderGallaryCard(movies) {
   const markup = movies
     .map(({ poster_path, original_title }) => {
@@ -168,4 +134,40 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
 export function clearPage() {
   refs.input.innerHTML = '';
   refs.gallery.innerHTML = '';
+}
+
+// ________________________________________________
+
+export function renderHeaderHome() {
+  const markup = `
+
+    <input
+          type="text"
+          id="search-input"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search films..."
+        />
+        <button type="submit" class="search-button">
+          <svg class="icon">
+            <use href="./images/icons.svg#icon-search"></use>
+          </svg>
+        </button>
+`;
+  refs.headerContent.insertAdjacentHTML(`beforeend`, markup);
+}
+
+export function renderHeaderLibrary() {
+  const markup = `
+
+  <ul class="nav_list_button">
+    <li class="nav_button"> 
+        <button type="submit" class="button">Watched</button>
+    </li>
+  <li class="nav_button"> 
+        <button type="submit" class="button">QUEUE</button>
+    </li>
+  </ul>
+  `;
+  refs.headerContent.insertAdjacentHTML(`beforeend`, markup);
 }

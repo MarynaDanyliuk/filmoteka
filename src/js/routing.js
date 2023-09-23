@@ -8,7 +8,7 @@ import { clearPage } from './renderServies';
 
 import {
   fetchMoviesByPageAndRender,
-  fetchMoviesByQueryAndRender,
+  //   fetchMoviesByQueryAndRender,
 } from './fetchAndRender';
 import { smoothScrolling } from './searchByQuery';
 
@@ -26,7 +26,8 @@ async function renderContent() {
 
   if (route === '/' || route === '') {
     clearPage();
-    // page = FetchApiMovies.page;
+    refs.headerNavButtons.classList.add('not-visible');
+    refs.form.classList.remove('not-visible');
     await fetchMoviesByPageAndRender(page);
     console.log('BEFORE scroll', FetchApiMovies);
   } else if (route === '/library') {

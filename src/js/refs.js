@@ -9,4 +9,5 @@ export const refs = {
   body: document.querySelector(`body`),
   content: document.getElementById('content'),
   headerNavLinks: document.querySelectorAll('.nav_item'),
+  headerNavButtons: document.querySelector('.nav_list_button'),
 };

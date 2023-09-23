@@ -42,9 +42,7 @@ export async function onFormSubmit(event) {
 export async function smoothScrolling() {
   const documentRect = refs.gallery.getBoundingClientRect();
 
-  if (documentRect.bottom < document.documentElement.clientHeight + 200) {
-    // console.log('AFTER scroll', FetchApiMovies);
-    // FetchApiMovies.incrementPage();
+  if (documentRect.bottom < document.documentElement.clientHeight + 150) {
     await unlimitedScroll();
 
     console.log('AFTER scroll', FetchApiMovies);
