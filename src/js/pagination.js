@@ -12,23 +12,23 @@ import {
   fetchMoviesByQueryAndRender,
 } from './fetchAndRender';
 
-export async function onButtonLoadMoreClick(event) {
-  event.preventDefault();
-  console.log('BEFORE FETCH', FetchApiMovies);
-  FetchApiMovies.incrementPage();
-  page = FetchApiMovies.page;
+// export async function onButtonLoadMoreClick(event) {
+//   event.preventDefault();
+//   console.log('BEFORE FETCH', FetchApiMovies);
+//   FetchApiMovies.incrementPage();
+//   page = FetchApiMovies.page;
 
-  if (query === '') {
-    await fetchMoviesByPageAndRender(page);
-    FetchApiMovies.incrementPage();
-  }
+//   if (query === '') {
+//     await fetchMoviesByPageAndRender(page);
+//     // FetchApiMovies.incrementPage();
+//   }
 
-  query = FetchApiMovies.query;
+//   query = FetchApiMovies.query;
 
-  await fetchMoviesByQueryAndRender(query, page);
+//   await fetchMoviesByQueryAndRender(query, page);
 
-  console.log('AFTER FETCH', FetchApiMovies);
-}
+//   console.log('AFTER FETCH', FetchApiMovies);
+// }
 
 // export async function smoothScrolling(event) {
 //   const documentRect = refs.gallery.getBoundingClientRect();

@@ -1,10 +1,10 @@
-import './js/modal';
 import './js/refs';
 import './js/headerNav';
 import './js/apiService';
 import './js/renderServies';
 import './js/fetchAndRender';
 import './js/routing';
+import './js/modal';
 import './js/searchByQuery';
 import './js/pagination';
 

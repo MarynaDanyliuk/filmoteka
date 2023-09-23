@@ -6,13 +6,14 @@ import { refs } from './refs';
 
 import { clearPage } from './renderServies';
 
-import {
-  fetchMoviesByPageAndRender,
-  //   fetchMoviesByQueryAndRender,
-} from './fetchAndRender';
+import { fetchMoviesByPageAndRender } from './fetchAndRender';
 import { smoothScrolling } from './searchByQuery';
+import { onGalleryClick } from './modal';
+import { showButtonLoad } from './pagination';
 
 let page = 1;
+
+page = FetchApiMovies.page;
 
 // window.addEventListener('scroll', smoothScrolling);
 window.addEventListener('hashchange', renderContent);
@@ -29,6 +30,8 @@ async function renderContent() {
     refs.headerNavButtons.classList.add('not-visible');
     refs.form.classList.remove('not-visible');
     await fetchMoviesByPageAndRender(page);
+    showButtonLoad();
+
     console.log('BEFORE scroll', FetchApiMovies);
   } else if (route === '/library') {
     clearPage();

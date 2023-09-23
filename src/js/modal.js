@@ -5,41 +5,45 @@ import fetchApiMovies from './apiService';
 
 const FetchApiMovies = new fetchApiMovies();
 
-let ImgActive = null;
+// let ImgActive = null;
 
-refs.gallery.addEventListener(`click`, onGalleryClick);
+// refs.gallery.addEventListener(`click`, onGalleryClick);
 
-export async function onGalleryClick(event) {
-  event.preventDefault();
+// export async function onGalleryClick(event) {
+//   event.preventDefault();
 
-  if (event.target.nodeName !== `IMG`) {
-    return;
-  }
-  const CurrentActiveImg = document.querySelector(`.img--active`);
+//   if (event.target.nodeName !== `IMG`) {
+//     return;
+//   }
+//   const CurrentActiveImg = document.querySelector(`.img--active`);
 
-  console.log(CurrentActiveImg);
+//   console.log(CurrentActiveImg);
 
-  if (CurrentActiveImg) {
-    event.target.classList.remove(`.img--active`);
-  }
+//   if (CurrentActiveImg) {
+//     event.target.classList.remove(`.img--active`);
+//   }
 
-  const nextImgActive = event.target;
-  nextImgActive.classList.add(`.img--active`);
-  console.log(event.target);
+//   const nextImgActive = event.target;
+//   nextImgActive.classList.add(`.img--active`);
+//   console.log(event.target);
 
-  ImgActive = nextImgActive.getAttribute(`src`).slice(31);
-  console.log(ImgActive);
+//   ImgActive = nextImgActive.getAttribute(`src`).slice(31);
+//   console.log(ImgActive);
 
-  const MovieId = await FetchApiMovies.fetchMovies().then(movies => {
-    console.log(movies);
-    const movieActive = movies.filter(movie => movie.poster_path === ImgActive);
-    console.log(movieActive);
+//   page = FetchApiMovies.page;
 
-    const movieId = movieActive[0].id;
-    console.log(movieId);
-    return movieId;
-  });
+//   console.log(page);
 
-  await fetchMovieDetailsByIdAndRender(MovieId);
-  refs.modal.classList.add(`open`);
-}
+//   const MovieId = await FetchApiMovies.fetchMoviesByPage(page).then(movies => {
+//     console.log(movies);
+//     const movieActive = movies.filter(movie => movie.poster_path === ImgActive);
+//     console.log(movieActive);
+
+//     const movieId = movieActive[0].id;
+//     console.log(movieId);
+//     return movieId;
+//   });
+
+//   await fetchMovieDetailsByIdAndRender(MovieId);
+//   refs.modal.classList.add(`open`);
+// }

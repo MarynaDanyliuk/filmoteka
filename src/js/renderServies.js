@@ -37,8 +37,6 @@ export function renderGallary(movies) {
     })
     .join(``);
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
-  // contentDiv.insertAdjacentHTML(`beforeend`, markup);
-  // refs.content.insertAdjacentHTML(`beforeend`, markup);
 }
 
 export function renderGallaryCard(movies) {
@@ -83,8 +81,7 @@ export function renderGallaryCard(movies) {
 }
 
 export function renderModalMovieDetails({ poster_path, original_title }) {
-  const movieCardMarkup = `
-    <div class="modal_body">
+  const movieCardMarkup = `<div class="modal_body">
     <div class="modal_content">
   <a href="" class="modal_close">X</a>
   <div class="movie_card">
@@ -128,7 +125,7 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
         </div>
       </div>`;
   refs.modal.insertAdjacentHTML(`beforeend`, movieCardMarkup);
-  console.log('повертаю Муві');
+  // console.log('повертаю Муві');
 }
 
 export function clearPage() {
