@@ -135,22 +135,18 @@ export function clearPage() {
 
 export function PageNotFound() {
   const markupPageNotFound = `
-    <img class="page-not-found"
-   src='/Users/marynadanyliuk/JavaScript/filmoteka/src/images/404-error-with-cute-animal-concept-illustration_114360-1900.jpg'
-   alt="template"
-
- />`;
+   <img class="page-not-found"
+   src=''
+   alt=""
+ />
+   `;
   refs.content.insertAdjacentHTML(`beforeend`, markupPageNotFound);
 }
-// <a href="./index.html" class="button">
-//   Go home
-// </a>;
 
 // ________________________________________________
 
 export function renderHeaderHome() {
   const markup = `
-
     <input
           type="text"
           id="search-input"
@@ -169,7 +165,6 @@ export function renderHeaderHome() {
 
 export function renderHeaderLibrary() {
   const markup = `
-
   <ul class="nav_list_button">
     <li class="nav_button"> 
         <button type="submit" class="button">Watched</button>
