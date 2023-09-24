@@ -133,6 +133,19 @@ export function clearPage() {
   refs.gallery.innerHTML = '';
 }
 
+export function PageNotFound() {
+  const markupPageNotFound = `
+    <img class="page-not-found"
+   src='/Users/marynadanyliuk/JavaScript/filmoteka/src/images/404-error-with-cute-animal-concept-illustration_114360-1900.jpg'
+   alt="template"
+
+ />`;
+  refs.content.insertAdjacentHTML(`beforeend`, markupPageNotFound);
+}
+// <a href="./index.html" class="button">
+//   Go home
+// </a>;
+
 // ________________________________________________
 
 export function renderHeaderHome() {

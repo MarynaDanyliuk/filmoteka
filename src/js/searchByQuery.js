@@ -24,7 +24,7 @@ export async function onFormSubmit(event) {
 
   clearPage();
   FetchApiMovies.resetPage();
-  // console.log(event.currentTarget.elements);
+
   FetchApiMovies.query = event.currentTarget.elements.searchQuery.value.trim();
   query = FetchApiMovies.query;
 
@@ -55,10 +55,12 @@ export async function onButtonLoadMoreClick(event) {
   console.log('AFTER FETCH', FetchApiMovies);
 }
 
-export async function smoothScrolling() {
+export async function smoothScrolling(event) {
+  event.preventDefault();
   const documentRect = refs.gallery.getBoundingClientRect();
 
   if (documentRect.bottom < document.documentElement.clientHeight + 150) {
+    console.log('BEFORE scroll', FetchApiMovies);
     await unlimitedScroll();
 
     console.log('AFTER scroll', FetchApiMovies);
@@ -70,16 +72,13 @@ export async function unlimitedScroll() {
 
   query = FetchApiMovies.query;
   page = FetchApiMovies.page;
-  console.log('before fetch', FetchApiMovies);
 
   if (query === '') {
     await fetchMoviesByPageAndRender(page);
-    console.log('Fetch after scroll', FetchApiMovies);
     return;
   }
 
   await fetchMoviesByQueryAndRender(query, page);
-  // console.log('AFTER scroll:', FetchApiMovies);
 }
 
 export async function onGalleryClick(event) {

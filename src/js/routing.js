@@ -4,18 +4,14 @@ const FetchApiMovies = new fetchApiMovies();
 
 import { refs } from './refs';
 
-import { clearPage } from './renderServies';
+import { clearPage, PageNotFound } from './renderServies';
 
 import { fetchMoviesByPageAndRender } from './fetchAndRender';
 import { smoothScrolling } from './searchByQuery';
-import { onGalleryClick } from './modal';
-import { showButtonLoad } from './pagination';
+import { showButtonLoad, hideButtonLoad } from './pagination';
 
 let page = 1;
 
-page = FetchApiMovies.page;
-
-// window.addEventListener('scroll', smoothScrolling);
 window.addEventListener('hashchange', renderContent);
 
 renderContent();
@@ -35,11 +31,15 @@ async function renderContent() {
     console.log('BEFORE scroll', FetchApiMovies);
   } else if (route === '/library') {
     clearPage();
-    refs.gallery.textContent = 'Це сторінка "Бібліотека"';
+    // refs.gallery.textContent = 'Це сторінка "Бібліотека"';
     await fetchMoviesByPageAndRender(page);
+    showButtonLoad();
   } else {
     clearPage();
+
     window.removeEventListener('scroll', smoothScrolling);
-    refs.content.textContent = 'Сторінка не знайдена';
+    // refs.content.textContent = 'Сторінка не знайдена';
+    PageNotFound();
+    hideButtonLoad();
   }
 }

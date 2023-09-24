@@ -45,7 +45,7 @@ import {
 //   }
 // }
 
-// _________________FUNC______________________
+// _________________FUNC______________________;
 
 // export async function unlimitedScroll() {
 //   FetchApiMovies.incrementPage();
