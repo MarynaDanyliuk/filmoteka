@@ -1,16 +1,18 @@
-import fetchApiMovies from './apiService';
+// import fetchApiMovies from './apiService';
 
-const FetchApiMovies = new fetchApiMovies();
+// const FetchApiMovies = new fetchApiMovies();
 
-import { refs } from './refs';
+// import { refs } from './refs';
 
-import { clearPage, PageNotFound } from './renderServies';
+// import { clearPage, PageNotFound } from './renderServies';
 
-import { fetchMoviesByPageAndRender } from './fetchAndRender';
-import { smoothScrolling } from './searchByQuery';
-import { showButtonLoad, hideButtonLoad } from './pagination';
+// import { fetchMoviesByPageAndRender } from './fetchAndRender';
+// import { smoothScrolling } from './searchByQuery';
+// import { showButtonLoad, hideButtonLoad } from './pagination';
 
-let page = 1;
+// let page = 1;
+
+import { homePage, libraryPage, notFoundPage } from './content-pages';
 
 window.addEventListener('hashchange', renderContent);
 
@@ -22,24 +24,28 @@ async function renderContent() {
   console.log(route);
 
   if (route === '/' || route === '') {
-    clearPage();
-    refs.headerNavButtons.classList.add('not-visible');
-    refs.form.classList.remove('not-visible');
-    await fetchMoviesByPageAndRender(page);
-    showButtonLoad();
+    // clearPage();
+    // refs.headerNavButtons.classList.add('not-visible');
+    // refs.form.classList.remove('not-visible');
+    // await fetchMoviesByPageAndRender(page);
+    // showButtonLoad();
+    // console.log('BEFORE scroll', FetchApiMovies);
 
-    console.log('BEFORE scroll', FetchApiMovies);
+    homePage();
   } else if (route === '/library') {
-    clearPage();
-    // refs.gallery.textContent = 'Це сторінка "Бібліотека"';
-    await fetchMoviesByPageAndRender(page);
-    showButtonLoad();
-  } else {
-    clearPage();
+    // clearPage();
+    // // refs.gallery.textContent = 'Це сторінка "Бібліотека"';
+    // await fetchMoviesByPageAndRender(page);
+    // showButtonLoad();
 
-    window.removeEventListener('scroll', smoothScrolling);
-    // refs.content.textContent = 'Сторінка не знайдена';
-    PageNotFound();
-    hideButtonLoad();
+    libraryPage();
+  } else {
+    // clearPage();
+    // window.removeEventListener('scroll', smoothScrolling);
+    // // refs.content.textContent = 'Сторінка не знайдена';
+    // PageNotFound();
+    // hideButtonLoad();
+
+    notFoundPage();
   }
 }

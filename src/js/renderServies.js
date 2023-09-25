@@ -22,15 +22,16 @@ export function renderGallary(movies) {
         : `<li class="galery__card">
         <a
           class="gallery__link modal_open"
-          href='../src/images/default_image_large.jpg'
+          href='https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg'
         >
           <img
             class="details__img"
-            src="../src/images/default_image_large.jpg"
+            src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
           alt=${original_title}
             width="300px"
             height="450px"
             loading="lazy"
+            style="{object-fit: cover}"
           />
         </a>
       </li>`;
@@ -145,34 +146,53 @@ export function PageNotFound() {
 
 // ________________________________________________
 
-export function renderHeaderHome() {
-  const markup = `
-    <input
-          type="text"
-          id="search-input"
-          name="searchQuery"
-          autocomplete="off"
-          placeholder="Search films..."
-        />
-        <button type="submit" class="search-button">
-          <svg class="icon">
-            <use href="./images/icons.svg#icon-search"></use>
-          </svg>
-        </button>
-`;
-  refs.headerContent.insertAdjacentHTML(`beforeend`, markup);
+export function MovieCard() {
+  return `<li class="galery__card">
+        <a
+          class="gallery__link"
+          href="https://image.tmdb.org/t/p/w500${poster_path}"
+        >
+          <img
+            class="details__img"
+            src="https://image.tmdb.org/t/p/w500${poster_path}"
+          alt=${original_title}
+            width="300px"
+            height="450px"
+            loading="lazy"
+          />
+        </a>
+      </li>`;
 }
 
-export function renderHeaderLibrary() {
-  const markup = `
-  <ul class="nav_list_button">
-    <li class="nav_button"> 
-        <button type="submit" class="button">Watched</button>
-    </li>
-  <li class="nav_button"> 
-        <button type="submit" class="button">QUEUE</button>
-    </li>
-  </ul>
-  `;
-  refs.headerContent.insertAdjacentHTML(`beforeend`, markup);
-}
+// ________________________________________________________________
+// export function renderHeaderHome() {
+//   const markup = `
+//     <input
+//           type="text"
+//           id="search-input"
+//           name="searchQuery"
+//           autocomplete="off"
+//           placeholder="Search films..."
+//         />
+//         <button type="submit" class="search-button">
+//           <svg class="icon">
+//             <use href="./images/icons.svg#icon-search"></use>
+//           </svg>
+//         </button>
+// `;
+//   refs.headerContent.insertAdjacentHTML(`beforeend`, markup);
+// }
+
+// export function renderHeaderLibrary() {
+//   const markup = `
+//   <ul class="nav_list_button">
+//     <li class="nav_button">
+//         <button type="submit" class="button">Watched</button>
+//     </li>
+//   <li class="nav_button">
+//         <button type="submit" class="button">QUEUE</button>
+//     </li>
+//   </ul>
+//   `;
+//   refs.headerContent.insertAdjacentHTML(`beforeend`, markup);
+// }
