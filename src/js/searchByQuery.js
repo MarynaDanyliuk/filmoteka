@@ -13,6 +13,7 @@ import {
 
 let query = '';
 let page = 1;
+let ImgActive = null;
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
