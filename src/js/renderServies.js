@@ -118,8 +118,8 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
             suscipit fugit at similique sequi explicabo tempora provident harum
             eaque dolorem dignissimos, praesentium architecto!
           </p>
-          <button type="submit" class="button">Add to watched</button>
-          <button type="submit" class="button">Add to queue</button>
+          <button type="submit" class="button btn_modal">Add to watched</button>
+          <button type="submit" class="button btn_modal">Add to queue</button>
         </div>
         </div>
         </div>

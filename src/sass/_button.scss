@@ -1,0 +1,22 @@
+.button {
+  border: 1px solid white;
+  border-radius: 8px;
+  width: 148px;
+  height: 42px;
+  background-color: transparent;
+  cursor: pointer;
+  min-width: 30px;
+  color: white;
+}
+.button:hover,
+.button:focus,
+.button:active {
+  border: 1px solid #ff6b01;
+  background-color: #ff6b01;
+  color: white;
+}
+
+.btn_modal {
+  border: 1px solid black;
+  color: black;
+}

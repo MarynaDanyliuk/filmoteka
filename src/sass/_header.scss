@@ -8,9 +8,8 @@
   //   background-color: #c4c4c4;
   background-position: center;
   background-size: auto auto;
-  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
-    1px 4px 6px #00000029;
-  margin-bottom: 60px;
+  // box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+  //   1px 4px 6px #00000029;
 }
 
 .header_nav {
@@ -117,16 +116,10 @@ svg:not(:root) {
   // border: 1px solid white;
 }
 
-.button {
-  border: 1px solid white;
-  border-radius: 8px;
-  width: 148px;
-  height: 42px;
-  background-color: transparent;
-  cursor: pointer;
-  min-width: 30px;
-  color: white;
-}
+// .button .active {
+//   border: 1px solid #ff6b01;
+//   background-color: #ff6b01;
+// }
 
 .nav_list_button {
   display: flex;
@@ -134,10 +127,6 @@ svg:not(:root) {
   gap: 12px;
   padding-bottom: 60px;
 }
-
-// .form_btn {
-//   padding-bottom: 60px;
-// }
 
 .not-visible {
   visibility: hidden;
