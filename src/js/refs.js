@@ -5,6 +5,7 @@ export const refs = {
   gallery: document.querySelector(`.gallery`),
   buttonLoadMore: document.querySelector(`.load-more`),
   modal: document.querySelector(`.modal`),
+  modalContent: document.querySelector(`.modal_data`),
   buttonClose: document.querySelector(`.modal_close`),
   body: document.querySelector(`body`),
   content: document.getElementById('content'),

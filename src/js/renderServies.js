@@ -82,11 +82,9 @@ export function renderGallaryCard(movies) {
 }
 
 export function renderModalMovieDetails({ poster_path, original_title }) {
-  const movieCardMarkup = `<div class="modal_body">
-    <div class="modal_content">
-  <a href="" class="modal_close">X</a>
+  const movieCardMarkup = `
+
   <div class="movie_card">
-  
         <img
           src="https://image.tmdb.org/t/p/w500${poster_path}"
           alt=${original_title}
@@ -123,15 +121,21 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
           <button type="submit" class="button btn_modal">Add to queue</button>
         </div>
         </div>
-        </div>
-      </div>`;
-  refs.modal.insertAdjacentHTML(`beforeend`, movieCardMarkup);
+   
+      `;
+  refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   // console.log('повертаю Муві');
 }
+
+
 
 export function clearPage() {
   refs.input.innerHTML = '';
   refs.gallery.innerHTML = '';
+}
+
+export function clearModal() {
+  refs.modalContent.innerHTML = '';
 }
 
 export function PageNotFound() {
@@ -164,6 +168,13 @@ export function MovieCard() {
       </li>`;
 }
 
+
+// <div class="modal_body">
+//   <div class="modal_content">
+// <a href="" class="modal_close">X</a>
+
+//   </div>
+// </div>
 // ________________________________________________________________
 // export function renderHeaderHome() {
 //   const markup = `

@@ -4,7 +4,7 @@ import fetchApiMovies from './apiService';
 
 const FetchApiMovies = new fetchApiMovies();
 
-import { clearPage } from './renderServies';
+import { clearPage, clearModal } from './renderServies';
 import {
   fetchMoviesByQueryAndRender,
   fetchMoviesByPageAndRender,
@@ -145,3 +145,15 @@ export async function onGalleryClick(event) {
   await fetchMovieDetailsByIdAndRender(MovieId);
   refs.modal.classList.add(`open`);
 }
+
+(function createModal() {
+  function closeModal(event) {
+    event.preventDefault();
+    refs.modal.classList.remove(`open`);
+    clearModal();
+  }
+
+  refs.buttonClose.addEventListener('click', closeModal);
+})();
+
+// createModal();
