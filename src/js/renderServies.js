@@ -81,6 +81,54 @@ export function renderGallaryCard(movies) {
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
 }
 
+export function renderMovieImage({ poster_path, original_title }) {
+  const movieImageMarkup = `
+
+   <img
+          src="https://image.tmdb.org/t/p/w500${poster_path}"
+          alt=${original_title}
+          class="image"
+        />
+
+  `;
+  refs.movieCard.insertAdjacentHTML(`beforeend`, movieImageMarkup);
+}
+
+export function renderMovieDescription({ original_title }) {
+  const movieMovieDescrMarkup = `
+        <div class="movie_descr">
+          <p class="movie_title">${original_title}</p>
+          <table class="movie_info">
+            <tr class="movie_info_item">
+              <td>11</td>
+              <td>12</td>
+            </tr>
+            <tr class="movie_info_item">
+              <td>21</td>
+              <td>22</td>
+            </tr>
+            <tr class="movie_info_item">
+              <td>31</td>
+              <td>32</td>
+            </tr>
+            <tr class="movie_info_item">
+              <td>41</td>
+              <td>42</td>
+            </tr>
+          </table>
+          <p>About</p>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus
+            nostrum inventore sint, consectetur i ncidunt rerum, adipisci
+            suscipit fugit at similique sequi explicabo tempora provident harum
+            eaque dolorem dignissimos, praesentium architecto!
+          </p>
+        </div>
+
+  `;
+  refs.movieDescr.insertAdjacentHTML(`beforeend`, movieMovieDescrMarkup);
+}
+
 export function renderModalMovieDetails({ poster_path, original_title }) {
   const movieCardMarkup = `
 
@@ -117,17 +165,16 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
             suscipit fugit at similique sequi explicabo tempora provident harum
             eaque dolorem dignissimos, praesentium architecto!
           </p>
-          <button type="submit" class="button btn_modal">Add to watched</button>
-          <button type="submit" class="button btn_modal">Add to queue</button>
+        
         </div>
         </div>
-   
       `;
-  refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
+  // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   // console.log('повертаю Муві');
 }
 
-
+//   <button id="buttonAdd" type="submit" class="button btn_modal">Add to watched</button>
+// <button type="submit" class="button btn_modal">Add to queue</button>
 
 export function clearPage() {
   refs.input.innerHTML = '';
@@ -135,7 +182,8 @@ export function clearPage() {
 }
 
 export function clearModal() {
-  refs.modalContent.innerHTML = '';
+  refs.movieCard.innerHTML = '';
+  refs.movieDescr.innerHTML = '';
 }
 
 export function PageNotFound() {
@@ -167,7 +215,6 @@ export function MovieCard() {
         </a>
       </li>`;
 }
-
 
 // <div class="modal_body">
 //   <div class="modal_content">

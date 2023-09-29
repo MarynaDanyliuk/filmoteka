@@ -18,6 +18,7 @@
 }
 
 .modal_body {
+  // position: relative;
   min-height: 100%;
   display: flex;
   align-items: center;
@@ -31,31 +32,44 @@
   max-width: 806px;
   border-radius: 8px;
   background-color: #fff;
+  padding: 40px 12px;
 }
 
 .modal_close {
   position: absolute;
   padding: 18px;
   right: 0;
+  top: 0;
+}
 
-  // color: #fff;
+.modal_data {
+  display: flex;
 }
 
 .movie_card {
   display: flex;
   flex-direction: row;
-  padding: 40px 12px;
+}
+
+.movie_info {
+  display: inline-block;
 }
 
 .image {
-  width: 375px;
-  height: 478px;
+  max-width: 375px;
+  max-height: 478px;
   object-fit: cover;
   margin-right: 16px;
 }
 
-// .not-visible {
-//   visibility: hidden;
-//   opacity: 0;
-//   pointer-events: none;
+// .movie_descr {
+//   display: inline-block;
+// }
+
+// .modal_data {
+//   position: relative;
+// }
+
+// .modal_nav {
+//   display: inline-block;
 // }

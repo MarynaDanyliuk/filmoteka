@@ -5,6 +5,8 @@ const FetchApiMovies = new fetchApiMovies();
 import {
   renderGallary,
   renderModalMovieDetails,
+  renderMovieImage,
+  renderMovieDescription,
 } from './renderServies';
 
 export async function fetchMoviesAndRender() {
@@ -32,7 +34,10 @@ export async function fetchMoviesByQueryAndRender(query, page) {
 export async function fetchMovieDetailsByIdAndRender(MovieId) {
   try {
     await FetchApiMovies.fetchMovieDetailsById(MovieId).then(movie => {
-      renderModalMovieDetails(movie);
+      // renderModalMovieDetails(movie);
+      renderMovieImage(movie);
+      renderMovieDescription(movie);
+      console.log(movie);
     });
   } catch (error) {
     console.log(error.message);

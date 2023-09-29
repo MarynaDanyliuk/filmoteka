@@ -1,9 +1,36 @@
 import { refs } from './refs';
-import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
+// import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
+import { clearModal } from './renderServies';
+import { onFormSubmit } from './searchByQuery';
 
-import fetchApiMovies from './apiService';
+// import fetchApiMovies from './apiService';
 
-const FetchApiMovies = new fetchApiMovies();
+// const FetchApiMovies = new fetchApiMovies();
+
+refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
+
+// function onButtonWatchedClick(event) {
+//   event.preventDefault();
+// }
+
+(function createModal() {
+  function closeModal(event) {
+    event.preventDefault();
+    refs.modal.classList.remove(`open`);
+    clearModal();
+  }
+
+  refs.buttonClose.addEventListener('click', closeModal);
+})();
+
+function onButtonWatchedClick(event) {
+  event.preventDefault();
+
+  console.log(refs.buttonWatched);
+
+  localStorage.setItem('original_title', 'tom');
+}
+// __________________________________________________________________
 
 // let ImgActive = null;
 

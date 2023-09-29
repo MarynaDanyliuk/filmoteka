@@ -6,9 +6,12 @@ export const refs = {
   buttonLoadMore: document.querySelector(`.load-more`),
   modal: document.querySelector(`.modal`),
   modalContent: document.querySelector(`.modal_data`),
+  movieCard: document.querySelector('.movie_card'),
+  movieDescr: document.querySelector('.movie_descr'),
   buttonClose: document.querySelector(`.modal_close`),
   body: document.querySelector(`body`),
   content: document.getElementById('content'),
   headerNavLinks: document.querySelectorAll('.nav_item'),
   headerNavButtons: document.querySelector('.nav_list_button'),
+  buttonWatched: document.getElementById('buttonAdd'),
 };

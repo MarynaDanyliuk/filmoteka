@@ -4,7 +4,7 @@ import fetchApiMovies from './apiService';
 
 const FetchApiMovies = new fetchApiMovies();
 
-import { clearPage, clearModal } from './renderServies';
+import { clearPage } from './renderServies';
 import {
   fetchMoviesByQueryAndRender,
   fetchMoviesByPageAndRender,
@@ -19,12 +19,16 @@ refs.form.addEventListener(`submit`, onFormSubmit);
 refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
 // window.addEventListener('scroll', smoothScrolling);
 refs.gallery.addEventListener(`click`, onGalleryClick);
+//
 
 export async function onFormSubmit(event) {
   event.preventDefault();
 
   clearPage();
   FetchApiMovies.resetPage();
+
+  const formData = new FormData(refs.form);
+  console.log(formData);
 
   FetchApiMovies.query = event.currentTarget.elements.searchQuery.value.trim();
   query = FetchApiMovies.query;
@@ -99,6 +103,7 @@ export async function onGalleryClick(event) {
   const nextImgActive = event.target;
   nextImgActive.classList.add(`.img--active`);
   console.log(event.target);
+  console.log(EventTarget);
 
   ImgActive = nextImgActive.getAttribute(`src`).slice(31);
   console.log(ImgActive);
@@ -142,18 +147,27 @@ export async function onGalleryClick(event) {
     }
   );
 
+  // return MovieId;
   await fetchMovieDetailsByIdAndRender(MovieId);
   refs.modal.classList.add(`open`);
 }
 
-(function createModal() {
-  function closeModal(event) {
-    event.preventDefault();
-    refs.modal.classList.remove(`open`);
-    clearModal();
-  }
+// (function createModal() {
+//   function closeModal(event) {
+//     event.preventDefault();
+//     refs.modal.classList.remove(`open`);
+//     clearModal();
+//   }
 
-  refs.buttonClose.addEventListener('click', closeModal);
-})();
+//   refs.buttonClose.addEventListener('click', closeModal);
+// })();
+
+// function onButtonWatchedClick(event) {
+//   event.preventDefault();
+
+//   console.log(refs.buttonWatched);
+
+//   localStorage.setItem('original_title', 'tom');
+// }
 
 // createModal();
