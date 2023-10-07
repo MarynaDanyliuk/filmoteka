@@ -1,16 +1,24 @@
 import { refs } from './refs';
 
-import fetchApiMovies from './apiService';
+export function showButtonLoad() {
+  refs.buttonLoadMore.classList.remove(`not-visible`);
+}
 
-const FetchApiMovies = new fetchApiMovies();
+export function hideButtonLoad() {
+  refs.buttonLoadMore.classList.add(`not-visible`);
+}
 
-let query = FetchApiMovies.query;
-let page = FetchApiMovies.page;
+// import fetchApiMovies from './apiService';
 
-import {
-  fetchMoviesByPageAndRender,
-  fetchMoviesByQueryAndRender,
-} from './fetchAndRender';
+// const FetchApiMovies = new fetchApiMovies();
+
+// let query = FetchApiMovies.query;
+// let page = FetchApiMovies.page;
+
+// import {
+//   fetchMoviesByPageAndRender,
+//   fetchMoviesByQueryAndRender,
+// } from './fetchAndRender';
 
 // export async function onButtonLoadMoreClick(event) {
 //   event.preventDefault();
@@ -64,11 +72,3 @@ import {
 //   await fetchMoviesByQueryAndRender(query, page);
 //   console.log('AFTER scroll:', FetchApiMovies);
 // }
-
-export function showButtonLoad() {
-  refs.buttonLoadMore.classList.remove(`not-visible`);
-}
-
-export function hideButtonLoad() {
-  refs.buttonLoadMore.classList.add(`not-visible`);
-}

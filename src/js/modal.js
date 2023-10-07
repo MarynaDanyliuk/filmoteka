@@ -1,12 +1,12 @@
 import { refs } from './refs';
-// import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
+import fetchApiMovies from './apiService';
+
+const FetchApiMovies = new fetchApiMovies();
+
+let MovieId = FetchApiMovies.movieId;
+
+import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
 import { clearModal } from './renderServies';
-
-import { onGalleryClick } from './searchByQuery';
-
-let MovieId = 926393;
-
-MovieId = onGalleryClick;
 
 // refs.gallery.addEventListener(`click`, getMovieId);
 
@@ -47,7 +47,7 @@ function onError() {
   console.log('Error');
 }
 
-createModal(onGalleryClick, onSuccess, onError);
+createModal(MovieId, onSuccess, onError);
 
 // (function getMovieId(MovieId) {
 //   const promise = new Promise((resolve, reject) => {
@@ -67,25 +67,23 @@ createModal(onGalleryClick, onSuccess, onError);
 
 // getMovieId().then(console.log('create Modal')).catch(console.log('error'));
 
-//   (
-//   function createModal() {
-//     function closeModal(event) {
-//       event.preventDefault();
-//       refs.modal.classList.remove(`open`);
-//       clearModal();
-//     }
+(function createModal() {
+  function closeModal(event) {
+    event.preventDefault();
+    refs.modal.classList.remove(`open`);
+    clearModal();
+  }
 
-//     refs.buttonClose.addEventListener('click', closeModal);
-//   }
-// )();
+  refs.buttonClose.addEventListener('click', closeModal);
+})();
 
-function onButtonWatchedClick(event) {
-  event.preventDefault();
+// function onButtonWatchedClick(event) {
+//   event.preventDefault();
 
-  console.log(refs.buttonWatched);
+//   console.log(refs.buttonWatched);
 
-  localStorage.setItem('watched', 'movie');
-}
+//   localStorage.setItem('watched', 'movie');
+// }
 // __________________________________________________________________
 
 // let ImgActive = null;

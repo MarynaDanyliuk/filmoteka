@@ -12,15 +12,11 @@ renderContent();
 
 function renderContent() {
   const route = window.location.hash.substring(1);
-  // const route = location.hash.replace(/^#/, '');
-
-  // const route = window.location.pathname;
 
   console.log(route);
   if (route === '/' || route === '') {
     homePage();
   } else if (route === '/library') {
-    console.log('rere');
     libraryPage();
   } else {
     notFoundPage();

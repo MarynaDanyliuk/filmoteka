@@ -76,8 +76,6 @@ export function renderGallaryCard(movies) {
       </li>`;
     })
     .join(``);
-  // refs.gallery.insertAdjacentHTML(`beforeend`, markup);
-  // contentDiv.insertAdjacentHTML(`beforeend`, markup);
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
 }
 
@@ -173,8 +171,6 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
   // console.log('повертаю Муві');
 }
 
-//   <button id="buttonAdd" type="submit" class="button btn_modal">Add to watched</button>
-// <button type="submit" class="button btn_modal">Add to queue</button>
 
 export function clearPage() {
   refs.gallery.innerHTML = '';
