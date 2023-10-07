@@ -177,7 +177,6 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
 // <button type="submit" class="button btn_modal">Add to queue</button>
 
 export function clearPage() {
-  refs.input.innerHTML = '';
   refs.gallery.innerHTML = '';
 }
 
@@ -186,10 +185,25 @@ export function clearModal() {
   refs.movieDescr.innerHTML = '';
 }
 
-export function PageNotFound() {
+export function homeHeader() {
+  refs.input.value = '';
+  refs.homeBtn.classList.add('nav_item--current');
+  refs.libraryBtn.classList.remove('nav_item--current');
+  refs.headerNavButtons.classList.add('not-visible');
+  refs.form.classList.remove('not-visible');
+}
+
+export function libraryHeader() {
+  refs.homeBtn.classList.remove('nav_item--current');
+  refs.libraryBtn.classList.add('nav_item--current');
+  refs.headerNavButtons.classList.remove('not-visible');
+  refs.form.classList.add('not-visible');
+}
+
+export function renderPageNotFound() {
   const markupPageNotFound = `
    <img class="page-not-found"
-   src=''
+   src=""
    alt=""
  />
    `;

@@ -5,8 +5,8 @@ import './js/apiService';
 import './js/renderServies';
 import './js/fetchAndRender';
 import './js/routing';
-import './js/modal';
 import './js/searchByQuery';
+import './js/modal';
 import './js/pagination';
 
 // import Notiflix from 'notiflix';

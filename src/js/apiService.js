@@ -11,11 +11,12 @@ export default class fetchApiMovies {
   constructor() {
     this.page = 1;
     this.word = '';
+    this._movieId = null;
   }
 
   async fetchMovies() {
     const response = await instance.get(
-      `/trending/movie/day?api_key=${API_KEY}`
+      `/trending/movie/day?api_key=${API_KEY}&page=${this.page}`
     );
     return response.data.results;
   }
@@ -48,12 +49,24 @@ export default class fetchApiMovies {
     this.page = 1;
   }
 
+  resetQuery() {
+    this.word = '';
+  }
+
   get query() {
     return this.word;
   }
 
   set query(newQuery) {
     return (this.word = newQuery);
+  }
+
+  get movieId() {
+    return this._movieId;
+  }
+
+  set movieId(newMovieId) {
+    return (this._movieId = newMovieId);
   }
 }
 

@@ -1,17 +1,26 @@
 import { homePage, libraryPage, notFoundPage } from './content-pages';
+import { onHeaderNavClick } from './headerNav';
+import { refs } from './refs';
 
 window.addEventListener('hashchange', renderContent);
+refs.logo.addEventListener('click', homePage);
+refs.headerNavLinks.forEach(headerNavLink =>
+  headerNavLink.addEventListener('click', onHeaderNavClick)
+);
 
 renderContent();
 
-async function renderContent() {
+function renderContent() {
   const route = window.location.hash.substring(1);
+  // const route = location.hash.replace(/^#/, '');
+
+  // const route = window.location.pathname;
 
   console.log(route);
-
   if (route === '/' || route === '') {
     homePage();
   } else if (route === '/library') {
+    console.log('rere');
     libraryPage();
   } else {
     notFoundPage();

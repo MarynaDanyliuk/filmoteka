@@ -23,7 +23,7 @@ export async function fetchMoviesAndRender() {
 export async function fetchMoviesByQueryAndRender(query, page) {
   try {
     await FetchApiMovies.fetchMoviesByQuery(query, page).then(movies => {
-      // console.log(movies);
+      console.log(movies);
       renderGallary(movies);
     });
   } catch (error) {
@@ -37,7 +37,7 @@ export async function fetchMovieDetailsByIdAndRender(MovieId) {
       // renderModalMovieDetails(movie);
       renderMovieImage(movie);
       renderMovieDescription(movie);
-      console.log(movie);
+      // console.log(movie);
     });
   } catch (error) {
     console.log(error.message);

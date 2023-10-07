@@ -1,34 +1,90 @@
 import { refs } from './refs';
 // import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
 import { clearModal } from './renderServies';
-import { onFormSubmit } from './searchByQuery';
+
+import { onGalleryClick } from './searchByQuery';
+
+let MovieId = 926393;
+
+MovieId = onGalleryClick;
+
+// refs.gallery.addEventListener(`click`, getMovieId);
+
+// import { getMovieId } from './searchByQuery';
 
 // import fetchApiMovies from './apiService';
 
 // const FetchApiMovies = new fetchApiMovies();
 
-refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
+// refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
 
 // function onButtonWatchedClick(event) {
 //   event.preventDefault();
 // }
 
-(function createModal() {
-  function closeModal(event) {
-    event.preventDefault();
-    refs.modal.classList.remove(`open`);
-    clearModal();
-  }
+// getMovieId().then(MovieId => {
+//   console.log(MovieId);
+// });
 
-  refs.buttonClose.addEventListener('click', closeModal);
-})();
+const createModal = (MovieId, onSuccess, onError) => {
+  // const promise = new Promise((resolve, reject) => {
+  if (MovieId) {
+    onSuccess();
+  } else {
+    onError();
+  }
+  // }
+  // );
+
+  // return promise;
+};
+
+function onSuccess() {
+  console.log('получилось');
+}
+
+function onError() {
+  console.log('Error');
+}
+
+createModal(onGalleryClick, onSuccess, onError);
+
+// (function getMovieId(MovieId) {
+//   const promise = new Promise((resolve, reject) => {
+//     if (MovieId) {
+//       resolve(console.log('получилось'));
+//     } else {
+//       reject(console.log('Error'));
+//     }
+//   });
+
+//   return promise;
+// })();
+
+// console.log(promise);
+
+// const p = getMovieId();
+
+// getMovieId().then(console.log('create Modal')).catch(console.log('error'));
+
+//   (
+//   function createModal() {
+//     function closeModal(event) {
+//       event.preventDefault();
+//       refs.modal.classList.remove(`open`);
+//       clearModal();
+//     }
+
+//     refs.buttonClose.addEventListener('click', closeModal);
+//   }
+// )();
 
 function onButtonWatchedClick(event) {
   event.preventDefault();
 
   console.log(refs.buttonWatched);
 
-  localStorage.setItem('original_title', 'tom');
+  localStorage.setItem('watched', 'movie');
 }
 // __________________________________________________________________
 

@@ -14,4 +14,7 @@ export const refs = {
   headerNavLinks: document.querySelectorAll('.nav_item'),
   headerNavButtons: document.querySelector('.nav_list_button'),
   buttonWatched: document.getElementById('buttonAdd'),
+  logo: document.querySelector('.logo'),
+  homeBtn: document.getElementById(`home_btn`),
+  libraryBtn: document.getElementById(`library_btn`),
 };
