@@ -21,6 +21,7 @@ let moviesQueue = [];
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
 // window.addEventListener('scroll', smoothScrolling);
+// refs.gallery.addEventListener(`click`, getMovieId);
 refs.gallery.addEventListener(`click`, onGalleryClick);
 refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
 // refs.gallery.addEventListener(`click`, getMovieId);
@@ -140,6 +141,8 @@ export async function onGalleryClick(event) {
   return MovieId;
 }
 
+async function getMovieId() {}
+
 console.log(FetchApiMovies.movieId);
 
 async function getMovieActive() {
@@ -158,10 +161,26 @@ async function onButtonWatchedClick(event) {
     .then(MovieActive => {
       moviesWatched.push(MovieActive);
       console.log(moviesWatched);
-      const MoviesWatchedStr = JSON.stringify(moviesWatched);
-      localStorage.setItem('watched', MoviesWatchedStr);
+      return moviesWatched;
+    })
+    .then(moviesWatched => {
+      setItemsLocalStorage(moviesWatched);
     })
     .catch(error => console.log('error'));
+}
+
+// console.log(moviesWatched);
+
+// setItemsLocalStorage(moviesWatched);
+
+function setItemsLocalStorage(moviesWatched) {
+  const MoviesWatchedStr = JSON.stringify(moviesWatched);
+  localStorage.setItem('watched', MoviesWatchedStr);
+}
+
+function getItemsLocalStorage(moviesWatched) {
+  const MoviesWatchedStr = JSON.stringify(moviesWatched);
+  localStorage.setItem('watched', MoviesWatchedStr);
 }
 
 // refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
