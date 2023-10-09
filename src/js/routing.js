@@ -1,12 +1,12 @@
 import { homePage, libraryPage, notFoundPage } from './content-pages';
-import { onHeaderNavClick } from './headerNav';
+// import { onHeaderNavClick } from './headerNav';
 import { refs } from './refs';
 
 window.addEventListener('hashchange', renderContent);
 refs.logo.addEventListener('click', homePage);
-refs.headerNavLinks.forEach(headerNavLink =>
-  headerNavLink.addEventListener('click', onHeaderNavClick)
-);
+// refs.headerNavLinks.forEach(headerNavLink =>
+//   headerNavLink.addEventListener('click', onHeaderNavClick)
+// );
 
 renderContent();
 

@@ -13,18 +13,9 @@ import {
 
 let query = '';
 let page = 1;
-let ImgActive = null;
-let MovieId = null;
-let moviesWatched = [];
-let moviesQueue = [];
 
 refs.form.addEventListener(`submit`, onFormSubmit);
 refs.buttonLoadMore.addEventListener(`click`, onButtonLoadMoreClick);
-// window.addEventListener('scroll', smoothScrolling);
-// refs.gallery.addEventListener(`click`, getMovieId);
-refs.gallery.addEventListener(`click`, onGalleryClick);
-refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
-// refs.gallery.addEventListener(`click`, getMovieId);
 
 export async function onFormSubmit(event) {
   event.preventDefault();
@@ -62,126 +53,134 @@ export async function onButtonLoadMoreClick(event) {
   console.log('AFTER FETCH', FetchApiMovies);
 }
 
-export async function onGalleryClick(event) {
-  event.preventDefault();
+// ________________________________________________________________
 
-  if (event.target.nodeName !== `IMG`) {
-    return;
-  }
-  const CurrentActiveImg = document.querySelector(`.img--active`);
+// window.addEventListener('scroll', smoothScrolling);
+// refs.gallery.addEventListener(`click`, getMovieId);
+// refs.gallery.addEventListener(`click`, onGalleryClick);
+// refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
+// refs.gallery.addEventListener(`click`, ModalOpen);
 
-  if (CurrentActiveImg) {
-    event.target.classList.remove(`.img--active`);
-  }
+// export async function onGalleryClick(event) {
+//   event.preventDefault();
 
-  const nextImgActive = event.target;
-  nextImgActive.classList.add(`.img--active`);
+//   if (event.target.nodeName !== `IMG`) {
+//     return;
+//   }
+//   const CurrentActiveImg = document.querySelector(`.img--active`);
 
-  ImgActive = nextImgActive.getAttribute(`src`).slice(31);
+//   if (CurrentActiveImg) {
+//     event.target.classList.remove(`.img--active`);
+//   }
 
-  page = FetchApiMovies.page;
-  query = FetchApiMovies.query;
+//   const nextImgActive = event.target;
+//   nextImgActive.classList.add(`.img--active`);
 
-  if (query === '') {
-    MovieId = await FetchApiMovies.fetchMoviesByPage(page).then(movies => {
-      const movieActive = movies.filter(
-        movie => movie.poster_path === ImgActive
-      );
-      const movieId = movieActive[0].id;
-      return movieId;
-    });
+//   ImgActive = nextImgActive.getAttribute(`src`).slice(31);
 
-    FetchApiMovies.movieId = MovieId;
-    console.log(FetchApiMovies.movieId);
-    await fetchMovieDetailsByIdAndRender(MovieId);
-    refs.modal.classList.add(`open`);
+//   page = FetchApiMovies.page;
+//   query = FetchApiMovies.query;
 
-    // ___________________local storage_______________
+//   if (query === '') {
+//     MovieId = await FetchApiMovies.fetchMoviesByPage(page).then(movies => {
+//       const movieActive = movies.filter(
+//         movie => movie.poster_path === ImgActive
+//       );
+//       const movieId = movieActive[0].id;
+//       return movieId;
+//     });
 
-    // const MovieActive = await FetchApiMovies.fetchMoviesByPage(page).then(
-    //   movies => {
-    //     // console.log(movies);
-    //     const movieActive = movies.filter(
-    //       movie => movie.poster_path === ImgActive
-    //     );
-    //     // console.log(movieActive);
+//     FetchApiMovies.movieId = MovieId;
+//     console.log(FetchApiMovies.movieId);
+//     await fetchMovieDetailsByIdAndRender(MovieId);
+//     refs.modal.classList.add(`open`);
 
-    //     const ActiveMovie = movieActive[0];
-    //     // console.log(movieId);
-    //     return ActiveMovie;
-    //   }
-    // );
-    // console.log(MovieActive);
+//     // ___________________local storage_______________
 
-    // moviesWatched.push(MovieActive);
+//     // const MovieActive = await FetchApiMovies.fetchMoviesByPage(page).then(
+//     //   movies => {
+//     //     // console.log(movies);
+//     //     const movieActive = movies.filter(
+//     //       movie => movie.poster_path === ImgActive
+//     //     );
+//     //     // console.log(movieActive);
 
-    // const MovieActiveStr = JSON.stringify(MovieActive);
+//     //     const ActiveMovie = movieActive[0];
+//     //     // console.log(movieId);
+//     //     return ActiveMovie;
+//     //   }
+//     // );
+//     // console.log(MovieActive);
 
-    return MovieId;
-    // return;
-  }
+//     // moviesWatched.push(MovieActive);
 
-  MovieId = await FetchApiMovies.fetchMoviesByQuery(query, page).then(
-    movies => {
-      console.log(movies);
-      const movieActive = movies.filter(
-        movie => movie.poster_path === ImgActive
-      );
-      // console.log(movieActive);
+//     // const MovieActiveStr = JSON.stringify(MovieActive);
 
-      const movieId = movieActive[0].id;
-      // console.log(movieId);
-      return movieId;
-    }
-  );
+//     return MovieId;
+//     // return;
+//   }
 
-  await fetchMovieDetailsByIdAndRender(MovieId);
-  refs.modal.classList.add(`open`);
-  // return;
-  return MovieId;
-}
+//   MovieId = await FetchApiMovies.fetchMoviesByQuery(query, page).then(
+//     movies => {
+//       console.log(movies);
+//       const movieActive = movies.filter(
+//         movie => movie.poster_path === ImgActive
+//       );
+//       // console.log(movieActive);
 
-async function getMovieId() {}
+//       const movieId = movieActive[0].id;
+//       // console.log(movieId);
+//       return movieId;
+//     }
+//   );
 
-console.log(FetchApiMovies.movieId);
+//   await fetchMovieDetailsByIdAndRender(MovieId);
+//   refs.modal.classList.add(`open`);
+//   // return;
+//   return MovieId;
+// }
 
-async function getMovieActive() {
-  const MovieActive = await FetchApiMovies.fetchMovieDetailsById(
-    FetchApiMovies.movieId
-  ).then(movie => {
-    return movie;
-  });
-  console.log(MovieActive);
-  return MovieActive;
-}
+// async function ModalOpen(event) {
+//   event.preventDefault();
 
-async function onButtonWatchedClick(event) {
-  event.preventDefault();
-  getMovieActive()
-    .then(MovieActive => {
-      moviesWatched.push(MovieActive);
-      console.log(moviesWatched);
-      return moviesWatched;
-    })
-    .then(moviesWatched => {
-      setItemsLocalStorage(moviesWatched);
-    })
-    .catch(error => console.log('error'));
-}
+//   if (event.target.nodeName !== `IMG`) {
+//     return;
+//   }
+
+//   MovieActiveId = event.target.getAttribute(`id`);
+//   // console.log(MovieActiveId);
+//   await fetchMovieDetailsByIdAndRender(MovieActiveId);
+//   refs.modal.classList.add(`open`);
+//   return MovieActiveId;
+// }
+
+// async function onButtonWatchedClick(event) {
+//   event.preventDefault();
+//   getMovieActive()
+//     .then(MovieActive => {
+//       moviesWatched.push(MovieActive);
+//       console.log(moviesWatched);
+//       return moviesWatched;
+//     })
+//     .then(moviesWatched => {
+//       setItemsLocalStorage(moviesWatched);
+//     })
+//     .catch(error => console.log(error.message));
+// }
 
 // console.log(moviesWatched);
 
 // setItemsLocalStorage(moviesWatched);
 
-function setItemsLocalStorage(moviesWatched) {
-  const MoviesWatchedStr = JSON.stringify(moviesWatched);
-  localStorage.setItem('watched', MoviesWatchedStr);
-}
+// function setItemsLocalStorage(moviesWatched) {
+//   const MoviesWatchedStr = JSON.stringify(moviesWatched);
+//   localStorage.setItem('watched', MoviesWatchedStr);
+// }
 
-function getItemsLocalStorage(moviesWatched) {
-  const MoviesWatchedStr = JSON.stringify(moviesWatched);
-  localStorage.setItem('watched', MoviesWatchedStr);
-}
+// function getItemsLocalStorage(moviesWatched) {
+//   const MoviesWatchedStr = JSON.stringify(moviesWatched);
+//   localStorage.setItem('watched', MoviesWatchedStr);
+// }
 
 // refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
 
@@ -203,34 +202,6 @@ function getItemsLocalStorage(moviesWatched) {
 
 //   localStorage.setItem('watched', 'movie');
 // }
-
-//______________________pagination______________________________
-
-export async function smoothScrolling(event) {
-  event.preventDefault();
-  const documentRect = refs.gallery.getBoundingClientRect();
-
-  if (documentRect.bottom < document.documentElement.clientHeight + 150) {
-    console.log('BEFORE scroll', FetchApiMovies);
-    await unlimitedScroll();
-
-    console.log('AFTER scroll', FetchApiMovies);
-  }
-}
-
-export async function unlimitedScroll() {
-  FetchApiMovies.incrementPage();
-
-  query = FetchApiMovies.query;
-  page = FetchApiMovies.page;
-
-  if (query === '') {
-    await fetchMoviesByPageAndRender(page);
-    return;
-  }
-
-  await fetchMoviesByQueryAndRender(query, page);
-}
 
 // async function getMovieId(event) {
 //   event.preventDefault();

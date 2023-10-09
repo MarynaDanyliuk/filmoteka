@@ -3,79 +3,66 @@ import fetchApiMovies from './apiService';
 
 const FetchApiMovies = new fetchApiMovies();
 
-let MovieId = FetchApiMovies.movieId;
-
 import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
 import { clearModal } from './renderServies';
 
-// refs.gallery.addEventListener(`click`, getMovieId);
+let moviesWatched = [];
+let moviesQueue = [];
 
-// import { getMovieId } from './searchByQuery';
+refs.gallery.addEventListener(`click`, ModalOpen);
+refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
 
-// import fetchApiMovies from './apiService';
+async function ModalOpen(event) {
+  event.preventDefault();
 
-// const FetchApiMovies = new fetchApiMovies();
-
-// refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
-
-// function onButtonWatchedClick(event) {
-//   event.preventDefault();
-// }
-
-// getMovieId().then(MovieId => {
-//   console.log(MovieId);
-// });
-
-const createModal = (MovieId, onSuccess, onError) => {
-  // const promise = new Promise((resolve, reject) => {
-  if (MovieId) {
-    onSuccess();
-  } else {
-    onError();
+  if (event.target.nodeName !== `IMG`) {
+    return;
   }
-  // }
-  // );
 
-  // return promise;
-};
-
-function onSuccess() {
-  console.log('получилось');
+  const MovieActiveId = event.target.getAttribute(`id`);
+  FetchApiMovies.movieId = MovieActiveId;
+  console.log(FetchApiMovies.movieId);
+  await fetchMovieDetailsByIdAndRender(MovieActiveId);
+  refs.modal.classList.add(`open`);
+  return MovieActiveId;
 }
-
-function onError() {
-  console.log('Error');
-}
-
-createModal(MovieId, onSuccess, onError);
-
-// (function getMovieId(MovieId) {
-//   const promise = new Promise((resolve, reject) => {
-//     if (MovieId) {
-//       resolve(console.log('получилось'));
-//     } else {
-//       reject(console.log('Error'));
-//     }
-//   });
-
-//   return promise;
-// })();
-
-// console.log(promise);
-
-// const p = getMovieId();
-
-// getMovieId().then(console.log('create Modal')).catch(console.log('error'));
 
 (function createModal() {
+  refs.buttonClose.addEventListener('click', closeModal);
   function closeModal(event) {
     event.preventDefault();
     refs.modal.classList.remove(`open`);
     clearModal();
   }
-
-  refs.buttonClose.addEventListener('click', closeModal);
 })();
+
+async function onButtonWatchedClick(event) {
+  event.preventDefault();
+
+  const MovieActive = await FetchApiMovies.fetchMovieDetailsById(
+    FetchApiMovies.movieId
+  )
+    .then(MovieActive => {
+      console.log(MovieActive);
+      moviesWatched.push(MovieActive);
+      console.log(moviesWatched);
+      return moviesWatched;
+    })
+    .then(moviesWatched => {
+      setItemsLocalStorage(moviesWatched);
+    })
+    .catch(error => console.log(error.message));
+}
+
+function setItemsLocalStorage(moviesWatched) {
+  const MoviesWatchedStr = JSON.stringify(moviesWatched);
+  localStorage.setItem('watched', MoviesWatchedStr);
+}
+
+function getItemsLocalStorage(moviesWatched) {
+  const MoviesWatchedStr = JSON.stringify(moviesWatched);
+  localStorage.setItem('watched', MoviesWatchedStr);
+}
 
 // function onButtonWatchedClick(event) {
 //   event.preventDefault();

@@ -2,7 +2,7 @@ import { refs } from './refs';
 
 export function renderGallary(movies) {
   const markup = movies
-    .map(({ poster_path, original_title }) => {
+    .map(({ poster_path, original_title, id }) => {
       return poster_path
         ? `<li class="galery__card">
         <a
@@ -10,9 +10,10 @@ export function renderGallary(movies) {
           href="https://image.tmdb.org/t/p/w500${poster_path}"
         >
           <img
+          id="${id}"
             class="details__img"
             src="https://image.tmdb.org/t/p/w500${poster_path}"
-          alt=${original_title}
+            alt=${original_title}
             width="300px"
             height="450px"
             loading="lazy"
@@ -25,6 +26,7 @@ export function renderGallary(movies) {
           href='https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg'
         >
           <img
+              id="${id}"
             class="details__img"
             src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
           alt=${original_title}
@@ -127,9 +129,62 @@ export function renderMovieDescription({ original_title }) {
   refs.movieDescr.insertAdjacentHTML(`beforeend`, movieMovieDescrMarkup);
 }
 
+export function clearPage() {
+  refs.gallery.innerHTML = '';
+}
+
+export function clearModal() {
+  refs.movieCard.innerHTML = '';
+  refs.movieDescr.innerHTML = '';
+}
+
+export function homeHeader() {
+  refs.input.value = '';
+  refs.homeBtn.classList.add('nav_item--current');
+  refs.libraryBtn.classList.remove('nav_item--current');
+  refs.headerNavButtons.classList.add('not-visible');
+  refs.form.classList.remove('not-visible');
+}
+
+export function libraryHeader() {
+  refs.homeBtn.classList.remove('nav_item--current');
+  refs.libraryBtn.classList.add('nav_item--current');
+  refs.headerNavButtons.classList.remove('not-visible');
+  refs.form.classList.add('not-visible');
+}
+
+export function renderPageNotFound() {
+  const markupPageNotFound = `
+   <img class="page-not-found"
+   src=""
+   alt=""
+ />
+   `;
+  refs.content.insertAdjacentHTML(`beforeend`, markupPageNotFound);
+}
+
+// _____________________DRAFT___________________________
+
+export function MovieCard() {
+  return `<li class="galery__card">
+        <a
+          class="gallery__link"
+          href="https://image.tmdb.org/t/p/w500${poster_path}"
+        >
+          <img
+            class="details__img"
+            src="https://image.tmdb.org/t/p/w500${poster_path}"
+          alt=${original_title}
+            width="300px"
+            height="450px"
+            loading="lazy"
+          />
+        </a>
+      </li>`;
+}
+
 export function renderModalMovieDetails({ poster_path, original_title }) {
   const movieCardMarkup = `
-
   <div class="movie_card">
         <img
           src="https://image.tmdb.org/t/p/w500${poster_path}"
@@ -169,61 +224,6 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
       `;
   // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   // console.log('повертаю Муві');
-}
-
-
-export function clearPage() {
-  refs.gallery.innerHTML = '';
-}
-
-export function clearModal() {
-  refs.movieCard.innerHTML = '';
-  refs.movieDescr.innerHTML = '';
-}
-
-export function homeHeader() {
-  refs.input.value = '';
-  refs.homeBtn.classList.add('nav_item--current');
-  refs.libraryBtn.classList.remove('nav_item--current');
-  refs.headerNavButtons.classList.add('not-visible');
-  refs.form.classList.remove('not-visible');
-}
-
-export function libraryHeader() {
-  refs.homeBtn.classList.remove('nav_item--current');
-  refs.libraryBtn.classList.add('nav_item--current');
-  refs.headerNavButtons.classList.remove('not-visible');
-  refs.form.classList.add('not-visible');
-}
-
-export function renderPageNotFound() {
-  const markupPageNotFound = `
-   <img class="page-not-found"
-   src=""
-   alt=""
- />
-   `;
-  refs.content.insertAdjacentHTML(`beforeend`, markupPageNotFound);
-}
-
-// ________________________________________________
-
-export function MovieCard() {
-  return `<li class="galery__card">
-        <a
-          class="gallery__link"
-          href="https://image.tmdb.org/t/p/w500${poster_path}"
-        >
-          <img
-            class="details__img"
-            src="https://image.tmdb.org/t/p/w500${poster_path}"
-          alt=${original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
-      </li>`;
 }
 
 // <div class="modal_body">
