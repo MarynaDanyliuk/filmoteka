@@ -8,7 +8,7 @@ import { clearPage } from './renderServies';
 import {
   fetchMoviesByQueryAndRender,
   fetchMoviesByPageAndRender,
-  fetchMovieDetailsByIdAndRender,
+  // fetchMovieDetailsByIdAndRender,
 } from './fetchAndRender';
 
 let query = '';

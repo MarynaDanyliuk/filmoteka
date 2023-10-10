@@ -7,17 +7,24 @@ import { refs } from './refs';
 import {
   clearPage,
   renderPageNotFound,
-  homeHeader,
-  libraryHeader,
+  renderHomeHeader,
+  renderLibraryHeader,
+  renderLibraryCollection,
 } from './renderServies';
 
 import { fetchMoviesAndRender } from './fetchAndRender';
 
 import { showButtonLoad, hideButtonLoad } from './pagination';
+import { getItemsLocalStorage } from './localStorageService';
+
+let key = 'watched';
+
+// refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
+// refs.buttonQueue.addEventListener('click', onButtonQueueClick);
 
 export async function homePage() {
   clearPage();
-  homeHeader();
+  renderHomeHeader();
   await fetchMoviesAndRender();
   showButtonLoad();
 }
@@ -25,10 +32,12 @@ export async function homePage() {
 export async function libraryPage() {
   clearPage();
 
-  libraryHeader();
+  renderLibraryHeader();
 
-  refs.gallery.textContent = 'Це сторінка "Бібліотека"';
-  await fetchMoviesAndRender();
+  // refs.gallery.textContent = 'Це сторінка "Бібліотека"';
+
+  renderLibraryCollection(key);
+
   showButtonLoad();
 }
 

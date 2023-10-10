@@ -1,3 +1,4 @@
+import { getItemsLocalStorage } from './localStorageService';
 import { refs } from './refs';
 
 export function renderGallary(movies) {
@@ -138,7 +139,7 @@ export function clearModal() {
   refs.movieDescr.innerHTML = '';
 }
 
-export function homeHeader() {
+export function renderHomeHeader() {
   refs.input.value = '';
   refs.homeBtn.classList.add('nav_item--current');
   refs.libraryBtn.classList.remove('nav_item--current');
@@ -146,7 +147,7 @@ export function homeHeader() {
   refs.form.classList.remove('not-visible');
 }
 
-export function libraryHeader() {
+export function renderLibraryHeader() {
   refs.homeBtn.classList.remove('nav_item--current');
   refs.libraryBtn.classList.add('nav_item--current');
   refs.headerNavButtons.classList.remove('not-visible');
@@ -161,6 +162,12 @@ export function renderPageNotFound() {
  />
    `;
   refs.content.insertAdjacentHTML(`beforeend`, markupPageNotFound);
+}
+
+export function renderLibraryCollection(key) {
+  const libraryCollection = getItemsLocalStorage(key);
+  renderGallary(libraryCollection);
+  console.log(libraryCollection);
 }
 
 // _____________________DRAFT___________________________

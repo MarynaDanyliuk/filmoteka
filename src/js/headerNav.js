@@ -1,8 +1,8 @@
 import { refs } from './refs';
 
-refs.headerNavLinks.forEach(headerNavLink =>
-  headerNavLink.addEventListener('click', onHeaderNavClick)
-);
+// refs.headerNavLinks.forEach(headerNavLink =>
+//   headerNavLink.addEventListener('click', onHeaderNavClick)
+// );
 
 export function onHeaderNavClick(event) {
   // const currentActiveLink = document.querySelector('.nav_item--current');

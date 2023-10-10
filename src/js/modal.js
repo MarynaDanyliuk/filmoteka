@@ -5,12 +5,14 @@ const FetchApiMovies = new fetchApiMovies();
 
 import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
 import { clearModal } from './renderServies';
+import { setItemsLocalStorage } from './localStorageService';
 
 let moviesWatched = [];
 let moviesQueue = [];
 
 refs.gallery.addEventListener(`click`, ModalOpen);
 refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
+refs.buttonQueue.addEventListener('click', onButtonQueueClick);
 
 async function ModalOpen(event) {
   event.preventDefault();
@@ -19,7 +21,7 @@ async function ModalOpen(event) {
     return;
   }
 
-  const MovieActiveId = event.target.getAttribute(`id`);
+  MovieActiveId = event.target.getAttribute(`id`);
   FetchApiMovies.movieId = MovieActiveId;
   console.log(FetchApiMovies.movieId);
   await fetchMovieDetailsByIdAndRender(MovieActiveId);
@@ -49,20 +51,51 @@ async function onButtonWatchedClick(event) {
       return moviesWatched;
     })
     .then(moviesWatched => {
-      setItemsLocalStorage(moviesWatched);
+      setItemsLocalStorage('watched', moviesWatched);
     })
     .catch(error => console.log(error.message));
 }
 
-function setItemsLocalStorage(moviesWatched) {
-  const MoviesWatchedStr = JSON.stringify(moviesWatched);
-  localStorage.setItem('watched', MoviesWatchedStr);
+async function onButtonQueueClick(event) {
+  event.preventDefault();
+
+  const MovieActive = await FetchApiMovies.fetchMovieDetailsById(
+    FetchApiMovies.movieId
+  )
+    .then(MovieActive => {
+      console.log(MovieActive);
+      moviesQueue.push(MovieActive);
+      console.log(moviesQueue);
+      return moviesQueue;
+    })
+    .then(moviesQueue => {
+      setItemsLocalStorage('queue', moviesQueue);
+    })
+    .catch(error => console.log(error.message));
 }
 
-function getItemsLocalStorage(moviesWatched) {
-  const MoviesWatchedStr = JSON.stringify(moviesWatched);
-  localStorage.setItem('watched', MoviesWatchedStr);
-}
+// async function libraryMovieSet(MovieActiveId, setItemsLocalStorage, getItemsLocalStorage) {
+//   try {
+//     const MovieActiveId = FetchApiMovies.movieId
+//     const MovieActive = await FetchApiMovies.fetchMovieDetailsById(
+//       MovieActiveId
+//     );
+
+//     // moviesWatched.push(MovieActive);
+//     // console.log(moviesWatched);
+//     // return moviesWatched;
+//   }
+//   // .then(moviesWatched => {
+//   //   setItemsLocalStorage(moviesWatched);
+//   // })
+//   catch {
+//     error => {
+//       console.log(error.message);
+//     }
+//   };
+
+//   console.log(MovieActive);
+// }
 
 // function onButtonWatchedClick(event) {
 //   event.preventDefault();
