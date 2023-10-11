@@ -3,19 +3,32 @@ import fetchApiMovies from './apiService';
 
 const FetchApiMovies = new fetchApiMovies();
 
-import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
-import { clearModal } from './renderServies';
-import { setItemsLocalStorage } from './localStorageService';
-
 let moviesWatched = [];
 let moviesQueue = [];
+let moviesLibrary = [];
+let MovieActive = null;
+// MovieActiveId = FetchApiMovies.movieId;
 
-refs.gallery.addEventListener(`click`, ModalOpen);
+refs.buttonClose.addEventListener('click', closeModal);
 refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
 refs.buttonQueue.addEventListener('click', onButtonQueueClick);
 
-async function ModalOpen(event) {
+import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
+// import { clearModal } from './renderServies';
+import {
+  setItemsLocalStorage,
+  getItemsLocalStorage,
+} from './localStorageService';
+
+let MovieActiveId = null;
+let key = 'watched';
+
+refs.gallery.addEventListener(`click`, ModalOpen);
+
+export async function ModalOpen(event) {
   event.preventDefault();
+
+  moviesWatched = getItemsLocalStorage(key);
 
   if (event.target.nodeName !== `IMG`) {
     return;
@@ -29,24 +42,37 @@ async function ModalOpen(event) {
   return MovieActiveId;
 }
 
-(function createModal() {
-  refs.buttonClose.addEventListener('click', closeModal);
-  function closeModal(event) {
-    event.preventDefault();
-    refs.modal.classList.remove(`open`);
-    clearModal();
-  }
-})();
+export function closeModal(event) {
+  event.preventDefault();
+  refs.modal.classList.remove(`open`);
+  clearModal();
+}
+
+function clearModal() {
+  refs.movieCard.innerHTML = '';
+  refs.movieDescr.innerHTML = '';
+}
+
+// (function createModal() {
+//   refs.buttonClose.addEventListener('click', closeModal);
+
+//   // function closeModal(event) {
+//   //   event.preventDefault();
+//   //   refs.modal.classList.remove(`open`);
+//   //   clearModal();
+//   // }
+// })();
 
 async function onButtonWatchedClick(event) {
   event.preventDefault();
+  closeModal(event);
 
-  const MovieActive = await FetchApiMovies.fetchMovieDetailsById(
+  MovieActive = await FetchApiMovies.fetchMovieDetailsById(
     FetchApiMovies.movieId
   )
-    .then(MovieActive => {
-      console.log(MovieActive);
-      moviesWatched.push(MovieActive);
+    .then(data => {
+      console.log(data);
+      moviesWatched.push(data);
       console.log(moviesWatched);
       return moviesWatched;
     })
@@ -73,6 +99,12 @@ async function onButtonQueueClick(event) {
     })
     .catch(error => console.log(error.message));
 }
+
+// export async function getMovieActiveId() {
+//   const MovieActiveId = await ModalOpen().then(MovieActiveId => {
+//     console.log(MovieActiveId);
+//   });
+// }
 
 // async function libraryMovieSet(MovieActiveId, setItemsLocalStorage, getItemsLocalStorage) {
 //   try {

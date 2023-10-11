@@ -9,13 +9,16 @@ import {
   renderPageNotFound,
   renderHomeHeader,
   renderLibraryHeader,
-  renderLibraryCollection,
+  renderGallary,
 } from './renderServies';
+
+import { renderLibraryCollection } from './libraryCollection';
 
 import { fetchMoviesAndRender } from './fetchAndRender';
 
 import { showButtonLoad, hideButtonLoad } from './pagination';
-import { getItemsLocalStorage } from './localStorageService';
+
+// import { getItemsLocalStorage } from './localStorageService';
 
 let key = 'watched';
 
@@ -33,6 +36,8 @@ export async function libraryPage() {
   clearPage();
 
   renderLibraryHeader();
+
+  // console.log(getItemsLocalStorage(key));
 
   // refs.gallery.textContent = 'Це сторінка "Бібліотека"';
 

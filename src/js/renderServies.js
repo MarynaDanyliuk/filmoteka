@@ -1,4 +1,3 @@
-import { getItemsLocalStorage } from './localStorageService';
 import { refs } from './refs';
 
 export function renderGallary(movies) {
@@ -134,11 +133,6 @@ export function clearPage() {
   refs.gallery.innerHTML = '';
 }
 
-export function clearModal() {
-  refs.movieCard.innerHTML = '';
-  refs.movieDescr.innerHTML = '';
-}
-
 export function renderHomeHeader() {
   refs.input.value = '';
   refs.homeBtn.classList.add('nav_item--current');
@@ -162,12 +156,6 @@ export function renderPageNotFound() {
  />
    `;
   refs.content.insertAdjacentHTML(`beforeend`, markupPageNotFound);
-}
-
-export function renderLibraryCollection(key) {
-  const libraryCollection = getItemsLocalStorage(key);
-  renderGallary(libraryCollection);
-  console.log(libraryCollection);
 }
 
 // _____________________DRAFT___________________________
