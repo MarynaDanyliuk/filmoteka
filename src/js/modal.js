@@ -5,31 +5,26 @@ const FetchApiMovies = new fetchApiMovies();
 
 let moviesWatched = [];
 let moviesQueue = [];
+let MovieActiveId = null;
+let key = '';
 let moviesLibrary = [];
 let MovieActive = null;
-// MovieActiveId = FetchApiMovies.movieId;
 
 refs.buttonClose.addEventListener('click', closeModal);
 refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
 refs.buttonQueue.addEventListener('click', onButtonQueueClick);
 
 import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
-// import { clearModal } from './renderServies';
+
 import {
   setItemsLocalStorage,
   getItemsLocalStorage,
 } from './localStorageService';
 
-let MovieActiveId = null;
-let key = 'watched';
-
 refs.gallery.addEventListener(`click`, ModalOpen);
 
 export async function ModalOpen(event) {
   event.preventDefault();
-
-  moviesWatched = getItemsLocalStorage(key);
-
   if (event.target.nodeName !== `IMG`) {
     return;
   }
@@ -66,10 +61,11 @@ function clearModal() {
 async function onButtonWatchedClick(event) {
   event.preventDefault();
   closeModal(event);
+  key = 'watched';
 
-  MovieActive = await FetchApiMovies.fetchMovieDetailsById(
-    FetchApiMovies.movieId
-  )
+  moviesWatched = getItemsLocalStorage(key) || [];
+
+  await FetchApiMovies.fetchMovieDetailsById(FetchApiMovies.movieId)
     .then(data => {
       console.log(data);
       moviesWatched.push(data);
@@ -77,17 +73,21 @@ async function onButtonWatchedClick(event) {
       return moviesWatched;
     })
     .then(moviesWatched => {
-      setItemsLocalStorage('watched', moviesWatched);
+      setItemsLocalStorage(key, moviesWatched);
+      // document.location.reload();
     })
     .catch(error => console.log(error.message));
 }
 
 async function onButtonQueueClick(event) {
   event.preventDefault();
+  closeModal(event);
 
-  const MovieActive = await FetchApiMovies.fetchMovieDetailsById(
-    FetchApiMovies.movieId
-  )
+  key = 'queue';
+
+  moviesQueue = getItemsLocalStorage(key) || [];
+
+  await FetchApiMovies.fetchMovieDetailsById(FetchApiMovies.movieId)
     .then(MovieActive => {
       console.log(MovieActive);
       moviesQueue.push(MovieActive);
@@ -95,7 +95,7 @@ async function onButtonQueueClick(event) {
       return moviesQueue;
     })
     .then(moviesQueue => {
-      setItemsLocalStorage('queue', moviesQueue);
+      setItemsLocalStorage(key, moviesQueue);
     })
     .catch(error => console.log(error.message));
 }
