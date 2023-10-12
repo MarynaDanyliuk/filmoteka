@@ -8,12 +8,9 @@ let moviesQueue = [];
 let MovieActiveId = null;
 let key = '';
 let moviesLibrary = [];
-// let MovieActive = null;
 
-refs.gallery.addEventListener(`click`, ModalOpen);
+refs.gallery.addEventListener(`click`, openModal);
 refs.buttonClose.addEventListener('click', closeModal);
-// refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
-// refs.buttonQueue.addEventListener('click', onButtonQueueClick);
 
 refs.butttonsLibrary.addEventListener('click', onButtonsClick);
 refs.buttonHeaderNav.addEventListener('click', onButtonsHeaderNavClick);
@@ -28,7 +25,7 @@ import {
 } from './localStorageService';
 import { clearPage } from './renderServies';
 
-export async function ModalOpen(event) {
+async function openModal(event) {
   event.preventDefault();
   if (event.target.nodeName !== `IMG`) {
     return;

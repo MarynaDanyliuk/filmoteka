@@ -3,48 +3,53 @@ import { refs } from './refs';
 export function renderGallary(movies) {
   const markup = movies
     .map(({ poster_path, original_title, id }) => {
-      return poster_path
-        ? `<li class="galery__card">
-        <a
-          class="gallery__link"
-          href="https://image.tmdb.org/t/p/w500${poster_path}"
-        >
-          <img
-          id="${id}"
-            class="details__img"
-            src="https://image.tmdb.org/t/p/w500${poster_path}"
-            alt=${original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
-      </li>`
-        : `<li class="galery__card">
-        <a
-          class="gallery__link modal_open"
-          href='https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg'
-        >
-          <img
-              id="${id}"
-            class="details__img"
-            src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-          alt=${original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-            style="{object-fit: cover}"
-          />
-        </a>
-      </li>`;
+      return MovieCard({ poster_path, original_title, id });
     })
-    .join(``);
+    .join('');
+  // const markup = movies
+  //   .map(({ poster_path, original_title, id }) => {
+  //     return poster_path
+  //   ? `<li class="galery__card">
+  //   <a
+  //     class="gallery__link"
+  //     href="https://image.tmdb.org/t/p/w500${poster_path}"
+  //   >
+  //     <img
+  //     id="${id}"
+  //       class="details__img"
+  //       src="https://image.tmdb.org/t/p/w500${poster_path}"
+  //       alt=${original_title}
+  //       width="300px"
+  //       height="450px"
+  //       loading="lazy"
+  //     />
+  //   </a>
+  // </li>`
+  //       : `<li class="galery__card">
+  //       <a
+  //         class="gallery__link modal_open"
+  //         href='https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg'
+  //       >
+  //         <img
+  //             id="${id}"
+  //           class="details__img"
+  //           src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+  //         alt=${original_title}
+  //           width="300px"
+  //           height="450px"
+  //           loading="lazy"
+  //           style="{object-fit: cover}"
+  //         />
+  //       </a>
+  //     </li>`;
+  //   })
+  //   .join(``);
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
 }
 
 export function renderGallaryCard(movies) {
   const markup = movies
-    .map(({ poster_path, original_title }) => {
+    .map(({ poster_path, original_title, id }) => {
       return poster_path
         ? `<li class="galery__card">
         <a
@@ -52,6 +57,7 @@ export function renderGallaryCard(movies) {
           href="https://image.tmdb.org/t/p/w500${poster_path}"
         >
           <img
+            id="${id}"
             class="details__img"
             src="https://image.tmdb.org/t/p/w500${poster_path}"
           alt=${original_title}
@@ -67,6 +73,7 @@ export function renderGallaryCard(movies) {
           href='../src/images/default_image_large.jpg'
         >
           <img
+                id="${id}"
             class="details__img"
             src="../src/images/default_image_large.jpg"
           alt=${original_title}
@@ -78,19 +85,23 @@ export function renderGallaryCard(movies) {
       </li>`;
     })
     .join(``);
-  refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+  // refs.gallery.insertAdjacentHTML(`beforeend`, markup);
 }
 
 export function renderMovieImage({ poster_path, original_title }) {
-  const movieImageMarkup = `
-
-   <img
+  const movieImageMarkup = poster_path
+    ? `<img
           src="https://image.tmdb.org/t/p/w500${poster_path}"
           alt=${original_title}
           class="image"
-        />
-
-  `;
+          
+        />`
+    : `<img
+          src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+          alt="default image"
+          class="image"
+          style="object-fit: cover"
+        />`;
   refs.movieCard.insertAdjacentHTML(`beforeend`, movieImageMarkup);
 }
 
@@ -160,21 +171,37 @@ export function renderPageNotFound() {
 
 // _____________________DRAFT___________________________
 
-export function MovieCard() {
-  return `<li class="galery__card">
-        <a
-          class="gallery__link"
+export function MovieCard({ poster_path, original_title, id }) {
+  return poster_path
+    ? `<li class="galery__card">
+         <a
+           class="gallery__link"
           href="https://image.tmdb.org/t/p/w500${poster_path}"
-        >
-          <img
-            class="details__img"
-            src="https://image.tmdb.org/t/p/w500${poster_path}"
-          alt=${original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
+         >
+           <img
+           id="${id}"
+             class="details__img"
+             src="https://image.tmdb.org/t/p/w500${poster_path}"
+             alt="${original_title}"
+           
+             loading="lazy"
+           />
+         </a>
+      </li>`
+    : `<li class="galery__card">
+         <a
+           class="gallery__link"
+          href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+         >
+           <img
+           id="${id}"
+             class="details__img"
+             src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+             alt="${original_title}"
+        
+             loading="lazy"
+           />
+         </a>
       </li>`;
 }
 
@@ -220,6 +247,12 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
   // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   // console.log('повертаю Муві');
 }
+
+//   width = '300px';
+// height = '450px';
+
+//      width = '300px';
+//      height = '450px';
 
 // <div class="modal_body">
 //   <div class="modal_content">

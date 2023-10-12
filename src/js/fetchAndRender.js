@@ -4,7 +4,7 @@ const FetchApiMovies = new fetchApiMovies();
 
 import {
   renderGallary,
-  renderModalMovieDetails,
+  // renderModalMovieDetails,
   renderMovieImage,
   renderMovieDescription,
 } from './renderServies';
