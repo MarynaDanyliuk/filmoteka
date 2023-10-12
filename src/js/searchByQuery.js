@@ -1,6 +1,6 @@
 import { refs } from './refs';
 
-import fetchApiMovies, { fetchMovieDetailsById } from './apiService';
+import fetchApiMovies from './apiService';
 
 const FetchApiMovies = new fetchApiMovies();
 
@@ -8,7 +8,6 @@ import { clearPage } from './renderServies';
 import {
   fetchMoviesByQueryAndRender,
   fetchMoviesByPageAndRender,
-  // fetchMovieDetailsByIdAndRender,
 } from './fetchAndRender';
 
 let query = '';

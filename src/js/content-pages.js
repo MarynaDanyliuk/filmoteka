@@ -1,15 +1,8 @@
-// import fetchApiMovies from './apiService';
-
-// const FetchApiMovies = new fetchApiMovies();
-
-import { refs } from './refs';
-
 import {
   clearPage,
   renderPageNotFound,
   renderHomeHeader,
   renderLibraryHeader,
-  renderGallary,
 } from './renderServies';
 
 import { renderLibraryCollection } from './libraryCollection';
@@ -18,14 +11,7 @@ import { fetchMoviesAndRender } from './fetchAndRender';
 
 import { showButtonLoad, hideButtonLoad } from './pagination';
 
-import { onButtonsHeaderNavClick } from './modal';
-
-// import { getItemsLocalStorage } from './localStorageService';
-
 let key = 'library';
-
-// refs.buttonWatched.addEventListener('click', onButtonsHeaderNavClick);
-// refs.buttonQueue.addEventListener('click', onButtonsHeaderNavClick);
 
 export async function homePage() {
   clearPage();
@@ -39,10 +25,6 @@ export async function libraryPage() {
 
   renderLibraryHeader();
 
-  // console.log(getItemsLocalStorage(key));
-
-  // refs.gallery.textContent = 'Це сторінка "Бібліотека"';
-
   renderLibraryCollection(key);
 
   showButtonLoad();
@@ -55,6 +37,23 @@ export function notFoundPage() {
 
   hideButtonLoad();
 }
+
+// refs.buttonWatched.addEventListener('click', onButtonsHeaderNavClick);
+// refs.buttonQueue.addEventListener('click', onButtonsHeaderNavClick);
+
+// import { refs } from './refs';
+
+// import fetchApiMovies from './apiService';
+
+// const FetchApiMovies = new fetchApiMovies();
+
+// import { onButtonsHeaderNavClick } from './modal';
+
+// import { getItemsLocalStorage } from './localStorageService';
+
+// console.log(getItemsLocalStorage(key));
+
+// refs.gallery.textContent = 'Це сторінка "Бібліотека"';
 
 // refs.input.value = '';
 // refs.homeBtn.classList.add('nav_item--current');

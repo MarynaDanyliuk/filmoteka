@@ -100,6 +100,8 @@ export function onButtonsHeaderNavClick(event) {
   console.log('great job!');
 }
 
+// __________________Draft________________
+
 async function onButtonWatchedClick(event) {
   event.preventDefault();
   closeModal(event);

@@ -1,6 +1,5 @@
 import './js/refs';
 import './js/content-pages';
-import './js/headerNav';
 import './js/apiService';
 import './js/renderServies';
 import './js/fetchAndRender';

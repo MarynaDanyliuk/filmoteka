@@ -105,26 +105,42 @@ export function renderMovieImage({ poster_path, original_title }) {
   refs.movieCard.insertAdjacentHTML(`beforeend`, movieImageMarkup);
 }
 
-export function renderMovieDescription({ original_title }) {
+// const markup = genres
+//   .map(({ genre }) => {
+//     return `<p>${genre}</p>`;
+//   })
+//   .join('');
+
+export function renderMovieDescription({
+  original_title,
+  vote_average,
+  vote_count,
+  popularity,
+  genres,
+}) {
   const movieMovieDescrMarkup = `
         <div class="movie_descr">
           <p class="movie_title">${original_title}</p>
           <table class="movie_info">
             <tr class="movie_info_item">
-              <td>11</td>
-              <td>12</td>
+              <td>Vote/Votes</td>
+              <td>${vote_average}/${vote_count}</td>
             </tr>
             <tr class="movie_info_item">
-              <td>21</td>
-              <td>22</td>
+              <td>Popularity</td>
+              <td>${popularity}</td>
             </tr>
             <tr class="movie_info_item">
-              <td>31</td>
-              <td>32</td>
+              <td>Original Title</td>
+              <td>${original_title}</td>
             </tr>
             <tr class="movie_info_item">
-              <td>41</td>
-              <td>42</td>
+              <td class="list_category">Genre</td>
+              <td class="list_data">${genres
+                .map(({ name }) => {
+                  return `<p>${name}</p>`;
+                })
+                .join('')}</td>
             </tr>
           </table>
           <p>About</p>

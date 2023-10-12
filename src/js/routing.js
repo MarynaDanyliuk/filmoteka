@@ -1,12 +1,8 @@
 import { homePage, libraryPage, notFoundPage } from './content-pages';
-// import { onHeaderNavClick } from './headerNav';
 import { refs } from './refs';
 
 window.addEventListener('hashchange', renderContent);
 refs.logo.addEventListener('click', homePage);
-// refs.headerNavLinks.forEach(headerNavLink =>
-//   headerNavLink.addEventListener('click', onHeaderNavClick)
-// );
 
 renderContent();
 
@@ -24,6 +20,11 @@ function renderContent() {
 }
 
 // _______________________________________________________________
+
+// import { onHeaderNavClick } from './headerNav';
+// refs.headerNavLinks.forEach(headerNavLink =>
+//   headerNavLink.addEventListener('click', onHeaderNavClick)
+// );
 
 // import fetchApiMovies from './apiService';
 
