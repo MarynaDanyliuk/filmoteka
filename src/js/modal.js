@@ -8,20 +8,25 @@ let moviesQueue = [];
 let MovieActiveId = null;
 let key = '';
 let moviesLibrary = [];
-let MovieActive = null;
+// let MovieActive = null;
 
+refs.gallery.addEventListener(`click`, ModalOpen);
 refs.buttonClose.addEventListener('click', closeModal);
-refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
-refs.buttonQueue.addEventListener('click', onButtonQueueClick);
+// refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
+// refs.buttonQueue.addEventListener('click', onButtonQueueClick);
+
+refs.butttonsLibrary.addEventListener('click', onButtonsClick);
+refs.buttonHeaderNav.addEventListener('click', onButtonsHeaderNavClick);
 
 import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
+
+import { renderLibraryCollection } from './libraryCollection';
 
 import {
   setItemsLocalStorage,
   getItemsLocalStorage,
 } from './localStorageService';
-
-refs.gallery.addEventListener(`click`, ModalOpen);
+import { clearPage } from './renderServies';
 
 export async function ModalOpen(event) {
   event.preventDefault();
@@ -48,15 +53,55 @@ function clearModal() {
   refs.movieDescr.innerHTML = '';
 }
 
-// (function createModal() {
-//   refs.buttonClose.addEventListener('click', closeModal);
+async function onButtonsClick(event) {
+  event.preventDefault();
+  if (event.target.nodeName !== `BUTTON`) {
+    return;
+  }
+  key = event.target.getAttribute('id');
 
-//   // function closeModal(event) {
-//   //   event.preventDefault();
-//   //   refs.modal.classList.remove(`open`);
-//   //   clearModal();
-//   // }
-// })();
+  moviesWatched = getItemsLocalStorage(key) || [];
+  moviesQueue = getItemsLocalStorage(key) || [];
+
+  closeModal(event);
+
+  await FetchApiMovies.fetchMovieDetailsById(FetchApiMovies.movieId)
+    .then(data => {
+      moviesLibrary = getItemsLocalStorage('library') || [];
+      console.log(data);
+      moviesLibrary.push(data);
+      setItemsLocalStorage('library', moviesLibrary);
+      if (key === 'watched') {
+        moviesWatched.push(data);
+        setItemsLocalStorage(key, moviesWatched);
+      } else if (key === 'queue') {
+        moviesQueue.push(data);
+        setItemsLocalStorage(key, moviesQueue);
+      }
+    })
+    .catch(error => console.log(error.message))
+    .finally(() => {
+      alert('фільм додано в бібліотеку');
+      // document.location.reload();
+    });
+}
+
+export function onButtonsHeaderNavClick(event) {
+  clearPage();
+
+  key = event.target.getAttribute('id');
+
+  moviesWatched = getItemsLocalStorage(key) || [];
+  moviesQueue = getItemsLocalStorage(key) || [];
+
+  if (key === 'watched') {
+    renderLibraryCollection(key);
+  }
+  if (key === 'queue') {
+    renderLibraryCollection(key);
+  }
+  console.log('great job!');
+}
 
 async function onButtonWatchedClick(event) {
   event.preventDefault();
@@ -69,6 +114,7 @@ async function onButtonWatchedClick(event) {
     .then(data => {
       console.log(data);
       moviesWatched.push(data);
+      moviesLibrary.push(data);
       console.log(moviesWatched);
       return moviesWatched;
     })
@@ -99,6 +145,20 @@ async function onButtonQueueClick(event) {
     })
     .catch(error => console.log(error.message));
 }
+
+// else {
+//         alert('я молодець');
+//       }
+
+// (function createModal() {
+//   refs.buttonClose.addEventListener('click', closeModal);
+
+//   // function closeModal(event) {
+//   //   event.preventDefault();
+//   //   refs.modal.classList.remove(`open`);
+//   //   clearModal();
+//   // }
+// })();
 
 // export async function getMovieActiveId() {
 //   const MovieActiveId = await ModalOpen().then(MovieActiveId => {

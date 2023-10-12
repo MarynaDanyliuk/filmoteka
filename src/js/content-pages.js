@@ -18,12 +18,14 @@ import { fetchMoviesAndRender } from './fetchAndRender';
 
 import { showButtonLoad, hideButtonLoad } from './pagination';
 
+import { onButtonsHeaderNavClick } from './modal';
+
 // import { getItemsLocalStorage } from './localStorageService';
 
-let key = 'watched';
+let key = 'library';
 
-// refs.buttonWatched.addEventListener('click', onButtonWatchedClick);
-// refs.buttonQueue.addEventListener('click', onButtonQueueClick);
+// refs.buttonWatched.addEventListener('click', onButtonsHeaderNavClick);
+// refs.buttonQueue.addEventListener('click', onButtonsHeaderNavClick);
 
 export async function homePage() {
   clearPage();
