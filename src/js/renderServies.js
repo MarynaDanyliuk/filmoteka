@@ -2,9 +2,25 @@ import { refs } from './refs';
 
 export function renderGallary(movies) {
   const markup = movies
-    .map(({ poster_path, original_title, id }) => {
-      return MovieCard({ poster_path, original_title, id });
-    })
+    .map(
+      ({
+        poster_path,
+        original_title,
+        id,
+        genre_ids,
+        release_date,
+        vote_average,
+      }) => {
+        return MovieCard({
+          poster_path,
+          original_title,
+          id,
+          genre_ids,
+          release_date,
+          vote_average,
+        });
+      }
+    )
     .join('');
   // const markup = movies
   //   .map(({ poster_path, original_title, id }) => {
@@ -120,31 +136,31 @@ export function renderMovieDescription({
 }) {
   const movieMovieDescrMarkup = `
         <div class="movie_descr">
-          <p class="movie_title">${original_title}</p>
-          <table class="movie_info">
+          <h1 class="movie_title">${original_title}</h1>
+          <table class="movie_inform">
             <tr class="movie_info_item">
-              <td>Vote/Votes</td>
-              <td>${vote_average}/${vote_count}</td>
+              <td class="list_category">Vote/Votes</td>
+              <td class="list_data">${vote_average}/${vote_count}</td>
             </tr>
             <tr class="movie_info_item">
-              <td>Popularity</td>
-              <td>${popularity}</td>
+              <td class="list_category">Popularity</td>
+              <td class="list_data">${popularity}</td>
             </tr>
             <tr class="movie_info_item">
-              <td>Original Title</td>
-              <td>${original_title}</td>
+              <td class="list_category">Original Title</td>
+              <td class="list_data" style="text-transform: uppercase">${original_title}</td>
             </tr>
             <tr class="movie_info_item">
               <td class="list_category">Genre</td>
-              <td class="list_data">${genres
+              <td class="list_data genres">${genres
                 .map(({ name }) => {
-                  return `<p>${name}</p>`;
+                  return `<p class="movie_genres">${name}</p>`;
                 })
                 .join('')}</td>
             </tr>
           </table>
-          <p>About</p>
-          <p>
+          <p style="text-transform: uppercase">About</p>
+          <p class="movie_about">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus
             nostrum inventore sint, consectetur i ncidunt rerum, adipisci
             suscipit fugit at similique sequi explicabo tempora provident harum
@@ -187,7 +203,14 @@ export function renderPageNotFound() {
 
 // _____________________DRAFT___________________________
 
-export function MovieCard({ poster_path, original_title, id }) {
+export function MovieCard({
+  poster_path,
+  original_title,
+  id,
+  genre_ids,
+  release_date,
+  vote_average,
+}) {
   return poster_path
     ? `<li class="galery__card">
          <a
@@ -202,7 +225,20 @@ export function MovieCard({ poster_path, original_title, id }) {
            
              loading="lazy"
            />
+             <p>${original_title}</p>
+         <div>
+         <ul>${
+           genre_ids
+           //  .map(({ name }) => {
+           //    return `<li class="movie_genres">${name}</li>`;
+           //  })
+           // .join('')
+         }</ul>
+           <p>${release_date}</p>
+           <p>${vote_average}</p>
+         </div>
          </a>
+       
       </li>`
     : `<li class="galery__card">
          <a

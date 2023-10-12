@@ -11,7 +11,7 @@ import {
 export async function fetchMoviesAndRender() {
   try {
     await FetchApiMovies.fetchMovies().then(movies => {
-      // console.log(movies);
+      console.log(movies);
       renderGallary(movies);
     });
   } catch (error) {

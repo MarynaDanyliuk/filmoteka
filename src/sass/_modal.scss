@@ -51,8 +51,25 @@
   flex-direction: row;
 }
 
-.movie_info {
-  display: inline-block;
+.movie_inform {
+  margin-bottom: 20px;
+  // background-color: yellow;
+  width: 100%;
+  height: 120px;
+}
+
+// .movie_info {
+// }
+
+// .movie_descr {
+// }
+
+.movie_title {
+  size: 30px;
+  font-weight: 700;
+  line-height: auto;
+  text-transform: uppercase;
+  margin-bottom: 20px;
 }
 
 .image {
@@ -62,6 +79,32 @@
   margin-right: 16px;
 }
 
-.list_data {
+.list_category {
+  // line-height: auto;
+  color: #8c8c8c;
+  width: 35%;
+  // background-color: aqua;
+  // vertical-align: middle;
+}
+
+// .list_data {
+//   // line-height: auto;
+//   // background-color: red;
+//   // vertical-align: middle;
+// }
+
+.genres {
   display: flex;
+}
+
+.movie_about {
+  line-height: 20px;
+  margin-bottom: 20px;
+}
+
+.movie_genres {
+  margin-right: 6px;
+}
+.movie_genres:last-child {
+  margin-right: 0;
 }
