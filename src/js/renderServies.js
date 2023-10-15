@@ -8,6 +8,7 @@ export function renderGallary(movies) {
         original_title,
         id,
         genre_ids,
+        genres,
         release_date,
         vote_average,
       }) => {
@@ -16,6 +17,7 @@ export function renderGallary(movies) {
           original_title,
           id,
           genre_ids,
+          genres,
           release_date,
           vote_average,
         });
@@ -121,18 +123,13 @@ export function renderMovieImage({ poster_path, original_title }) {
   refs.movieCard.insertAdjacentHTML(`beforeend`, movieImageMarkup);
 }
 
-// const markup = genres
-//   .map(({ genre }) => {
-//     return `<p>${genre}</p>`;
-//   })
-//   .join('');
-
 export function renderMovieDescription({
   original_title,
   vote_average,
   vote_count,
   popularity,
   genres,
+  overview,
 }) {
   const movieMovieDescrMarkup = `
         <div class="movie_descr">
@@ -159,12 +156,9 @@ export function renderMovieDescription({
                 .join('')}</td>
             </tr>
           </table>
-          <p style="text-transform: uppercase">About</p>
+          <p class="movie_title about">About</p>
           <p class="movie_about">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus
-            nostrum inventore sint, consectetur i ncidunt rerum, adipisci
-            suscipit fugit at similique sequi explicabo tempora provident harum
-            eaque dolorem dignissimos, praesentium architecto!
+          ${overview}
           </p>
         </div>
 
@@ -201,16 +195,28 @@ export function renderPageNotFound() {
   refs.content.insertAdjacentHTML(`beforeend`, markupPageNotFound);
 }
 
-// _____________________DRAFT___________________________
-
 export function MovieCard({
   poster_path,
   original_title,
   id,
   genre_ids,
+  genres,
   release_date,
   vote_average,
 }) {
+  const genresList = (genres, genre_ids) => {
+    if (genres) {
+      return genres
+        .map(({ name }) => {
+          return `<li class="movie_genres">${name}</li>`;
+        })
+        .join('');
+    } else {
+      return `<li class="movie_genres">${genre_ids}</li>`;
+    }
+  };
+
+  console.log(genresList(genres, genre_ids));
   return poster_path
     ? `<li class="galery__card">
          <a
@@ -225,15 +231,11 @@ export function MovieCard({
            
              loading="lazy"
            />
-             <p>${original_title}</p>
-         <div>
-         <ul>${
-           genre_ids
-           //  .map(({ name }) => {
-           //    return `<li class="movie_genres">${name}</li>`;
-           //  })
-           // .join('')
-         }</ul>
+             <p class="movie_title card">${original_title}</p>
+         <div class="movie_describtion">
+         <ul>
+     ${genresList(genres, genre_ids)}
+         </ul>
            <p>${release_date}</p>
            <p>${vote_average}</p>
          </div>
@@ -256,6 +258,8 @@ export function MovieCard({
          </a>
       </li>`;
 }
+
+// ________________DRAFT___________________________
 
 export function renderModalMovieDetails({ poster_path, original_title }) {
   const movieCardMarkup = `
@@ -299,6 +303,14 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
   // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   // console.log('повертаю Муві');
 }
+
+//  genresList
+//  .map(({ name }) => {
+//    return `<li class="movie_genres">${name}</li>`;
+//  })
+// .join('')
+
+// style="text-transform: uppercase; margin-bottom: 8px"
 
 //   width = '300px';
 // height = '450px';

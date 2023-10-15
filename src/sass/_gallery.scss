@@ -8,16 +8,13 @@
   width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   grid-template-rows: auto;
-  // grid-auto-rows: 634px;
-  grid-gap: 16px;
+  grid-gap: 32px;
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
 }
 
 .gallery__link {
-  height: 100%;
-  width: 100%;
   display: inline-block;
   transition: transform 400ms easy-out;
 }
@@ -29,33 +26,22 @@
 .details__img {
   display: block;
   object-fit: cover;
-  width: 395px;
+  width: 100%;
   height: 635px;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
   border-radius: 10px;
 }
 
-.info {
+.movie_describtion {
   display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
+  gap: 8px;
+  font-size: 20px;
+  line-height: 24px;
+  color: #ff6b08;
 }
 
-.info__item {
-  display: flex;
-  flex-direction: column;
-  margin-top: 18px;
-  align-items: center;
-  font-family: inherit;
-  font-size: smaller;
-  color: black;
-}
-
-.info__item-name {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+// _____________LOAD MORE BUTTON_____________________
 
 .load-more {
   display: block;
@@ -70,7 +56,6 @@
   padding: 0;
   border: none;
   border-color: transparent;
-  // margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
 
@@ -93,12 +78,6 @@
   visibility: visible;
   opacity: 1;
 }
-
-// .not-visible {
-//   visibility: hidden;
-//   opacity: 0;
-//   pointer-events: none;
-// }
 
 .not-visible {
   display: none;
@@ -127,3 +106,30 @@
   color: red;
   font-weight: bolder;
 }
+
+// .not-visible {
+//   visibility: hidden;
+//   opacity: 0;
+//   pointer-events: none;
+// }
+
+// .info {
+//   display: flex;
+//   justify-content: space-between;
+//   padding: 0 10px;
+// }
+
+// .info__item {
+//   display: flex;
+//   flex-direction: column;
+//   margin-top: 18px;
+//   align-items: center;
+//   font-family: inherit;
+//   font-size: smaller;
+//   color: black;
+// }
+
+// .info__item-name {
+//   font-weight: bold;
+//   margin-bottom: 5px;
+// }

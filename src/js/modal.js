@@ -12,7 +12,7 @@ let moviesLibrary = [];
 refs.gallery.addEventListener(`click`, openModal);
 refs.buttonClose.addEventListener('click', closeModal);
 
-refs.butttonsLibrary.addEventListener('click', onButtonsClick);
+refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
 refs.buttonHeaderNav.addEventListener('click', onButtonsHeaderNavClick);
 
 import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
@@ -50,7 +50,7 @@ function clearModal() {
   refs.movieDescr.innerHTML = '';
 }
 
-async function onButtonsClick(event) {
+async function createLibraryCollection(event) {
   event.preventDefault();
   if (event.target.nodeName !== `BUTTON`) {
     return;
