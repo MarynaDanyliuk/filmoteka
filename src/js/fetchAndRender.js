@@ -8,6 +8,8 @@ import {
   renderMovieDescription,
 } from './renderServies';
 
+import { setItemsLocalStorage } from './localStorageService';
+
 export async function fetchMoviesAndRender() {
   try {
     await FetchApiMovies.fetchMovies().then(movies => {
