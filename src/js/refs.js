@@ -20,4 +20,6 @@ export const refs = {
   logo: document.querySelector('.logo'),
   homeBtn: document.getElementById(`home_btn`),
   libraryBtn: document.getElementById(`library_btn`),
+  // genresList: document.getElementById(`genres`),
+  // galleryCard: document.querySelector('.gallery_card'),
 };

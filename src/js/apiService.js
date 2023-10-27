@@ -41,6 +41,13 @@ export default class fetchApiMovies {
     return response.data.results;
   }
 
+  async fetchGenresListByIds() {
+    const response = await instance.get(
+      `/genre/movie/list?api_key=${API_KEY}&language=en`
+    );
+    return response.data.genres;
+  }
+
   incrementPage() {
     this.page += 1;
   }
@@ -135,6 +142,13 @@ export async function fetchMoviesByPage(page) {
   const res = await response.json();
 
   return res;
+}
+
+export async function fetchGenresListByIds() {
+  const response = await instance.get(
+    `/genre/movie/list?api_key=${API_KEY}&language=en`
+  );
+  return response.data.genres;
 }
 
 // ______________________ TRASH________________________________

@@ -53,3 +53,12 @@ export async function fetchMoviesByPageAndRender(page) {
     console.log(error.message);
   }
 }
+
+export async function fetchGenresListByIds() {
+  try {
+    const allGenresByIds = await FetchApiMovies.fetchGenresListByIds();
+    setItemsLocalStorage('genres', allGenresByIds);
+  } catch (error) {
+    console.log(error.message);
+  }
+}

@@ -7,6 +7,7 @@ import './js/routing';
 import './js/searchByQuery';
 import './js/modal';
 import './js/pagination';
+import './js/genres';
 
 // import Notiflix from 'notiflix';
 

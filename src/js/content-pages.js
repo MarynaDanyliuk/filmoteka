@@ -6,16 +6,16 @@ import {
 } from './renderServies';
 
 import { renderLibraryCollection } from './libraryCollection';
-
-import { fetchMoviesAndRender } from './fetchAndRender';
-
+import { fetchMoviesAndRender, fetchGenresListByIds } from './fetchAndRender';
 import { showButtonLoad, hideButtonLoad } from './pagination';
+// import { getGenres } from './genres';
 
 let key = 'library';
 
 export async function homePage() {
   clearPage();
   renderHomeHeader();
+  await fetchGenresListByIds();
   await fetchMoviesAndRender();
   showButtonLoad();
 }

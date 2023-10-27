@@ -1,4 +1,8 @@
 import { refs } from './refs';
+// import { fetchGenresListByIdsAndRender } from './fetchAndRender';
+// import { all } from 'axios';
+// import { getGenres } from './genres';
+import { getGenresMovie } from './genres';
 
 export function renderGallary(movies) {
   const markup = movies
@@ -204,21 +208,75 @@ export function MovieCard({
   release_date,
   vote_average,
 }) {
-  const genresList = (genres, genre_ids) => {
-    if (genres) {
-      return genres
-        .map(({ name }) => {
-          return `<li class="movie_genres">${name}</li>`;
-        })
-        .join('');
-    } else {
-      return `<li class="movie_genres">${genre_ids}</li>`;
-    }
-  };
+  // const renderGenres = (genres, genre_ids) => {
+  //   if (genres) {
+  //     return genres
+  //       .map(({ name }) => {
+  //         return `<li class="movie_genres">${name}</li>`;
+  //       })
+  //       .join('');
+  //   } else {
+  //     getGenres(genre_ids)
+  //       .then(result => {
+  //         console.log(result);
+  //         renderG(result);
+  //       })
+  //       .catch(alert);
+  //   }
+  // };
+  // getGenres(genre_ids).then(result => {
+  //   console.log(result);
+  //   return result
+  //     .map(({ name }) => {
+  //       return `<li class="movie_genres">${name}</li>`;
+  //     })
+  //     .join('');
+  // });
 
-  console.log(genresList(genres, genre_ids));
-  return poster_path
-    ? `<li class="galery__card">
+  // const markupMovieCard = `<li class="gallery_card">
+  //        <a
+  //          class="gallery__link"
+  //         href="https://image.tmdb.org/t/p/w500${poster_path}"
+  //        >
+  //          <img
+  //          id="${id}"
+  //            class="details__img"
+  //            src="https://image.tmdb.org/t/p/w500${poster_path}"
+  //            alt="${original_title}"
+
+  //            loading="lazy"
+  //          />
+  //            <p class="movie_title card">${original_title}</p>
+  //        <div class="movie_describtion">
+  //        <ul id="genres">
+  //        ${renderGenres(genres, genre_ids)}
+  //        </ul>
+  //          <p>${release_date}</p>
+  //          <p>${vote_average}</p>
+  //        </div>
+  //        </a>
+  //     </li>`;
+
+  // poster_path
+  //   ? markupMovieCard
+  //   : `<li class="gallery_card">
+  //        <a
+  //          class="gallery__link"
+  //         href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+  //        >
+  //          <img
+  //          id="${id}"
+  //            class="details__img"
+  //            src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+  //            alt="${original_title}"
+
+  //            loading="lazy"
+  //          />
+  //        </a>
+  //     </li>`;
+
+  const markupMovieCard = poster_path
+    ? `<li class="gallery_card">
          <a
            class="gallery__link"
           href="https://image.tmdb.org/t/p/w500${poster_path}"
@@ -233,16 +291,13 @@ export function MovieCard({
            />
              <p class="movie_title card">${original_title}</p>
          <div class="movie_describtion">
-         <ul>
-     ${genresList(genres, genre_ids)}
-         </ul>
+          <ul>${renderGenres(genres, genre_ids)}</ul>
            <p>${release_date}</p>
            <p>${vote_average}</p>
          </div>
-         </a>
-       
-      </li>`
-    : `<li class="galery__card">
+         </a>      
+  </li>`
+    : `<li class="gallery_card">
          <a
            class="gallery__link"
           href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
@@ -252,12 +307,48 @@ export function MovieCard({
              class="details__img"
              src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
              alt="${original_title}"
-        
              loading="lazy"
            />
          </a>
       </li>`;
+  refs.gallery.insertAdjacentHTML(`beforeend`, markupMovieCard);
 }
+
+export const renderGenres = (genres, genre_ids) => {
+  if (genres) {
+    const genresList = genres
+      .map(({ name }) => {
+        return name;
+      })
+      .join(' ');
+    return `<li class="movie_gnr">${genresList}</li>`;
+  } else if (genre_ids) {
+    const genresList = getGenresMovie(genre_ids).join(' ');
+    return `<li class="movie_gnr">${genresList}</li>`;
+  }
+};
+
+// export function renderG(result) {
+//   return `<li class="movie_gnr">${result}</li>`;
+//   // const markup = `<ul class="movie_genres">${result
+//   //   .map(genre => {
+//   //     return `<li class="movie_gnr">${genre}</li>`;
+//   //   })
+//   //   .join('')}</ul>`;
+//   // const markup = result
+//   //   .map(genre => {
+//   //     return `<li class="movie_genres">${genre}</li>`;
+//   //   })
+//   //   .join('');
+//   // refs.genresList.insertAdjacentElement('afterend', markup);
+//   // refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+// }
+
+// const genresMarkup = genres
+//   .map(({ name }) => {
+//     return `<li class="movie_genres">${name}</li>`;
+//   })
+//   .join('');
 
 // ________________DRAFT___________________________
 
@@ -303,6 +394,13 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
   // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   // console.log('повертаю Муві');
 }
+
+// console.log(genresList);
+// return `<li class="movie_gnr">${getGenresMovie(genre_ids)}</li>`;
+// getGenres(genre_ids).then(result => {
+//   console.log(result);
+//   // renderG(result);
+// });
 
 //  genresList
 //  .map(({ name }) => {
