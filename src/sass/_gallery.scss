@@ -35,7 +35,6 @@
 
 .movie_describtion {
   display: flex;
-  gap: 8px;
   font-size: 20px;
   line-height: 24px;
   color: #ff6b08;
@@ -43,6 +42,17 @@
 
 .movie_genresList {
   display: flex;
+  margin-right: 8px;
+
+  &::after {
+    content: '';
+
+    margin-left: 8px;
+    display: block;
+    height: 100%;
+    width: 2px;
+    background-color: #ff6b08;
+  }
 }
 
 // _____________LOAD MORE BUTTON_____________________

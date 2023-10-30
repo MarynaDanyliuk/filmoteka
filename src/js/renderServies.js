@@ -206,74 +206,8 @@ export function MovieCard({
   genre_ids,
   genres,
   release_date,
-  vote_average,
 }) {
-  // const renderGenres = (genres, genre_ids) => {
-  //   if (genres) {
-  //     return genres
-  //       .map(({ name }) => {
-  //         return `<li class="movie_genres">${name}</li>`;
-  //       })
-  //       .join('');
-  //   } else {
-  //     getGenres(genre_ids)
-  //       .then(result => {
-  //         console.log(result);
-  //         renderG(result);
-  //       })
-  //       .catch(alert);
-  //   }
-  // };
-  // getGenres(genre_ids).then(result => {
-  //   console.log(result);
-  //   return result
-  //     .map(({ name }) => {
-  //       return `<li class="movie_genres">${name}</li>`;
-  //     })
-  //     .join('');
-  // });
-
-  // const markupMovieCard = `<li class="gallery_card">
-  //        <a
-  //          class="gallery__link"
-  //         href="https://image.tmdb.org/t/p/w500${poster_path}"
-  //        >
-  //          <img
-  //          id="${id}"
-  //            class="details__img"
-  //            src="https://image.tmdb.org/t/p/w500${poster_path}"
-  //            alt="${original_title}"
-
-  //            loading="lazy"
-  //          />
-  //            <p class="movie_title card">${original_title}</p>
-  //        <div class="movie_describtion">
-  //        <ul id="genres">
-  //        ${renderGenres(genres, genre_ids)}
-  //        </ul>
-  //          <p>${release_date}</p>
-  //          <p>${vote_average}</p>
-  //        </div>
-  //        </a>
-  //     </li>`;
-
-  // poster_path
-  //   ? markupMovieCard
-  //   : `<li class="gallery_card">
-  //        <a
-  //          class="gallery__link"
-  //         href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-  //        >
-  //          <img
-  //          id="${id}"
-  //            class="details__img"
-  //            src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-  //            alt="${original_title}"
-
-  //            loading="lazy"
-  //          />
-  //        </a>
-  //     </li>`;
+  const releaseYear = new Date(release_date).getFullYear();
 
   const markupMovieCard = poster_path
     ? `<li class="gallery_card">
@@ -291,9 +225,8 @@ export function MovieCard({
            />
              <p class="movie_title card">${original_title}</p>
          <div class="movie_describtion">
-          <ul>${renderGenres(genres, genre_ids)}</ul>
-           <p>${release_date}</p>
-           <p>${vote_average}</p>
+          <ul class="movie_genresList">${renderGenres(genres, genre_ids)}</ul>
+           <p>${releaseYear}</p>
          </div>
          </a>      
   </li>`
@@ -309,6 +242,11 @@ export function MovieCard({
              alt="${original_title}"
              loading="lazy"
            />
+          <p class="movie_title card">${original_title}</p>
+         <div class="movie_describtion">
+           <ul>${renderGenres(genres, genre_ids)}</ul>
+           <p>${releaseYear}</p>
+         </div>
          </a>
       </li>`;
   refs.gallery.insertAdjacentHTML(`beforeend`, markupMovieCard);
@@ -317,17 +255,65 @@ export function MovieCard({
 export const renderGenres = (genres, genre_ids) => {
   if (genres) {
     const genresList = genres
+      .splice(0, 2)
       .map(({ name }) => {
         return name;
       })
-      .join(' ');
-    return `<li class="movie_gnr">${genresList}</li>`;
+      .join(', ');
+    return genres.length >= 3
+      ? `<li class="movie_gnr">${genresList}, Other</li>`
+      : `<li class="movie_gnr">${genresList}</li>`;
   } else if (genre_ids) {
-    const genresList = getGenresMovie(genre_ids).join(' ');
-    return `<li class="movie_gnr">${genresList}</li>`;
+    const genresList = getGenresMovie(genre_ids).splice(0, 2).join(', ');
+    return genre_ids.length >= 3
+      ? `<li class="movie_gnr">${genresList}, Other</li>`
+      : `<li class="movie_gnr">${genresList}</li>`;
   }
 };
 
+// <p>${vote_average}</p>;
+
+// const markupMovieCard = `<li class="gallery_card">
+//        <a
+//          class="gallery__link"
+//         href="https://image.tmdb.org/t/p/w500${poster_path}"
+//        >
+//          <img
+//          id="${id}"
+//            class="details__img"
+//            src="https://image.tmdb.org/t/p/w500${poster_path}"
+//            alt="${original_title}"
+
+//            loading="lazy"
+//          />
+//            <p class="movie_title card">${original_title}</p>
+//        <div class="movie_describtion">
+//        <ul id="genres">
+//        ${renderGenres(genres, genre_ids)}
+//        </ul>
+//          <p>${release_date}</p>
+//          <p>${vote_average}</p>
+//        </div>
+//        </a>
+//     </li>`;
+
+// poster_path
+//   ? markupMovieCard
+//   : `<li class="gallery_card">
+//        <a
+//          class="gallery__link"
+//         href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+//        >
+//          <img
+//          id="${id}"
+//            class="details__img"
+//            src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+//            alt="${original_title}"
+
+//            loading="lazy"
+//          />
+//        </a>
+//     </li>`;
 // export function renderG(result) {
 //   return `<li class="movie_gnr">${result}</li>`;
 //   // const markup = `<ul class="movie_genres">${result
@@ -394,6 +380,30 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
   // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   // console.log('повертаю Муві');
 }
+// getGenres(genre_ids).then(result => {
+//   console.log(result);
+//   return result
+//     .map(({ name }) => {
+//       return `<li class="movie_genres">${name}</li>`;
+//     })
+//     .join('');
+// });
+// const renderGenres = (genres, genre_ids) => {
+//   if (genres) {
+//     return genres
+//       .map(({ name }) => {
+//         return `<li class="movie_genres">${name}</li>`;
+//       })
+//       .join('');
+//   } else {
+//     getGenres(genre_ids)
+//       .then(result => {
+//         console.log(result);
+//         renderG(result);
+//       })
+//       .catch(alert);
+//   }
+// };
 
 // console.log(genresList);
 // return `<li class="movie_gnr">${getGenresMovie(genre_ids)}</li>`;
