@@ -8,7 +8,6 @@ import {
 import { renderLibraryCollection } from './libraryCollection';
 import { fetchMoviesAndRender, fetchGenresListByIds } from './fetchAndRender';
 import { showButtonLoad, hideButtonLoad } from './pagination';
-// import { getGenres } from './genres';
 
 let key = 'library';
 

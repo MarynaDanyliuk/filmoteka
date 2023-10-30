@@ -38,21 +38,35 @@
   font-size: 20px;
   line-height: 24px;
   color: #ff6b08;
+  align-items: baseline;
 }
 
 .movie_genresList {
+  position: relative;
   display: flex;
-  margin-right: 8px;
+  margin-right: 16px;
 
   &::after {
     content: '';
 
-    margin-left: 8px;
+    position: absolute;
     display: block;
+    top: 0;
+    left: calc(100% + 8px);
+
     height: 100%;
     width: 2px;
     background-color: #ff6b08;
   }
+}
+
+.movie_average {
+  font-size: 18px;
+  margin-left: 8px;
+  background-color: #ff6b08;
+  padding: 2px 8px;
+  color: #fff;
+  border-radius: 4px;
 }
 
 // _____________LOAD MORE BUTTON_____________________

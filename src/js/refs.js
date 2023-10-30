@@ -6,7 +6,7 @@ export const refs = {
   buttonLoadMore: document.querySelector(`.load-more`),
   modal: document.querySelector(`.modal`),
   modalContent: document.querySelector(`.modal_data`),
-  movieCard: document.querySelector('.movie_card'),
+  movieImage: document.querySelector('.movie_image'),
   movieDescr: document.querySelector('.movie_descr'),
   buttonClose: document.querySelector(`.modal_close`),
   body: document.querySelector(`body`),

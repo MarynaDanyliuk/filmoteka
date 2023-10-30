@@ -24,7 +24,6 @@ export async function fetchMoviesAndRender() {
 export async function fetchMoviesByQueryAndRender(query, page) {
   try {
     await FetchApiMovies.fetchMoviesByQuery(query, page).then(movies => {
-      // console.log(movies);
       renderGallary(movies);
     });
   } catch (error) {

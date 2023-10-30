@@ -46,7 +46,7 @@ export function closeModal(event) {
 }
 
 function clearModal() {
-  refs.movieCard.innerHTML = '';
+  refs.movieImage.innerHTML = '';
   refs.movieDescr.innerHTML = '';
 }
 

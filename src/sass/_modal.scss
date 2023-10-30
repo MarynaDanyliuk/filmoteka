@@ -46,7 +46,7 @@
   display: flex;
 }
 
-.movie_card {
+.movie_image {
   display: flex;
   flex-direction: row;
 }
@@ -107,9 +107,22 @@
   margin-bottom: 8px;
 }
 
-.movie_genres {
-  margin-right: 6px;
-  &:last-child {
-    margin-right: 0;
-  }
+.average {
+  background-color: #ff6b08;
+  padding: 4px 10px;
+  color: #fff;
+  border-radius: 4px;
 }
+
+.count {
+  background-color: #f7f7f7;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+// .movie_genres {
+//   margin-right: 6px;
+//   &:last-child {
+//     margin-right: 0;
+//   }
+// }

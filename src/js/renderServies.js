@@ -1,7 +1,4 @@
 import { refs } from './refs';
-// import { fetchGenresListByIdsAndRender } from './fetchAndRender';
-// import { all } from 'axios';
-// import { getGenres } from './genres';
 import { getGenresMovie } from './genres';
 
 export function renderGallary(movies) {
@@ -28,46 +25,177 @@ export function renderGallary(movies) {
       }
     )
     .join('');
-  // const markup = movies
-  //   .map(({ poster_path, original_title, id }) => {
-  //     return poster_path
-  //   ? `<li class="galery__card">
-  //   <a
-  //     class="gallery__link"
-  //     href="https://image.tmdb.org/t/p/w500${poster_path}"
-  //   >
-  //     <img
-  //     id="${id}"
-  //       class="details__img"
-  //       src="https://image.tmdb.org/t/p/w500${poster_path}"
-  //       alt=${original_title}
-  //       width="300px"
-  //       height="450px"
-  //       loading="lazy"
-  //     />
-  //   </a>
-  // </li>`
-  //       : `<li class="galery__card">
-  //       <a
-  //         class="gallery__link modal_open"
-  //         href='https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg'
-  //       >
-  //         <img
-  //             id="${id}"
-  //           class="details__img"
-  //           src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-  //         alt=${original_title}
-  //           width="300px"
-  //           height="450px"
-  //           loading="lazy"
-  //           style="{object-fit: cover}"
-  //         />
-  //       </a>
-  //     </li>`;
-  //   })
-  //   .join(``);
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
 }
+
+export function renderMovieImage({ poster_path, original_title }) {
+  const movieImageMarkup = poster_path
+    ? `<img
+          src="https://image.tmdb.org/t/p/w500${poster_path}"
+          alt=${original_title}
+          class="image"
+          
+        />`
+    : `<img
+          src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+          alt="default image"
+          class="image"
+          style="object-fit: cover"
+        />`;
+  refs.movieImage.insertAdjacentHTML(`beforeend`, movieImageMarkup);
+}
+
+export function renderMovieDescription({
+  original_title,
+  vote_average,
+  vote_count,
+  popularity,
+  genres,
+  overview,
+}) {
+  const genresList = genres
+    .map(({ name }) => {
+      return name;
+    })
+    .join(', ');
+  const movieDescrMarkup = `
+        <div class="movie_descr">
+          <h1 class="movie_title">${original_title}</h1>
+          <table class="movie_inform">
+            <tr class="movie_info_item">
+              <td class="list_category">Vote/Votes</td>
+              <td class="list_data"><span class="average">${vote_average.toFixed(
+                1
+              )}</span> / <span class="count">${vote_count}</span></td>
+            </tr>
+            <tr class="movie_info_item">
+              <td class="list_category">Popularity</td>
+              <td class="list_data">${popularity.toFixed(1)}</td>
+            </tr>
+            <tr class="movie_info_item">
+              <td class="list_category">Original Title</td>
+              <td class="list_data" style="text-transform: uppercase">${original_title}</td>
+            </tr>
+            <tr class="movie_info_item">
+              <td class="list_category">Genre</td>
+              <td class="list_data genres">${genresList}</td>
+            </tr>
+          </table>
+          <p class="movie_title about">About</p>
+          <p class="movie_about">
+          ${overview}
+          </p>
+        </div>
+
+  `;
+  refs.movieDescr.insertAdjacentHTML(`beforeend`, movieDescrMarkup);
+}
+
+export function clearPage() {
+  refs.gallery.innerHTML = '';
+}
+
+export function renderHomeHeader() {
+  refs.input.value = '';
+  refs.homeBtn.classList.add('nav_item--current');
+  refs.libraryBtn.classList.remove('nav_item--current');
+  refs.headerNavButtons.classList.add('not-visible');
+  refs.form.classList.remove('not-visible');
+}
+
+export function renderLibraryHeader() {
+  refs.homeBtn.classList.remove('nav_item--current');
+  refs.libraryBtn.classList.add('nav_item--current');
+  refs.headerNavButtons.classList.remove('not-visible');
+  refs.form.classList.add('not-visible');
+}
+
+export function renderPageNotFound() {
+  const markupPageNotFound = `
+   <img class="page-not-found"
+   src=""
+   alt=""
+ />
+   `;
+  refs.content.insertAdjacentHTML(`beforeend`, markupPageNotFound);
+}
+
+export function MovieCard({
+  poster_path,
+  original_title,
+  id,
+  genre_ids,
+  genres,
+  release_date,
+  vote_average,
+}) {
+  const releaseYear = new Date(release_date).getFullYear();
+
+  const markupMovieCard = poster_path
+    ? `<li class="gallery_card">
+         <a
+           class="gallery__link"
+          href="https://image.tmdb.org/t/p/w500${poster_path}"
+         >
+           <img
+           id="${id}"
+             class="details__img"
+             src="https://image.tmdb.org/t/p/w500${poster_path}"
+             alt="${original_title}"
+           
+             loading="lazy"
+           />
+             <p class="movie_title card">${original_title}</p>
+         <div class="movie_describtion">
+          <ul class="movie_genresList">${renderGenres(genres, genre_ids)}</ul>
+           <p>${releaseYear}</p>
+           <p class="movie_average">${vote_average.toFixed(1)}</p>
+         </div>
+         </a>      
+  </li>`
+    : `<li class="gallery_card">
+         <a
+           class="gallery__link"
+          href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+         >
+           <img
+           id="${id}"
+             class="details__img"
+             src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+             alt="${original_title}"
+             loading="lazy"
+           />
+          <p class="movie_title card">${original_title}</p>
+         <div class="movie_describtion">
+           <ul>${renderGenres(genres, genre_ids)}</ul>
+           <p>${releaseYear}</p>
+           <p class="movie_average">${vote_average.toFixed(1)}</p>
+         </div>
+         </a>
+      </li>`;
+  refs.gallery.insertAdjacentHTML(`beforeend`, markupMovieCard);
+}
+
+export const renderGenres = (genres, genre_ids) => {
+  if (genres) {
+    const genresList = genres
+      .splice(0, 2)
+      .map(({ name }) => {
+        return name;
+      })
+      .join(', ');
+    return genres.length >= 3
+      ? `<li class="movie_gnr">${genresList}, Other</li>`
+      : `<li class="movie_gnr">${genresList}</li>`;
+  } else if (genre_ids) {
+    const genresList = getGenresMovie(genre_ids).splice(0, 2).join(', ');
+    return genre_ids.length >= 3
+      ? `<li class="movie_gnr">${genresList}, Other</li>`
+      : `<li class="movie_gnr">${genresList}</li>`;
+  }
+};
+
+// _________________________________________________________
 
 export function renderGallaryCard(movies) {
   const markup = movies
@@ -110,166 +238,91 @@ export function renderGallaryCard(movies) {
   // refs.gallery.insertAdjacentHTML(`beforeend`, markup);
 }
 
-export function renderMovieImage({ poster_path, original_title }) {
-  const movieImageMarkup = poster_path
-    ? `<img
+export function renderModalMovieDetails({ poster_path, original_title }) {
+  const movieCardMarkup = `
+  <div class="movie_card">
+        <img
           src="https://image.tmdb.org/t/p/w500${poster_path}"
           alt=${original_title}
           class="image"
-          
-        />`
-    : `<img
-          src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-          alt="default image"
-          class="image"
-          style="object-fit: cover"
-        />`;
-  refs.movieCard.insertAdjacentHTML(`beforeend`, movieImageMarkup);
-}
-
-export function renderMovieDescription({
-  original_title,
-  vote_average,
-  vote_count,
-  popularity,
-  genres,
-  overview,
-}) {
-  const movieMovieDescrMarkup = `
+        />
         <div class="movie_descr">
-          <h1 class="movie_title">${original_title}</h1>
-          <table class="movie_inform">
+          <p class="movie_title">${original_title}</p>
+          <table class="movie_info">
             <tr class="movie_info_item">
-              <td class="list_category">Vote/Votes</td>
-              <td class="list_data">${vote_average}/${vote_count}</td>
+              <td>11</td>
+              <td>12</td>
             </tr>
             <tr class="movie_info_item">
-              <td class="list_category">Popularity</td>
-              <td class="list_data">${popularity}</td>
+              <td>21</td>
+              <td>22</td>
             </tr>
             <tr class="movie_info_item">
-              <td class="list_category">Original Title</td>
-              <td class="list_data" style="text-transform: uppercase">${original_title}</td>
+              <td>31</td>
+              <td>32</td>
             </tr>
             <tr class="movie_info_item">
-              <td class="list_category">Genre</td>
-              <td class="list_data genres">${genres
-                .map(({ name }) => {
-                  return `<p class="movie_genres">${name}</p>`;
-                })
-                .join('')}</td>
+              <td>41</td>
+              <td>42</td>
             </tr>
           </table>
-          <p class="movie_title about">About</p>
-          <p class="movie_about">
-          ${overview}
+          <p>About</p>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus
+            nostrum inventore sint, consectetur i ncidunt rerum, adipisci
+            suscipit fugit at similique sequi explicabo tempora provident harum
+            eaque dolorem dignissimos, praesentium architecto!
           </p>
+        
         </div>
-
-  `;
-  refs.movieDescr.insertAdjacentHTML(`beforeend`, movieMovieDescrMarkup);
+        </div>
+      `;
+  // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
+  // console.log('повертаю Муві');
 }
 
-export function clearPage() {
-  refs.gallery.innerHTML = '';
-}
+// const markup = movies
+//   .map(({ poster_path, original_title, id }) => {
+//     return poster_path
+//   ? `<li class="galery__card">
+//   <a
+//     class="gallery__link"
+//     href="https://image.tmdb.org/t/p/w500${poster_path}"
+//   >
+//     <img
+//     id="${id}"
+//       class="details__img"
+//       src="https://image.tmdb.org/t/p/w500${poster_path}"
+//       alt=${original_title}
+//       width="300px"
+//       height="450px"
+//       loading="lazy"
+//     />
+//   </a>
+// </li>`
+//       : `<li class="galery__card">
+//       <a
+//         class="gallery__link modal_open"
+//         href='https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg'
+//       >
+//         <img
+//             id="${id}"
+//           class="details__img"
+//           src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+//         alt=${original_title}
+//           width="300px"
+//           height="450px"
+//           loading="lazy"
+//           style="{object-fit: cover}"
+//         />
+//       </a>
+//     </li>`;
+//   })
+//   .join(``);
 
-export function renderHomeHeader() {
-  refs.input.value = '';
-  refs.homeBtn.classList.add('nav_item--current');
-  refs.libraryBtn.classList.remove('nav_item--current');
-  refs.headerNavButtons.classList.add('not-visible');
-  refs.form.classList.remove('not-visible');
-}
-
-export function renderLibraryHeader() {
-  refs.homeBtn.classList.remove('nav_item--current');
-  refs.libraryBtn.classList.add('nav_item--current');
-  refs.headerNavButtons.classList.remove('not-visible');
-  refs.form.classList.add('not-visible');
-}
-
-export function renderPageNotFound() {
-  const markupPageNotFound = `
-   <img class="page-not-found"
-   src=""
-   alt=""
- />
-   `;
-  refs.content.insertAdjacentHTML(`beforeend`, markupPageNotFound);
-}
-
-export function MovieCard({
-  poster_path,
-  original_title,
-  id,
-  genre_ids,
-  genres,
-  release_date,
-}) {
-  const releaseYear = new Date(release_date).getFullYear();
-
-  const markupMovieCard = poster_path
-    ? `<li class="gallery_card">
-         <a
-           class="gallery__link"
-          href="https://image.tmdb.org/t/p/w500${poster_path}"
-         >
-           <img
-           id="${id}"
-             class="details__img"
-             src="https://image.tmdb.org/t/p/w500${poster_path}"
-             alt="${original_title}"
-           
-             loading="lazy"
-           />
-             <p class="movie_title card">${original_title}</p>
-         <div class="movie_describtion">
-          <ul class="movie_genresList">${renderGenres(genres, genre_ids)}</ul>
-           <p>${releaseYear}</p>
-         </div>
-         </a>      
-  </li>`
-    : `<li class="gallery_card">
-         <a
-           class="gallery__link"
-          href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-         >
-           <img
-           id="${id}"
-             class="details__img"
-             src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-             alt="${original_title}"
-             loading="lazy"
-           />
-          <p class="movie_title card">${original_title}</p>
-         <div class="movie_describtion">
-           <ul>${renderGenres(genres, genre_ids)}</ul>
-           <p>${releaseYear}</p>
-         </div>
-         </a>
-      </li>`;
-  refs.gallery.insertAdjacentHTML(`beforeend`, markupMovieCard);
-}
-
-export const renderGenres = (genres, genre_ids) => {
-  if (genres) {
-    const genresList = genres
-      .splice(0, 2)
-      .map(({ name }) => {
-        return name;
-      })
-      .join(', ');
-    return genres.length >= 3
-      ? `<li class="movie_gnr">${genresList}, Other</li>`
-      : `<li class="movie_gnr">${genresList}</li>`;
-  } else if (genre_ids) {
-    const genresList = getGenresMovie(genre_ids).splice(0, 2).join(', ');
-    return genre_ids.length >= 3
-      ? `<li class="movie_gnr">${genresList}, Other</li>`
-      : `<li class="movie_gnr">${genresList}</li>`;
-  }
-};
+// import { fetchGenresListByIdsAndRender } from './fetchAndRender';
+// import { all } from 'axios';
+// import { getGenres } from './genres';
 
 // <p>${vote_average}</p>;
 
@@ -338,48 +391,6 @@ export const renderGenres = (genres, genre_ids) => {
 
 // ________________DRAFT___________________________
 
-export function renderModalMovieDetails({ poster_path, original_title }) {
-  const movieCardMarkup = `
-  <div class="movie_card">
-        <img
-          src="https://image.tmdb.org/t/p/w500${poster_path}"
-          alt=${original_title}
-          class="image"
-        />
-        <div class="movie_descr">
-          <p class="movie_title">${original_title}</p>
-          <table class="movie_info">
-            <tr class="movie_info_item">
-              <td>11</td>
-              <td>12</td>
-            </tr>
-            <tr class="movie_info_item">
-              <td>21</td>
-              <td>22</td>
-            </tr>
-            <tr class="movie_info_item">
-              <td>31</td>
-              <td>32</td>
-            </tr>
-            <tr class="movie_info_item">
-              <td>41</td>
-              <td>42</td>
-            </tr>
-          </table>
-          <p>About</p>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus
-            nostrum inventore sint, consectetur i ncidunt rerum, adipisci
-            suscipit fugit at similique sequi explicabo tempora provident harum
-            eaque dolorem dignissimos, praesentium architecto!
-          </p>
-        
-        </div>
-        </div>
-      `;
-  // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
-  // console.log('повертаю Муві');
-}
 // getGenres(genre_ids).then(result => {
 //   console.log(result);
 //   return result
