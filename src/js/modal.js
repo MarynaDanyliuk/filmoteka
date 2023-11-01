@@ -97,7 +97,7 @@ export function onButtonsHeaderNavClick(event) {
   if (key === 'queue') {
     renderLibraryCollection(key);
   }
-  console.log('great job!');
+  // console.log('great job!');
 }
 
 // __________________Draft________________

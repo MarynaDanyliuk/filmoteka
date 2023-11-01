@@ -134,12 +134,12 @@ export function MovieCard({
   const markupMovieCard = poster_path
     ? `<li class="gallery_card">
          <a
-           class="gallery__link"
+           class="gallery_link"
           href="https://image.tmdb.org/t/p/w500${poster_path}"
          >
            <img
            id="${id}"
-             class="details__img"
+             class="movie_img"
              src="https://image.tmdb.org/t/p/w500${poster_path}"
              alt="${original_title}"
            
