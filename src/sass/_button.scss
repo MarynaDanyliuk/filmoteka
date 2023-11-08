@@ -8,13 +8,13 @@
   min-width: 30px;
   color: white;
   text-transform: uppercase;
-}
-.button:hover,
-.button:focus,
-.button:active {
-  border: 1px solid #ff6b01;
-  background-color: #ff6b01;
-  color: white;
+  &:hover,
+  &:focus,
+  &:active {
+    border: 1px solid #ff6b01;
+    background-color: #ff6b01;
+    color: white;
+  }
 }
 
 .btn_modal {
@@ -22,6 +22,17 @@
   color: black;
   margin-right: 15px;
   text-transform: uppercase;
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.btn_modal_auth {
+  font-size: 14px;
+  border: 1px solid black;
+  color: black;
+  text-transform: uppercase;
+  margin-bottom: 32px;
   &:last-child {
     margin-right: 0;
   }

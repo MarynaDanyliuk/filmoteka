@@ -195,6 +195,10 @@ export const renderGenres = (genres, genre_ids) => {
   }
 };
 
+export function renderRegisterPage() {
+  // openModalRegister();
+}
+
 // _________________________________________________________
 
 export function renderGallaryCard(movies) {

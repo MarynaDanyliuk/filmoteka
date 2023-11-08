@@ -1,4 +1,9 @@
-import { homePage, libraryPage, notFoundPage } from './content-pages';
+import {
+  homePage,
+  libraryPage,
+  registerPage,
+  notFoundPage,
+} from './content-pages';
 import { refs } from './refs';
 
 window.addEventListener('hashchange', renderContent);

@@ -3,11 +3,13 @@ import {
   renderPageNotFound,
   renderHomeHeader,
   renderLibraryHeader,
+  // renderRegisterPage,
 } from './renderServies';
 
 import { renderLibraryCollection } from './libraryCollection';
 import { fetchMoviesAndRender, fetchGenresListByIds } from './fetchAndRender';
 import { showButtonLoad, hideButtonLoad } from './pagination';
+// import { openModalRegister } from './modal_auth';
 
 let key = 'library';
 
@@ -35,6 +37,10 @@ export function notFoundPage() {
   renderPageNotFound();
 
   hideButtonLoad();
+}
+
+export function registerPage() {
+  // openModalRegister;
 }
 
 // refs.buttonWatched.addEventListener('click', onButtonsHeaderNavClick);

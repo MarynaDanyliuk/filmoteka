@@ -40,9 +40,14 @@ async function openModal(event) {
 }
 
 export function closeModal(event) {
-  event.preventDefault();
   refs.modal.classList.remove(`open`);
+  // refs.modalLogin.classList.remove(`open`);
+  // refs.modalRegister.classList.remove(`open`);
+
+  // refs.modalLogin.classList.remove(`open`);
+  // refs.modalRegister.classList.remove(`open`);
   clearModal();
+  event.preventDefault();
 }
 
 function clearModal() {
@@ -102,48 +107,48 @@ export function onButtonsHeaderNavClick(event) {
 
 // __________________Draft________________
 
-async function onButtonWatchedClick(event) {
-  event.preventDefault();
-  closeModal(event);
-  key = 'watched';
+// async function onButtonWatchedClick(event) {
+//   event.preventDefault();
+//   closeModal(event);
+//   key = 'watched';
 
-  moviesWatched = getItemsLocalStorage(key) || [];
+//   moviesWatched = getItemsLocalStorage(key) || [];
 
-  await FetchApiMovies.fetchMovieDetailsById(FetchApiMovies.movieId)
-    .then(data => {
-      console.log(data);
-      moviesWatched.push(data);
-      moviesLibrary.push(data);
-      console.log(moviesWatched);
-      return moviesWatched;
-    })
-    .then(moviesWatched => {
-      setItemsLocalStorage(key, moviesWatched);
-      // document.location.reload();
-    })
-    .catch(error => console.log(error.message));
-}
+//   await FetchApiMovies.fetchMovieDetailsById(FetchApiMovies.movieId)
+//     .then(data => {
+//       console.log(data);
+//       moviesWatched.push(data);
+//       moviesLibrary.push(data);
+//       console.log(moviesWatched);
+//       return moviesWatched;
+//     })
+//     .then(moviesWatched => {
+//       setItemsLocalStorage(key, moviesWatched);
+//       // document.location.reload();
+//     })
+//     .catch(error => console.log(error.message));
+// }
 
-async function onButtonQueueClick(event) {
-  event.preventDefault();
-  closeModal(event);
+// async function onButtonQueueClick(event) {
+//   event.preventDefault();
+//   closeModal(event);
 
-  key = 'queue';
+//   key = 'queue';
 
-  moviesQueue = getItemsLocalStorage(key) || [];
+//   moviesQueue = getItemsLocalStorage(key) || [];
 
-  await FetchApiMovies.fetchMovieDetailsById(FetchApiMovies.movieId)
-    .then(MovieActive => {
-      console.log(MovieActive);
-      moviesQueue.push(MovieActive);
-      console.log(moviesQueue);
-      return moviesQueue;
-    })
-    .then(moviesQueue => {
-      setItemsLocalStorage(key, moviesQueue);
-    })
-    .catch(error => console.log(error.message));
-}
+//   await FetchApiMovies.fetchMovieDetailsById(FetchApiMovies.movieId)
+//     .then(MovieActive => {
+//       console.log(MovieActive);
+//       moviesQueue.push(MovieActive);
+//       console.log(moviesQueue);
+//       return moviesQueue;
+//     })
+//     .then(moviesQueue => {
+//       setItemsLocalStorage(key, moviesQueue);
+//     })
+//     .catch(error => console.log(error.message));
+// }
 
 // else {
 //         alert('я молодець');
