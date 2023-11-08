@@ -10,7 +10,6 @@ import './js/searchByQuery';
 import './js/pagination';
 import './js/genres';
 import './js/modal';
-import './js/modal_auth';
 
 // import Notiflix from 'notiflix';
 

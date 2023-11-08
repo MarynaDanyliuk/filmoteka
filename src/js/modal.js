@@ -8,12 +8,16 @@ let moviesQueue = [];
 let MovieActiveId = null;
 let key = '';
 let moviesLibrary = [];
+let unlock = true;
+let ModalActive = '';
 
 refs.gallery.addEventListener(`click`, openModal);
-refs.buttonClose.addEventListener('click', closeModal);
-
 refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
 refs.buttonHeaderNav.addEventListener('click', onButtonsHeaderNavClick);
+
+refs.libraryBtn.addEventListener(`click`, openModalAuth);
+refs.registerLink.addEventListener('click', openModalAuth);
+refs.loginLink.addEventListener('click', openModalAuth);
 
 import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
 
@@ -39,15 +43,18 @@ async function openModal(event) {
   return MovieActiveId;
 }
 
-export function closeModal(event) {
-  refs.modal.classList.remove(`open`);
-  // refs.modalLogin.classList.remove(`open`);
-  // refs.modalRegister.classList.remove(`open`);
+const modalCloseButtons = refs.buttonClose;
 
-  // refs.modalLogin.classList.remove(`open`);
-  // refs.modalRegister.classList.remove(`open`);
-  clearModal();
-  event.preventDefault();
+if (modalCloseButtons) {
+  for (let i = 0; i < modalCloseButtons.length; i++) {
+    const closeButton = modalCloseButtons[i];
+    closeButton.addEventListener('click', event => {
+      event.preventDefault();
+      console.log(event.target.closest('.modal'));
+      clearModal();
+      event.target.closest('.modal').classList.remove('open');
+    });
+  }
 }
 
 function clearModal() {
@@ -105,7 +112,28 @@ export function onButtonsHeaderNavClick(event) {
   // console.log('great job!');
 }
 
+// _________________Modal Auth___________________
+
+function openModalAuth(event) {
+  event.preventDefault();
+
+  ModalActive = event.target.getAttribute('id');
+
+  if (ModalActive === 'library_btn') {
+    refs.modalLogin.classList.toggle(`open`);
+  } else {
+    refs.modalRegister.classList.toggle(`open`);
+    refs.modalLogin.classList.toggle(`open`);
+  }
+}
+
 // __________________Draft________________
+
+// export function closeModal(event) {
+//   refs.modal.classList.remove(`open`);
+// clearModal();
+//   event.preventDefault();
+// }
 
 // async function onButtonWatchedClick(event) {
 //   event.preventDefault();
