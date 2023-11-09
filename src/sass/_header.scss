@@ -86,10 +86,7 @@ svg:not(:root) {
   border: transparent;
   border-bottom: solid 1px white;
   color: white;
-
-  // font-weight: 500;
   font-size: 18px;
-  // letter-spacing: 0.03em;
 }
 
 #search-input:focus {
@@ -114,13 +111,7 @@ svg:not(:root) {
 
 .content-thumb {
   color: white;
-  // border: 1px solid white;
 }
-
-// .button .active {
-//   border: 1px solid #ff6b01;
-//   background-color: #ff6b01;
-// }
 
 .nav_list_button {
   display: flex;

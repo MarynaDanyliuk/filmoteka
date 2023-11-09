@@ -8,7 +8,6 @@ let moviesQueue = [];
 let MovieActiveId = null;
 let key = '';
 let moviesLibrary = [];
-let unlock = true;
 let ModalActive = '';
 
 refs.gallery.addEventListener(`click`, openModal);
@@ -40,26 +39,8 @@ async function openModal(event) {
   console.log(FetchApiMovies.movieId);
   await fetchMovieDetailsByIdAndRender(MovieActiveId);
   refs.modal.classList.add(`open`);
+  refs.body.classList.add(`lock`);
   return MovieActiveId;
-}
-
-const modalCloseButtons = refs.buttonClose;
-
-if (modalCloseButtons) {
-  for (let i = 0; i < modalCloseButtons.length; i++) {
-    const closeButton = modalCloseButtons[i];
-    closeButton.addEventListener('click', event => {
-      event.preventDefault();
-      console.log(event.target.closest('.modal'));
-      clearModal();
-      event.target.closest('.modal').classList.remove('open');
-    });
-  }
-}
-
-function clearModal() {
-  refs.movieImage.innerHTML = '';
-  refs.movieDescr.innerHTML = '';
 }
 
 async function createLibraryCollection(event) {
@@ -109,7 +90,34 @@ export function onButtonsHeaderNavClick(event) {
   if (key === 'queue') {
     renderLibraryCollection(key);
   }
-  // console.log('great job!');
+}
+
+const modalCloseButtons = refs.buttonClose;
+if (modalCloseButtons) {
+  for (let i = 0; i < modalCloseButtons.length; i++) {
+    // const closeButton = modalCloseButtons[i];
+    modalCloseButtons[i].addEventListener('click', closeModal);
+  }
+}
+
+const modalBackdrops = refs.modalBackdrop;
+if (modalBackdrops) {
+  for (let i = 0; i < modalBackdrops.length; i++) {
+    modalBackdrops[i].addEventListener('click', closeModal);
+  }
+}
+
+function closeModal(event) {
+  refs.modal.classList.remove(`open`);
+  event.target.closest('.modal').classList.remove('open');
+  refs.body.classList.remove(`lock`);
+  clearModal();
+  event.preventDefault();
+}
+
+function clearModal() {
+  refs.movieImage.innerHTML = '';
+  refs.movieDescr.innerHTML = '';
 }
 
 // _________________Modal Auth___________________
@@ -121,19 +129,22 @@ function openModalAuth(event) {
 
   if (ModalActive === 'library_btn') {
     refs.modalLogin.classList.toggle(`open`);
+    refs.body.classList.add(`lock`);
   } else {
     refs.modalRegister.classList.toggle(`open`);
     refs.modalLogin.classList.toggle(`open`);
+    refs.body.classList.add(`lock`);
   }
 }
 
 // __________________Draft________________
 
-// export function closeModal(event) {
-//   refs.modal.classList.remove(`open`);
-// clearModal();
+// event => {
 //   event.preventDefault();
-// }
+//   clearModal();
+//   event.target.closest('.modal').classList.remove('open');
+//   refs.body.classList.remove(`lock`);
+// };
 
 // async function onButtonWatchedClick(event) {
 //   event.preventDefault();
