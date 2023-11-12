@@ -27,6 +27,7 @@ import {
   getItemsLocalStorage,
 } from './localStorageService';
 import { clearPage } from './renderServies';
+import { connectFirestoreEmulator } from 'firebase/firestore';
 
 async function openModal(event) {
   event.preventDefault();
@@ -95,7 +96,6 @@ export function onButtonsHeaderNavClick(event) {
 const modalCloseButtons = refs.buttonClose;
 if (modalCloseButtons) {
   for (let i = 0; i < modalCloseButtons.length; i++) {
-    // const closeButton = modalCloseButtons[i];
     modalCloseButtons[i].addEventListener('click', closeModal);
   }
 }
@@ -109,7 +109,10 @@ if (modalBackdrops) {
 
 function closeModal(event) {
   refs.modal.classList.remove(`open`);
-  event.target.closest('.modal').classList.remove('open');
+  if (event.target.nodeName === `A`) {
+    event.target.closest('.modal').classList.remove('open');
+  }
+
   refs.body.classList.remove(`lock`);
   clearModal();
   event.preventDefault();
@@ -122,19 +125,26 @@ function clearModal() {
 
 // _________________Modal Auth___________________
 
+// let bodyLock = refs.body.classList.remove(`lock`);
+
 function openModalAuth(event) {
   event.preventDefault();
+  // refs.modalLogin.classList.add(`open`);
+  // refs.body.classList.add(`lock`);
 
   ModalActive = event.target.getAttribute('id');
 
   if (ModalActive === 'library_btn') {
     refs.modalLogin.classList.toggle(`open`);
-    refs.body.classList.add(`lock`);
+    // refs.body.classList.add(`lock`);
   } else {
     refs.modalRegister.classList.toggle(`open`);
     refs.modalLogin.classList.toggle(`open`);
-    refs.body.classList.add(`lock`);
   }
+
+  // if (ModalActive === 'register_link' || 'login_link') {
+  //   refs.body.classList.toggle(`lock`);
+  // }
 }
 
 // __________________Draft________________
