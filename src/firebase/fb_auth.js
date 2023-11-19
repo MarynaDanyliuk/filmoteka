@@ -112,16 +112,16 @@ const updateUserProfile = async update => {
   }
 };
 
-const deleteUser = async user => {
-  if (user) {
-    // оновлюємо його профайл
-    try {
-      await deleteUser(user);
-    } catch (error) {
-      throw error;
-    }
-  }
-};
+// const deleteUser = async user => {
+//   if (user) {
+//     // оновлюємо його профайл
+//     try {
+//       await deleteUser(user);
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// };
 
 const signOut = async auth => {
   try {
