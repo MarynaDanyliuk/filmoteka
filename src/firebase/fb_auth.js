@@ -123,13 +123,13 @@ const updateUserProfile = async update => {
 //   }
 // };
 
-const signOut = async auth => {
-  try {
-    await signOut(user);
-  } catch (error) {
-    throw error;
-  }
-};
+// const signOut = async auth => {
+//   try {
+//     await signOut(user);
+//   } catch (error) {
+//     throw error;
+//   }
+// };
 
 // deleteUser(user)
 //   .then(() => {
