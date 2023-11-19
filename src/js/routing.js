@@ -5,9 +5,11 @@ import {
   notFoundPage,
 } from './content-pages';
 import { refs } from './refs';
+import { uid } from '../firebase/fb_auth';
 
 window.addEventListener('hashchange', renderContent);
 refs.logo.addEventListener('click', homePage);
+// refs.libraryBtn.addEventListener('click', libraryPage);
 
 renderContent();
 

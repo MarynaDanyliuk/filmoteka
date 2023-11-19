@@ -1,5 +1,6 @@
 import { refs } from './refs';
 import fetchApiMovies from './apiService';
+import { user } from '../firebase/fb_auth';
 
 const FetchApiMovies = new fetchApiMovies();
 
@@ -14,7 +15,7 @@ refs.gallery.addEventListener(`click`, openModal);
 refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
 refs.buttonHeaderNav.addEventListener('click', onButtonsHeaderNavClick);
 
-refs.libraryBtn.addEventListener(`click`, openModalAuth);
+refs.libraryBtn.addEventListener(`click`, showUserGallery);
 refs.registerLink.addEventListener('click', openModalAuth);
 refs.loginLink.addEventListener('click', openModalAuth);
 
@@ -27,7 +28,10 @@ import {
   getItemsLocalStorage,
 } from './localStorageService';
 import { clearPage } from './renderServies';
-import { connectFirestoreEmulator } from 'firebase/firestore';
+import { libraryPage } from './content-pages';
+
+import { user } from '../firebase/fb_auth';
+// import { connectFirestoreEmulator } from 'firebase/firestore';
 
 async function openModal(event) {
   event.preventDefault();
@@ -107,7 +111,7 @@ if (modalBackdrops) {
   }
 }
 
-function closeModal(event) {
+export function closeModal(event) {
   refs.modal.classList.remove(`open`);
   if (event.target.nodeName === `A`) {
     event.target.closest('.modal').classList.remove('open');
@@ -125,9 +129,15 @@ function clearModal() {
 
 // _________________Modal Auth___________________
 
-// let bodyLock = refs.body.classList.remove(`lock`);
+function showUserGallery(user) {
+  if (user) {
+    libraryPage();
+  } else {
+    openModalAuth();
+  }
+}
 
-function openModalAuth(event) {
+export function openModalAuth(event) {
   event.preventDefault();
   // refs.modalLogin.classList.add(`open`);
   // refs.body.classList.add(`lock`);
@@ -148,6 +158,14 @@ function openModalAuth(event) {
 }
 
 // __________________Draft________________
+
+// let bodyLock = refs.body.classList.remove(`lock`);
+
+// console.log(user);
+// if (user !== null) {
+//   window.location.assign('#/library');
+//   return;
+// }
 
 // event => {
 //   event.preventDefault();

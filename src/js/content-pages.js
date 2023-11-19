@@ -11,7 +11,7 @@ import { fetchMoviesAndRender, fetchGenresListByIds } from './fetchAndRender';
 import { showButtonLoad, hideButtonLoad } from './pagination';
 // import { openModalRegister } from './modal_auth';
 
-let key = 'library';
+export let key = 'library';
 
 export async function homePage() {
   clearPage();
