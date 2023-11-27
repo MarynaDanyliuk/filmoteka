@@ -1,10 +1,5 @@
 .header {
-  background-image: linear-gradient(
-      to right,
-      rgba(47, 48, 58, 0.4),
-      rgba(47, 48, 58, 0.4)
-    ),
-    url(../images/abstract-background-with-red-lines_1x.jpg);
+  background-image: url(../images/abstract-background-with-red-lines_1x.jpg);
 
   background-position: center;
   background-size: auto auto;
@@ -135,3 +130,9 @@ svg:not(:root) {
   margin-left: auto;
   margin-right: auto;
 }
+
+// linear-gradient(
+//       to right,
+//       rgba(47, 48, 58, 0.4),
+//       rgba(47, 48, 58, 0.4)
+//     ),

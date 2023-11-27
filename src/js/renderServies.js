@@ -101,11 +101,13 @@ export function renderHomeHeader() {
   refs.libraryBtn.classList.remove('nav_item--current');
   refs.headerNavButtons.classList.add('not-visible');
   refs.form.classList.remove('not-visible');
+  refs.signOut.classList.add('not-visible');
 }
 
 export function renderLibraryHeader() {
   refs.homeBtn.classList.remove('nav_item--current');
   refs.libraryBtn.classList.add('nav_item--current');
+  refs.signOut.classList.remove('not-visible');
   refs.headerNavButtons.classList.remove('not-visible');
   refs.form.classList.add('not-visible');
 }

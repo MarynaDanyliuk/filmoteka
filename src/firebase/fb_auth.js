@@ -8,38 +8,20 @@ import {
   signOut,
 } from 'firebase/auth';
 
-import { getItemsLocalStorage } from '../js/localStorageService';
 import { homePage, libraryPage } from '../js/content-pages';
 import { openModalAuth } from '../js/modal';
 
 import { refs } from '../js/refs';
 import { auth } from './fb_config';
 import { key } from '../js/content-pages';
-
-// import { closeModal } from '../js/modal';
+import { openModalAuth } from '../js/modal';
 
 refs.loginButton.addEventListener('click', loginEmailAndPassword);
 refs.registerButton.addEventListener('click', registerEmailAndPassword);
-
-// console.log(refs.formsAuth);
+refs.signOut.addEventListener('click', signOutEvent);
 
 const formsAuth = refs.formsAuth || [];
 const user = auth.currentUser;
-
-// connectAuthEmulator(auth, 'http://localhost:9099');
-// connectAuthEmulator(auth, 'http://127.0.0.1:9099');
-
-// createUserWithEmailAndPassword(auth, email, password)
-//   .then(userCredential => {
-//     // Signed up
-//     const user = userCredential.user;
-//     // ...
-//   })
-//   .catch(error => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // ..
-//   });
 
 async function loginEmailAndPassword(event) {
   event.preventDefault();
@@ -52,10 +34,8 @@ async function loginEmailAndPassword(event) {
       password
     );
     console.log(userCredential.user);
-
     window.location.assign('#/library');
-    // window.location.href('#/library');
-    // clearForm();
+    clearForm();
   } catch (error) {
     console.log(error.message);
   }
@@ -72,32 +52,60 @@ async function registerEmailAndPassword() {
       password
     );
     console.log(userCredential.user);
-    // clearForm();
-    // refs.modalRegister.classList.remove('.open');
+    clearForm();
   } catch (error) {
     console.log(error.message);
   }
 }
 
-onAuthStateChanged(auth, user => {
-  if (user !== null) {
-    console.log(user);
-    console.log('user logged in');
-
-    // The user object has basic properties such as display name, email, etc.
-    const displayName = user.displayName;
-    const email = user.email;
-    const photoURL = user.photoURL;
-    const emailVerified = user.emailVerified;
-
-    // The user's ID, unique to the Firebase project. Do NOT use
-    // this value to authenticate with your backend server, if
-    // you have one. Use User.getToken() instead.
-    const uid = user.uid;
-  } else {
-    console.log('no user');
+async function signOutEvent(event) {
+  try {
+    event.preventDefault();
+    window.location.assign('#/');
+    await signOut(auth);
+    console.log('user is successfully logout');
+  } catch (error) {
+    console.log(error.message);
   }
-});
+}
+
+const monitorAuthState = async () => {
+  onAuthStateChanged(auth, user => {
+    if (user !== null) {
+      console.log(user);
+      console.log('user logged in');
+      libraryPage();
+      // The user object has basic properties such as display name, email, etc.
+      const displayName = user.displayName;
+      const email = user.email;
+      const photoURL = user.photoURL;
+      const emailVerified = user.emailVerified;
+      // The user's ID, unique to the Firebase project. Do NOT use
+      // this value to authenticate with your backend server, if
+      // you have one. Use User.getToken() instead.
+      const uid = user.uid;
+    } else {
+      homePage();
+      console.log('no user');
+    }
+  });
+};
+
+// refs.libraryBtn.addEventListener(`click`, monitorAuthState);
+
+monitorAuthState();
+
+function clearForm() {
+  for (let i = 0; i < formsAuth.length; i++) {
+    const formAuth = formsAuth[i];
+
+    for (let i = 0; i < formAuth.elements.length; i++) {
+      if (formAuth.elements[i].type === 'text') {
+        formAuth.elements[i].value = '';
+      }
+    }
+  }
+}
 
 const updateUserProfile = async update => {
   // const user = auth.currentUser;
@@ -111,6 +119,44 @@ const updateUserProfile = async update => {
     }
   }
 };
+
+// onAuthStateChanged(auth, user => {
+//   if (user !== null) {
+//     console.log(user);
+//     console.log('user logged in');
+//     libraryPage();
+//     // refs.libraryBtn.removeEventListener('click', openModalAuth);
+//     // The user object has basic properties such as display name, email, etc.
+//     const displayName = user.displayName;
+//     const email = user.email;
+//     const photoURL = user.photoURL;
+//     const emailVerified = user.emailVerified;
+
+//     // The user's ID, unique to the Firebase project. Do NOT use
+//     // this value to authenticate with your backend server, if
+//     // you have one. Use User.getToken() instead.
+//     const uid = user.uid;
+//   } else {
+//     // refs.modalLogin.addEventListener('click', openModalAuth);
+//     homePage();
+//     console.log('no user');
+//   }
+// });
+
+// connectAuthEmulator(auth, 'http://localhost:9099');
+// connectAuthEmulator(auth, 'http://127.0.0.1:9099');
+
+// createUserWithEmailAndPassword(auth, email, password)
+//   .then(userCredential => {
+//     // Signed up
+//     const user = userCredential.user;
+//     // ...
+//   })
+//   .catch(error => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     // ..
+//   });
 
 // const deleteUser = async user => {
 //   if (user) {
@@ -148,18 +194,6 @@ const updateUserProfile = async update => {
 //     // An error happened.
 //     throw error;
 //   });
-
-function clearForm() {
-  for (let i = 0; i < formsAuth.length; i++) {
-    const formAuth = formsAuth[i];
-
-    for (let i = 0; i < formAuth.elements.length; i++) {
-      if (formAuth.elements[i].type === 'text') {
-        formAuth.elements[i].value = '';
-      }
-    }
-  }
-}
 
 // function closeModalAuth(event) {
 //   event.preventDefault();

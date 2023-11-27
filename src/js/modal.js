@@ -1,6 +1,6 @@
 import { refs } from './refs';
 import fetchApiMovies from './apiService';
-import { user } from '../firebase/fb_auth';
+import { auth } from '../firebase/fb_config';
 
 const FetchApiMovies = new fetchApiMovies();
 
@@ -15,7 +15,7 @@ refs.gallery.addEventListener(`click`, openModal);
 refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
 refs.buttonHeaderNav.addEventListener('click', onButtonsHeaderNavClick);
 
-refs.libraryBtn.addEventListener(`click`, showUserGallery);
+refs.libraryBtn.addEventListener(`click`, openModalAuth);
 refs.registerLink.addEventListener('click', openModalAuth);
 refs.loginLink.addEventListener('click', openModalAuth);
 
@@ -29,9 +29,6 @@ import {
 } from './localStorageService';
 import { clearPage } from './renderServies';
 import { libraryPage } from './content-pages';
-
-import { user } from '../firebase/fb_auth';
-// import { connectFirestoreEmulator } from 'firebase/firestore';
 
 async function openModal(event) {
   event.preventDefault();
@@ -129,33 +126,42 @@ function clearModal() {
 
 // _________________Modal Auth___________________
 
-function showUserGallery(user) {
-  if (user) {
-    libraryPage();
-  } else {
-    openModalAuth();
-  }
-}
-
-export function openModalAuth(event) {
+function openModalAuth(event) {
   event.preventDefault();
-  // refs.modalLogin.classList.add(`open`);
-  // refs.body.classList.add(`lock`);
-
+  const user = auth.currentUser;
+  console.log(user);
   ModalActive = event.target.getAttribute('id');
 
-  if (ModalActive === 'library_btn') {
-    refs.modalLogin.classList.toggle(`open`);
-    // refs.body.classList.add(`lock`);
+  // if (user) {
+  //   refs.libraryBtn.removeEventListener(`click`, openModalAuth);
+  // }
+  if (ModalActive === 'library_btn' && user) {
+    window.location.assign('#/library');
+    refs.modalRegister.classList.remove(`open`);
+    return;
+  }
+  if (ModalActive === 'library_btn' && !user) {
+    refs.modalLogin.classList.add(`open`);
   } else {
     refs.modalRegister.classList.toggle(`open`);
     refs.modalLogin.classList.toggle(`open`);
   }
-
-  // if (ModalActive === 'register_link' || 'login_link') {
-  //   refs.body.classList.toggle(`lock`);
-  // }
 }
+
+// function openModalAuth(event) {
+//   event.preventDefault();
+//   const user = auth.currentUser;
+//   console.log(user);
+//   ModalActive = event.target.getAttribute('id');
+
+//   if (ModalActive === 'library_btn') {
+//     refs.modalLogin.classList.toggle(`open`);
+//     console.log('rere');
+//   } else {
+//     refs.modalRegister.classList.toggle(`open`);
+//     refs.modalLogin.classList.toggle(`open`);
+//   }
+// }
 
 // __________________Draft________________
 

@@ -3,13 +3,11 @@ import {
   renderPageNotFound,
   renderHomeHeader,
   renderLibraryHeader,
-  // renderRegisterPage,
 } from './renderServies';
 
 import { renderLibraryCollection } from './libraryCollection';
 import { fetchMoviesAndRender, fetchGenresListByIds } from './fetchAndRender';
 import { showButtonLoad, hideButtonLoad } from './pagination';
-// import { openModalRegister } from './modal_auth';
 
 export let key = 'library';
 
