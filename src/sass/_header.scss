@@ -121,6 +121,12 @@ svg:not(:root) {
   pointer-events: none;
 }
 
+.visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: inherit;
+}
+
 .page-not-found {
   background-image: url(../images/404-error-with-cute-animal-concept-illustration_114360-1900.jpg);
   width: 100%;

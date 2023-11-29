@@ -40,7 +40,7 @@ export function renderMovieImage({ poster_path, original_title }) {
           src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
           alt="default image"
           class="image"
-          style="object-fit: cover"
+          style="width: 375px; height: 478px"
         />`;
   refs.movieImage.insertAdjacentHTML(`beforeend`, movieImageMarkup);
 }
@@ -101,7 +101,6 @@ export function renderHomeHeader() {
   refs.libraryBtn.classList.remove('nav_item--current');
   refs.headerNavButtons.classList.add('not-visible');
   refs.form.classList.remove('not-visible');
-  refs.signOut.classList.add('not-visible');
 }
 
 export function renderLibraryHeader() {
@@ -162,7 +161,7 @@ export function MovieCard({
          >
            <img
            id="${id}"
-             class="details__img"
+            class="movie_img"
              src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
              alt="${original_title}"
              loading="lazy"
@@ -196,10 +195,6 @@ export const renderGenres = (genres, genre_ids) => {
       : `<li class="movie_gnr">${genresList}</li>`;
   }
 };
-
-export function renderRegisterPage() {
-  // openModalRegister();
-}
 
 // _________________________________________________________
 

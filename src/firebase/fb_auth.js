@@ -8,20 +8,17 @@ import {
   signOut,
 } from 'firebase/auth';
 
-import { homePage, libraryPage } from '../js/content-pages';
-import { openModalAuth } from '../js/modal';
+import { homePage } from '../js/content-pages';
 
 import { refs } from '../js/refs';
 import { auth } from './fb_config';
-import { key } from '../js/content-pages';
-import { openModalAuth } from '../js/modal';
 
 refs.loginButton.addEventListener('click', loginEmailAndPassword);
 refs.registerButton.addEventListener('click', registerEmailAndPassword);
 refs.signOut.addEventListener('click', signOutEvent);
 
 const formsAuth = refs.formsAuth || [];
-const user = auth.currentUser;
+// const user = auth.currentUser;
 
 async function loginEmailAndPassword(event) {
   event.preventDefault();
@@ -34,7 +31,7 @@ async function loginEmailAndPassword(event) {
       password
     );
     console.log(userCredential.user);
-    window.location.assign('#/library');
+    refs.signOut.classList.remove('not-visible');
     clearForm();
   } catch (error) {
     console.log(error.message);
@@ -52,6 +49,7 @@ async function registerEmailAndPassword() {
       password
     );
     console.log(userCredential.user);
+    refs.signOut.classList.remove('not-visible');
     clearForm();
   } catch (error) {
     console.log(error.message);
@@ -63,6 +61,7 @@ async function signOutEvent(event) {
     event.preventDefault();
     window.location.assign('#/');
     await signOut(auth);
+    refs.signOut.classList.add('not-visible');
     console.log('user is successfully logout');
   } catch (error) {
     console.log(error.message);
@@ -74,7 +73,8 @@ const monitorAuthState = async () => {
     if (user !== null) {
       console.log(user);
       console.log('user logged in');
-      libraryPage();
+      homePage();
+      // libraryPage();
       // The user object has basic properties such as display name, email, etc.
       const displayName = user.displayName;
       const email = user.email;
@@ -107,18 +107,18 @@ function clearForm() {
   }
 }
 
-const updateUserProfile = async update => {
-  // const user = auth.currentUser;
-  // якщо такий користувач знайдений
-  if (user) {
-    // оновлюємо його профайл
-    try {
-      await updateProfile(user, update);
-    } catch (error) {
-      throw error;
-    }
-  }
-};
+// const updateUserProfile = async update => {
+//   // const user = auth.currentUser;
+//   // якщо такий користувач знайдений
+//   if (user) {
+//     // оновлюємо його профайл
+//     try {
+//       await updateProfile(user, update);
+//     } catch (error) {
+//       throw error;
+//     }
+//   }
+// };
 
 // onAuthStateChanged(auth, user => {
 //   if (user !== null) {

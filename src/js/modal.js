@@ -28,7 +28,7 @@ import {
   getItemsLocalStorage,
 } from './localStorageService';
 import { clearPage } from './renderServies';
-import { libraryPage } from './content-pages';
+// import { libraryPage } from './content-pages';
 
 async function openModal(event) {
   event.preventDefault();
@@ -129,12 +129,8 @@ function clearModal() {
 function openModalAuth(event) {
   event.preventDefault();
   const user = auth.currentUser;
-  console.log(user);
   ModalActive = event.target.getAttribute('id');
 
-  // if (user) {
-  //   refs.libraryBtn.removeEventListener(`click`, openModalAuth);
-  // }
   if (ModalActive === 'library_btn' && user) {
     window.location.assign('#/library');
     refs.modalRegister.classList.remove(`open`);

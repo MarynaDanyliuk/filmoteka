@@ -11,9 +11,9 @@ import { showButtonLoad, hideButtonLoad } from './pagination';
 
 export let key = 'library';
 
-export async function homePage() {
+export async function homePage(user) {
   clearPage();
-  renderHomeHeader();
+  renderHomeHeader(user);
   await fetchGenresListByIds();
   await fetchMoviesAndRender();
   showButtonLoad();
@@ -23,7 +23,6 @@ export async function libraryPage() {
   clearPage();
 
   renderLibraryHeader();
-
   renderLibraryCollection(key);
 
   showButtonLoad();
@@ -37,9 +36,9 @@ export function notFoundPage() {
   hideButtonLoad();
 }
 
-export function registerPage() {
-  // openModalRegister;
-}
+// export function registerPage() {
+//   // openModalRegister;
+// }
 
 // refs.buttonWatched.addEventListener('click', onButtonsHeaderNavClick);
 // refs.buttonQueue.addEventListener('click', onButtonsHeaderNavClick);
