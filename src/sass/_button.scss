@@ -8,22 +8,21 @@
   min-width: 30px;
   color: white;
   text-transform: uppercase;
-  &:hover,
-  &:focus,
-  &:active {
-    border: 1px solid #ff6b01;
-    background-color: #ff6b01;
-    color: white;
-  }
 }
 
 .btn_modal {
   border: 1px solid black;
   color: black;
   margin-right: 15px;
-  text-transform: uppercase;
   &:last-child {
     margin-right: 0;
+  }
+  &:hover,
+  &:focus,
+  &:active {
+    border: 1px solid #ff6b01;
+    background-color: #ff6b01;
+    color: white;
   }
 }
 
@@ -34,9 +33,15 @@
   font-size: 14px;
   border: 1px solid black;
   color: black;
-  text-transform: uppercase;
   margin-bottom: 24px;
   &:last-child {
     margin-right: 0;
+  }
+  &:hover,
+  &:focus,
+  &:active {
+    border: 1px solid #ff6b01;
+    background-color: #ff6b01;
+    color: white;
   }
 }

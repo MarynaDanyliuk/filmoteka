@@ -22,7 +22,8 @@
   }
 }
 
-.form_auth a {
+#register_link,
+#login_link {
   &:hover {
     color: #ff6b01;
   }
@@ -33,10 +34,3 @@
   align-items: baseline;
   gap: 16px;
 }
-
-// .form_auth_register {
-//   //   position: absolute;
-//   //   top: 0;
-//   display: flex;
-//   flex-direction: column;
-// }

@@ -5,7 +5,7 @@ import {
   notFoundPage,
 } from './content-pages';
 import { refs } from './refs';
-import { uid } from '../firebase/fb_auth';
+import { auth } from '../firebase/fb_config';
 
 window.addEventListener('hashchange', renderContent);
 refs.logo.addEventListener('click', homePage);
@@ -15,10 +15,11 @@ renderContent();
 
 function renderContent() {
   const route = window.location.hash.substring(1);
+  const user = auth.currentUser;
 
   console.log(route);
   if (route === '/' || route === '') {
-    homePage();
+    homePage(user);
   } else if (route === '/library') {
     libraryPage();
   } else {

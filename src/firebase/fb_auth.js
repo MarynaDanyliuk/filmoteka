@@ -71,10 +71,9 @@ async function signOutEvent(event) {
 const monitorAuthState = async () => {
   onAuthStateChanged(auth, user => {
     if (user !== null) {
-      console.log(user);
+      // console.log(user);
       console.log('user logged in');
-      homePage();
-      // libraryPage();
+      refs.signOut.classList.remove('not-visible');
       // The user object has basic properties such as display name, email, etc.
       const displayName = user.displayName;
       const email = user.email;
@@ -85,7 +84,7 @@ const monitorAuthState = async () => {
       // you have one. Use User.getToken() instead.
       const uid = user.uid;
     } else {
-      homePage();
+      homePage(user);
       console.log('no user');
     }
   });
