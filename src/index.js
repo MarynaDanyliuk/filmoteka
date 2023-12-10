@@ -1,5 +1,7 @@
 import './firebase/fb_config';
 import './firebase/fb_auth';
+import './firebase/fb_cloudStore';
+import './firebase/db';
 import './js/refs';
 import './js/content-pages';
 import './js/apiService';

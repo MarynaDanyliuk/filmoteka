@@ -20,3 +20,11 @@ export function getItemsLocalStorage(key) {
     console.log(error.message);
   }
 }
+
+export function removeItemsFromLocalStorage(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.log(error.message);
+  }
+}

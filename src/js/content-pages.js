@@ -11,6 +11,10 @@ import { showButtonLoad, hideButtonLoad } from './pagination';
 
 export let key = 'library';
 
+// import { auth } from '../firebase/fb_config';
+// const user = auth.currentUser;
+// console.log(user);
+
 export async function homePage(user) {
   clearPage();
   renderHomeHeader(user);

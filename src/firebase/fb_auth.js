@@ -11,6 +11,7 @@ import {
 import { homePage } from '../js/content-pages';
 
 import { refs } from '../js/refs';
+import { addUserToFirestore } from './fb_cloudStore';
 import { auth } from './fb_config';
 
 refs.loginButton.addEventListener('click', loginEmailAndPassword);
@@ -18,10 +19,10 @@ refs.registerButton.addEventListener('click', registerEmailAndPassword);
 refs.signOut.addEventListener('click', signOutEvent);
 
 const formsAuth = refs.formsAuth || [];
-// const user = auth.currentUser;
+const user = auth.currentUser;
 
 async function loginEmailAndPassword(event) {
-  event.preventDefault();
+  // event.preventDefault();
   try {
     const email = refs.txtEmail.value;
     const password = refs.txtPassword.value;
@@ -48,6 +49,7 @@ async function registerEmailAndPassword() {
       email,
       password
     );
+
     console.log(userCredential.user);
     refs.signOut.classList.remove('not-visible');
     clearForm();
@@ -68,21 +70,22 @@ async function signOutEvent(event) {
   }
 }
 
-const monitorAuthState = async () => {
+export const monitorAuthState = async user => {
   onAuthStateChanged(auth, user => {
     if (user !== null) {
-      // console.log(user);
       console.log('user logged in');
       refs.signOut.classList.remove('not-visible');
       // The user object has basic properties such as display name, email, etc.
-      const displayName = user.displayName;
+      // const displayName = user.displayName;
       const email = user.email;
-      const photoURL = user.photoURL;
+      const token = user.accessToken;
+      // const photoURL = user.photoURL;
       const emailVerified = user.emailVerified;
       // The user's ID, unique to the Firebase project. Do NOT use
       // this value to authenticate with your backend server, if
       // you have one. Use User.getToken() instead.
       const uid = user.uid;
+      addUserToFirestore(user);
     } else {
       homePage(user);
       console.log('no user');
@@ -90,9 +93,7 @@ const monitorAuthState = async () => {
   });
 };
 
-// refs.libraryBtn.addEventListener(`click`, monitorAuthState);
-
-monitorAuthState();
+monitorAuthState(user);
 
 function clearForm() {
   for (let i = 0; i < formsAuth.length; i++) {
