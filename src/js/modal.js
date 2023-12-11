@@ -7,7 +7,7 @@ let moviesWatched = [];
 let moviesQueue = [];
 let MovieActiveId = null;
 // let key = '';
-let moviesLibrary = [];
+// let moviesLibrary = [];
 let ModalActive = '';
 
 refs.gallery.addEventListener(`click`, openModal);
@@ -54,7 +54,8 @@ export async function createLibraryCollection(event) {
   if (event.target.nodeName !== `BUTTON`) {
     return;
   }
-
+  refs.buttonQueue.classList.add('active_btn');
+  refs.buttonWatched.classList.remove('active_btn');
   key = event.target.getAttribute('id');
 
   moviesWatched = getItemsLocalStorage(key) || [];
@@ -64,18 +65,19 @@ export async function createLibraryCollection(event) {
 
   await FetchApiMovies.fetchMovieDetailsById(FetchApiMovies.movieId)
     .then(data => {
-      // updateDB
-      moviesLibrary = getItemsLocalStorage('library') || [];
-      console.log(data);
-      moviesLibrary.push(data);
+      // moviesLibrary = getItemsLocalStorage('library') || [];
+      // console.log(data);
+      // moviesLibrary.push(data);
 
-      setItemsLocalStorage('library', moviesLibrary);
+      // setItemsLocalStorage('library', moviesLibrary);
       if (key === 'watched') {
         moviesWatched.push(data);
         setItemsLocalStorage(key, moviesWatched);
       } else if (key === 'queue') {
         moviesQueue.push(data);
         setItemsLocalStorage(key, moviesQueue);
+        // refs.buttonWatched.classList.remove('active_btn');
+        // refs.buttonQueue.classList.add('active_btn');
       }
     })
     .catch(error => console.log(error.message))

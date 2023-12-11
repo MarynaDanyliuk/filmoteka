@@ -9,7 +9,7 @@ import { renderLibraryCollection } from './libraryCollection';
 import { fetchMoviesAndRender, fetchGenresListByIds } from './fetchAndRender';
 import { showButtonLoad, hideButtonLoad } from './pagination';
 
-export let key = 'library';
+export let key = 'watched';
 
 export async function homePage(user) {
   clearPage();
@@ -22,9 +22,9 @@ export async function homePage(user) {
 export async function libraryPage() {
   clearPage();
 
-  renderLibraryHeader();
-
   renderLibraryCollection(key);
+
+  renderLibraryHeader();
 
   showButtonLoad();
 }

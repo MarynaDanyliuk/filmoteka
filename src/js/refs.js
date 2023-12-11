@@ -1,17 +1,26 @@
 export const refs = {
+  // _______________Header search form_____________
   form: document.querySelector(`.form`),
   input: document.getElementById('search-input'),
   button: document.querySelector(`.search-button`),
+
+  // ________________Gallery___________________
   gallery: document.querySelector(`.gallery`),
   buttonLoadMore: document.querySelector(`.load-more`),
+
+  // _______________Modal___________
   modal: document.querySelector(`.modal`),
   modalContent: document.querySelector(`.modal_data`),
   movieImage: document.querySelector('.movie_image'),
   movieDescr: document.querySelector('.movie_descr'),
   buttonClose: document.querySelectorAll(`.modal_close`),
   modalBackdrop: document.querySelectorAll(`.modal_body`),
+
+  // _______________Utils___________________
   body: document.querySelector(`body`),
   content: document.getElementById('content'),
+
+  // ______________Header__________________________
   headerNavLinks: document.querySelectorAll('.nav_item'),
   headerNavButtons: document.querySelector('.nav_list_button'),
   buttonWatched: document.getElementById('watched'),
@@ -22,6 +31,8 @@ export const refs = {
   homeBtn: document.getElementById(`home_btn`),
   libraryBtn: document.getElementById(`library_btn`),
   signOut: document.getElementById('auth_btn'),
+
+  // _______________Modal auth__________________________
   modalLogin: document.getElementById(`login`),
   modalRegister: document.getElementById(`register`),
   formsAuth: document.querySelectorAll(`.form_auth`),

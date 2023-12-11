@@ -45,3 +45,19 @@
     color: white;
   }
 }
+
+.btn_header {
+  &:hover,
+  &:focus,
+  &:active {
+    border: 1px solid #ff6b01;
+    background-color: #ff6b01;
+    color: white;
+  }
+}
+
+.active_btn {
+  border: 1px solid #ff6b01;
+  background-color: #ff6b01;
+  color: white;
+}

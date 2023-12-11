@@ -120,6 +120,7 @@ export function renderHomeHeader(user) {
 export function renderLibraryHeader() {
   refs.homeBtn.classList.remove('nav_item--current');
   refs.libraryBtn.classList.add('nav_item--current');
+  // refs.buttonWatched.classList.add('active_btn');
   // refs.signOut.classList.remove('not-visible');
   refs.headerNavButtons.classList.remove('not-visible');
   refs.form.classList.add('not-visible');
