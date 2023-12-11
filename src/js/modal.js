@@ -6,7 +6,7 @@ const FetchApiMovies = new fetchApiMovies();
 let moviesWatched = [];
 let moviesQueue = [];
 let MovieActiveId = null;
-// let key = '';
+let key = '';
 // let moviesLibrary = [];
 let ModalActive = '';
 
@@ -51,12 +51,13 @@ async function openModal(event) {
 
 export async function createLibraryCollection(event) {
   event.preventDefault();
+  key = event.target.getAttribute('id');
+  console.log('key:', key);
   if (event.target.nodeName !== `BUTTON`) {
     return;
   }
   refs.buttonQueue.classList.add('active_btn');
   refs.buttonWatched.classList.remove('active_btn');
-  key = event.target.getAttribute('id');
 
   moviesWatched = getItemsLocalStorage(key) || [];
   moviesQueue = getItemsLocalStorage(key) || [];
