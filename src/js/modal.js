@@ -23,7 +23,6 @@ import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
 import { renderLibraryCollection } from './libraryCollection';
 
 import { auth } from '../firebase/fb_config';
-const user = auth.currentUser;
 
 import {
   setItemsLocalStorage,
@@ -33,21 +32,21 @@ import { clearPage } from './renderServies';
 
 async function openModal(event) {
   event.preventDefault();
-  if (!user) {
-    refs.modalLogin.classList.add(`open`);
-    return;
-  }
+  const user = auth.currentUser;
+  // console.log(user);
   if (event.target.nodeName !== `IMG`) {
     return;
   }
-
-  MovieActiveId = event.target.getAttribute(`id`);
-  FetchApiMovies.movieId = MovieActiveId;
-  console.log(FetchApiMovies.movieId);
-  await fetchMovieDetailsByIdAndRender(MovieActiveId);
-  refs.modal.classList.add(`open`);
-  refs.body.classList.add(`lock`);
-  return MovieActiveId;
+  if (!user) {
+    refs.modalLogin.classList.add(`open`);
+  } else if (user) {
+    MovieActiveId = event.target.getAttribute(`id`);
+    FetchApiMovies.movieId = MovieActiveId;
+    console.log(FetchApiMovies.movieId);
+    await fetchMovieDetailsByIdAndRender(MovieActiveId);
+    refs.modal.classList.add(`open`);
+    refs.body.classList.add(`lock`);
+  }
 }
 
 export async function createLibraryCollection(event) {
@@ -150,6 +149,19 @@ function openModalAuth(event) {
     refs.modalLogin.classList.toggle(`open`);
   }
 }
+
+// else {
+// MovieActiveId = event.target.getAttribute(`id`);
+// FetchApiMovies.movieId = MovieActiveId;
+// console.log(FetchApiMovies.movieId);
+// await fetchMovieDetailsByIdAndRender(MovieActiveId);
+// refs.modal.classList.add(`open`);
+// refs.body.classList.add(`lock`);
+// return MovieActiveId;
+// }
+// refs.modalLogin.classList.remove(`open`);
+
+// return;
 
 // async function createLibraryCollection(event) {
 //   event.preventDefault();

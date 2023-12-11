@@ -17,7 +17,7 @@ export const addUserToFirestore = async user => {
   const userQuery = query(usersRef, where('userId', '==', user.uid));
   try {
     const querySnapshot = await getDocs(userQuery);
-    console.log(querySnapshot);
+    // console.log(querySnapshot);
     querySnapshot.forEach(doc => {
       console.log(doc.id, ' => ', doc.data());
     });
