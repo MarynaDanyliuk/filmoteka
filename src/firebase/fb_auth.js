@@ -1,17 +1,14 @@
 import {
   signInWithEmailAndPassword,
-  connectAuthEmulator,
   createUserWithEmailAndPassword,
-  onAuthStateChanged,
-  updateProfile,
-  deleteUser,
   signOut,
+  // connectAuthEmulator,
+  // onAuthStateChanged,
+  // updateProfile,
+  // deleteUser,
 } from 'firebase/auth';
 
-import { homePage } from '../js/content-pages';
-
 import { refs } from '../js/refs';
-import { addUserToFirestore } from './fb_cloudStore';
 import { auth } from './fb_config';
 
 refs.loginButton.addEventListener('click', loginEmailAndPassword);
@@ -19,10 +16,8 @@ refs.registerButton.addEventListener('click', registerEmailAndPassword);
 refs.signOut.addEventListener('click', signOutEvent);
 
 const formsAuth = refs.formsAuth || [];
-const user = auth.currentUser;
 
-async function loginEmailAndPassword(event) {
-  // event.preventDefault();
+async function loginEmailAndPassword() {
   try {
     const email = refs.txtEmail.value;
     const password = refs.txtPassword.value;
@@ -31,7 +26,7 @@ async function loginEmailAndPassword(event) {
       email,
       password
     );
-    console.log(userCredential.user);
+    // console.log(userCredential.user);
     refs.signOut.classList.remove('not-visible');
     clearForm();
   } catch (error) {
@@ -70,30 +65,34 @@ async function signOutEvent(event) {
   }
 }
 
-export const monitorAuthState = async user => {
-  onAuthStateChanged(auth, user => {
-    if (user !== null) {
-      console.log('user logged in');
-      refs.signOut.classList.remove('not-visible');
-      // The user object has basic properties such as display name, email, etc.
-      // const displayName = user.displayName;
-      const email = user.email;
-      const token = user.accessToken;
-      // const photoURL = user.photoURL;
-      const emailVerified = user.emailVerified;
-      // The user's ID, unique to the Firebase project. Do NOT use
-      // this value to authenticate with your backend server, if
-      // you have one. Use User.getToken() instead.
-      const uid = user.uid;
-      addUserToFirestore(user);
-    } else {
-      homePage(user);
-      console.log('no user');
-    }
-  });
-};
+// export const monitorAuthState = async user => {
+//   onAuthStateChanged(auth, user => {
+//     if (user !== null) {
+//       console.log('user logged in', user);
+//       refs.signOut.classList.remove('not-visible');
+//       // The user object has basic properties such as display name, email, etc.
+//       const displayName = user.displayName;
+//       const email = user.email;
+//       const token = user.accessToken;
+//       // const photoURL = user.photoURL;
+//       const emailVerified = user.emailVerified;
+//       // The user's ID, unique to the Firebase project. Do NOT use
+//       // this value to authenticate with your backend server, if
+//       // you have one. Use User.getToken() instead.
+//       const uid = user.uid;
+//       const collectionName = 'users';
+//       // const list = getItemsLocalStorage(key);
+//       // const list = ['1', '2', '3'];
+//       addUserToFirestore(user);
+//       // updateMovieInFirestore(collectionName, user, key);
+//     } else {
+//       homePage(user);
+//       console.log('no user');
+//     }
+//   });
+// };
 
-monitorAuthState(user);
+// monitorAuthState(user);
 
 function clearForm() {
   for (let i = 0; i < formsAuth.length; i++) {

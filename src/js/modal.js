@@ -3,16 +3,16 @@ import fetchApiMovies from './apiService';
 
 const FetchApiMovies = new fetchApiMovies();
 
-let moviesWatched = [];
-let moviesQueue = [];
-let MovieActiveId = null;
-let key = '';
+// let moviesWatched = [];
+// let moviesQueue = [];
+export let MovieActiveId = null;
+// let key = '';
 // let moviesLibrary = [];
 let ModalActive = '';
 
 refs.gallery.addEventListener(`click`, openModal);
-refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
-refs.buttonHeaderNav.addEventListener('click', onButtonsHeaderNavClick);
+// refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
+// refs.buttonHeaderNav.addEventListener('click', onButtonsHeaderNavClick);
 
 refs.libraryBtn.addEventListener(`click`, openModalAuth);
 refs.registerLink.addEventListener('click', openModalAuth);
@@ -20,20 +20,19 @@ refs.loginLink.addEventListener('click', openModalAuth);
 
 import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
 
-import { renderLibraryCollection } from './libraryCollection';
+// import { renderLibraryCollection } from './libraryCollection';
 
 import { auth } from '../firebase/fb_config';
 
-import {
-  setItemsLocalStorage,
-  getItemsLocalStorage,
-} from './localStorageService';
-import { clearPage } from './renderServies';
+// import {
+//   setItemsLocalStorage,
+//   getItemsLocalStorage,
+// } from './localStorageService';
+// import { clearPage } from './renderServies';
 
-async function openModal(event) {
+export async function openModal(event) {
   event.preventDefault();
   const user = auth.currentUser;
-  // console.log(user);
   if (event.target.nodeName !== `IMG`) {
     return;
   }
@@ -42,66 +41,68 @@ async function openModal(event) {
   } else if (user) {
     MovieActiveId = event.target.getAttribute(`id`);
     FetchApiMovies.movieId = MovieActiveId;
-    console.log(FetchApiMovies.movieId);
+    console.log(MovieActiveId);
     await fetchMovieDetailsByIdAndRender(MovieActiveId);
     refs.modal.classList.add(`open`);
     refs.body.classList.add(`lock`);
+    return MovieActiveId;
   }
+  return MovieActiveId;
 }
 
-export async function createLibraryCollection(event) {
-  event.preventDefault();
-  key = event.target.getAttribute('id');
-  console.log('key:', key);
-  if (event.target.nodeName !== `BUTTON`) {
-    return;
-  }
-  refs.buttonQueue.classList.add('active_btn');
-  refs.buttonWatched.classList.remove('active_btn');
+// export async function createLibraryCollection(event) {
+//   event.preventDefault();
+//   key = event.target.getAttribute('id');
+//   console.log('key:', key);
+//   if (event.target.nodeName !== `BUTTON`) {
+//     return;
+//   }
+//   refs.buttonQueue.classList.add('active_btn');
+//   refs.buttonWatched.classList.remove('active_btn');
 
-  moviesWatched = getItemsLocalStorage(key) || [];
-  moviesQueue = getItemsLocalStorage(key) || [];
+//   moviesWatched = getItemsLocalStorage(key) || [];
+//   moviesQueue = getItemsLocalStorage(key) || [];
 
-  closeModal(event);
+//   closeModal(event);
 
-  await FetchApiMovies.fetchMovieDetailsById(FetchApiMovies.movieId)
-    .then(data => {
-      // moviesLibrary = getItemsLocalStorage('library') || [];
-      // console.log(data);
-      // moviesLibrary.push(data);
+//   await FetchApiMovies.fetchMovieDetailsById(FetchApiMovies.movieId)
+//     .then(data => {
+//       // moviesLibrary = getItemsLocalStorage('library') || [];
+//       // console.log(data);
+//       // moviesLibrary.push(data);
 
-      // setItemsLocalStorage('library', moviesLibrary);
-      if (key === 'watched') {
-        moviesWatched.push(data);
-        setItemsLocalStorage(key, moviesWatched);
-      } else if (key === 'queue') {
-        moviesQueue.push(data);
-        setItemsLocalStorage(key, moviesQueue);
-        // refs.buttonWatched.classList.remove('active_btn');
-        // refs.buttonQueue.classList.add('active_btn');
-      }
-    })
-    .catch(error => console.log(error.message))
-    .finally(() => {
-      alert('фільм додано в бібліотеку');
-    });
-}
+//       // setItemsLocalStorage('library', moviesLibrary);
+//       if (key === 'watched') {
+//         moviesWatched.push(data);
+//         setItemsLocalStorage(key, moviesWatched);
+//       } else if (key === 'queue') {
+//         moviesQueue.push(data);
+//         setItemsLocalStorage(key, moviesQueue);
+//         // refs.buttonWatched.classList.remove('active_btn');
+//         // refs.buttonQueue.classList.add('active_btn');
+//       }
+//     })
+//     .catch(error => console.log(error.message))
+//     .finally(() => {
+//       alert('фільм додано в бібліотеку');
+//     });
+// }
 
-export function onButtonsHeaderNavClick(event) {
-  clearPage();
+// export function onButtonsHeaderNavClick(event) {
+//   clearPage();
 
-  key = event.target.getAttribute('id');
+//   key = event.target.getAttribute('id');
 
-  moviesWatched = getItemsLocalStorage(key) || [];
-  moviesQueue = getItemsLocalStorage(key) || [];
+//   moviesWatched = getItemsLocalStorage(key) || [];
+//   moviesQueue = getItemsLocalStorage(key) || [];
 
-  if (key === 'watched') {
-    renderLibraryCollection(key);
-  }
-  if (key === 'queue') {
-    renderLibraryCollection(key);
-  }
-}
+//   if (key === 'watched') {
+//     renderLibraryCollection(key);
+//   }
+//   if (key === 'queue') {
+//     renderLibraryCollection(key);
+//   }
+// }
 
 const modalCloseButtons = refs.buttonClose;
 if (modalCloseButtons) {

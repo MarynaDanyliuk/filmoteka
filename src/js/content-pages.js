@@ -3,26 +3,33 @@ import {
   renderPageNotFound,
   renderHomeHeader,
   renderLibraryHeader,
+  renderGallary,
 } from './renderServies';
 
-import { renderLibraryCollection } from './libraryCollection';
+// import { renderLibraryCollection } from './libraryCollection';
+import { renderLibraryCollection } from '../firebase/db';
 import { fetchMoviesAndRender, fetchGenresListByIds } from './fetchAndRender';
 import { showButtonLoad, hideButtonLoad } from './pagination';
 
-export let key = 'watched';
+// import { user } from '../firebase/db';
+
+// const collectionName = 'users';
 
 export async function homePage(user) {
+  // event.preventDefault();
   clearPage();
   renderHomeHeader(user);
+
   await fetchGenresListByIds();
   await fetchMoviesAndRender();
+
   showButtonLoad();
 }
 
-export async function libraryPage() {
+export async function libraryPage(key, user) {
   clearPage();
 
-  renderLibraryCollection(key);
+  renderLibraryCollection(key, user);
 
   renderLibraryHeader();
 

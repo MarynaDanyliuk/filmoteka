@@ -2,22 +2,46 @@ import {
   collection,
   getDocs,
   addDoc,
-  setDoc,
-  getDoc,
+  // getDoc,
   doc,
   query,
   where,
   updateDoc,
+  arrayUnion,
 } from 'firebase/firestore';
+
 import { db } from './fb_config';
 
-const usersRef = collection(db, 'users');
+// import { refs } from '../js/refs';
+
+import { MovieActiveId } from '../js/modal';
+
+import fetchApiMovies from '../js/apiService';
+const FetchApiMovies = new fetchApiMovies();
+
+// import {
+//   getItemsLocalStorage,
+//   setItemsLocalStorage,
+// } from '../js/localStorageService';
+
+// let key = '';
+// let moviesW = [];
+// let moviesQ = [];
+
+// import { renderGallary } from '../js/renderServies';
+
+// refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
+// const key = 'watched';
+// export const listWatched = getItemsLocalStorage(key) || [];
+// export const listQueue = getItemsLocalStorage(key) || [];
+
+export const usersRef = collection(db, 'users');
 
 export const addUserToFirestore = async user => {
   const userQuery = query(usersRef, where('userId', '==', user.uid));
   try {
     const querySnapshot = await getDocs(userQuery);
-    // console.log(querySnapshot);
+
     querySnapshot.forEach(doc => {
       console.log(doc.id, ' => ', doc.data());
     });
@@ -28,6 +52,8 @@ export const addUserToFirestore = async user => {
       const docRef = await addDoc(collection(db, 'users'), {
         userId: user.uid,
         email: user.email,
+        watched: [],
+        queue: [],
       });
       console.log('Document written with ID: ', docRef.id);
     }
@@ -37,18 +63,71 @@ export const addUserToFirestore = async user => {
   }
 };
 
-const updateMovieInFirestore = async (collectionName, docId) => {
+export const updateMovieInFirestore = async (user, key) => {
   try {
-    const ref = doc(db, 'users', docId);
+    const userQuery = query(usersRef, where('userId', '==', user.uid));
+    const querySnapshot = await getDocs(userQuery);
 
-    await updateDoc(ref, {
-      userId: user.uid,
-    });
+    console.log(querySnapshot.docs[0].id);
+
+    const refId = querySnapshot.docs[0].id;
+    const ref = doc(db, 'users', refId);
+    console.log(ref);
+
+    const data = await FetchApiMovies.fetchMovieDetailsById(MovieActiveId);
+
+    console.log(data);
+
+    let fieldToUpdate;
+    let valueToAdd;
+
+    if (key === 'watched') {
+      fieldToUpdate = 'watched';
+      valueToAdd = data;
+    } else if (key === 'queue') {
+      fieldToUpdate = 'queue';
+      valueToAdd = data;
+    }
+
+    if (fieldToUpdate && valueToAdd) {
+      await updateDoc(ref, {
+        [fieldToUpdate]: arrayUnion(valueToAdd),
+      });
+    }
+    // const list = getItemsLocalStorage(key);
+    // moviesWatched = getItemsLocalStorage(key) || [];
+    // moviesQueue = getItemsLocalStorage(key) || [];
+    // _______________________________________________________________________________
+    // await FetchApiMovies.fetchMovieDetailsById(MovieActiveId).then(data => {
+    //   // console.log(data);
+
+    //   if (key === 'watched') {
+    //     moviesW.push(data);
+    //     updateDoc(ref, {
+    //       watched: moviesW,
+    //     });
+    //   } else if (key === 'queue') {
+    //     moviesQ.push(data);
+    //     updateDoc(ref, {
+    //       queue: moviesQ,
+    //     });
+    //   }
+    // });
+    // ____________________________________________________________
+    // await updateDoc(ref, {
+    //   watched: moviesW,
+    //   queue: moviesQ,
+    // });
     console.log('document updated');
   } catch (error) {
     console.log(error);
   }
 };
+
+// refs.buttonHeaderNav.addEventListener('click', updateMovieInFirestore);
+
+// renderGallary(listWatched);
+// renderGallary(listQueue);
 
 // const getUserFromFirestore = async uid => {
 //   try {
