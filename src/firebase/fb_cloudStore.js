@@ -2,7 +2,6 @@ import {
   collection,
   getDocs,
   addDoc,
-  // getDoc,
   doc,
   query,
   where,
@@ -12,28 +11,10 @@ import {
 
 import { db } from './fb_config';
 
-// import { refs } from '../js/refs';
-
 import { MovieActiveId } from '../js/modal';
 
 import fetchApiMovies from '../js/apiService';
 const FetchApiMovies = new fetchApiMovies();
-
-// import {
-//   getItemsLocalStorage,
-//   setItemsLocalStorage,
-// } from '../js/localStorageService';
-
-// let key = '';
-// let moviesW = [];
-// let moviesQ = [];
-
-// import { renderGallary } from '../js/renderServies';
-
-// refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
-// const key = 'watched';
-// export const listWatched = getItemsLocalStorage(key) || [];
-// export const listQueue = getItemsLocalStorage(key) || [];
 
 export const usersRef = collection(db, 'users');
 

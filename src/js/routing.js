@@ -1,16 +1,8 @@
 import { homePage, libraryPage, notFoundPage } from './content-pages';
 import { refs } from './refs';
-// import { auth } from '../firebase/fb_config';
-// import { user } from '../firebase/db';
+
 
 refs.logo.addEventListener('click', homePage);
-// window.addEventListener('hashchange', renderContent);
-
-// let key = 'watched';
-
-// refs.libraryBtn.addEventListener('click', libraryPage);
-
-// renderContent(key, user);
 
 export async function renderContent(key, user) {
   const route = window.location.hash.substring(1);
@@ -25,7 +17,21 @@ export async function renderContent(key, user) {
   }
 }
 
-// _______________________________________________________________
+
+
+
+
+
+// import { auth } from '../firebase/fb_config';
+// import { user } from '../firebase/db';
+
+// window.addEventListener('hashchange', renderContent);
+
+// let key = 'watched';
+
+// refs.libraryBtn.addEventListener('click', libraryPage);
+
+// renderContent(key, user);_________________________________
 
 // import { onHeaderNavClick } from './headerNav';
 // refs.headerNavLinks.forEach(headerNavLink =>

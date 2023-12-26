@@ -65,6 +65,18 @@ async function signOutEvent(event) {
   }
 }
 
+function clearForm() {
+  for (let i = 0; i < formsAuth.length; i++) {
+    const formAuth = formsAuth[i];
+
+    for (let i = 0; i < formAuth.elements.length; i++) {
+      if (formAuth.elements[i].type === 'text') {
+        formAuth.elements[i].value = '';
+      }
+    }
+  }
+}
+
 // export const monitorAuthState = async user => {
 //   onAuthStateChanged(auth, user => {
 //     if (user !== null) {
@@ -93,18 +105,6 @@ async function signOutEvent(event) {
 // };
 
 // monitorAuthState(user);
-
-function clearForm() {
-  for (let i = 0; i < formsAuth.length; i++) {
-    const formAuth = formsAuth[i];
-
-    for (let i = 0; i < formAuth.elements.length; i++) {
-      if (formAuth.elements[i].type === 'text') {
-        formAuth.elements[i].value = '';
-      }
-    }
-  }
-}
 
 // const updateUserProfile = async update => {
 //   // const user = auth.currentUser;

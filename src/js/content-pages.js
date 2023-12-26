@@ -11,12 +11,9 @@ import { renderLibraryCollection } from '../firebase/db';
 import { fetchMoviesAndRender, fetchGenresListByIds } from './fetchAndRender';
 import { showButtonLoad, hideButtonLoad } from './pagination';
 
-// import { user } from '../firebase/db';
-
-// const collectionName = 'users';
+import { user } from '../firebase/db';
 
 export async function homePage(user) {
-  // event.preventDefault();
   clearPage();
   renderHomeHeader(user);
 
@@ -28,10 +25,8 @@ export async function homePage(user) {
 
 export async function libraryPage(key, user) {
   clearPage();
-
-  renderLibraryCollection(key, user);
-
   renderLibraryHeader();
+  renderLibraryCollection(key, user);
 
   showButtonLoad();
 }

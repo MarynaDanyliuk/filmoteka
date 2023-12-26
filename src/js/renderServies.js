@@ -96,20 +96,6 @@ export function clearPage() {
 }
 
 export function renderHomeHeader(user) {
-  // if (user) {
-  //   refs.input.value = '';
-  //   refs.homeBtn.classList.add('nav_item--current');
-  //   refs.libraryBtn.classList.remove('nav_item--current');
-  //   refs.headerNavButtons.classList.add('not-visible');
-  //   refs.form.classList.remove('not-visible');
-  //   return;
-  // } else if (!user) {
-  //   refs.homeBtn.classList.add('nav_item--current');
-  //   refs.libraryBtn.classList.remove('nav_item--current');
-  //   refs.headerNavButtons.classList.add('not-visible');
-  //   refs.form.classList.remove('not-visible');
-  //   refs.signOut.classList.add('not-visible');
-  // }
   refs.input.value = '';
   refs.homeBtn.classList.add('nav_item--current');
   refs.libraryBtn.classList.remove('nav_item--current');
@@ -297,6 +283,21 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
   // console.log('повертаю Муві');
 }
 
+// if (user) {
+//   refs.input.value = '';
+//   refs.homeBtn.classList.add('nav_item--current');
+//   refs.libraryBtn.classList.remove('nav_item--current');
+//   refs.headerNavButtons.classList.add('not-visible');
+//   refs.form.classList.remove('not-visible');
+//   return;
+// } else if (!user) {
+//   refs.homeBtn.classList.add('nav_item--current');
+//   refs.libraryBtn.classList.remove('nav_item--current');
+//   refs.headerNavButtons.classList.add('not-visible');
+//   refs.form.classList.remove('not-visible');
+//   refs.signOut.classList.add('not-visible');
+// }
+// __________________________________________________
 // const markup = movies
 //   .map(({ poster_path, original_title, id }) => {
 //     return poster_path

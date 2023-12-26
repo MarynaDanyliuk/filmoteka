@@ -31,23 +31,21 @@ refs.buttonHeaderNav.addEventListener(
 refs.logo.addEventListener('click', homePage);
 
 refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
-// refs.buttonHeaderNav.addEventListener('click', onButtonsHeaderNavClick);
 
 export const monitorAuthState = user => {
   onAuthStateChanged(auth, user => {
     if (user !== null) {
       console.log('user logged in', user);
       refs.signOut.classList.remove('not-visible');
-      //   refs.libraryBtn.addEventListener('click', libraryPage);
-      // The user object has basic properties such as display name, email, etc.
       const displayName = user.displayName;
       const email = user.email;
       const token = user.accessToken;
       const emailVerified = user.emailVerified;
+      const uid = user.uid;
       // The user's ID, unique to the Firebase project. Do NOT use
       // this value to authenticate with your backend server, if
       // you have one. Use User.getToken() instead.
-      const uid = user.uid;
+
       addUserToFirestore(user);
       renderContent(key, user);
       clearPage();
@@ -75,8 +73,6 @@ const getLibrary = async (key, user) => {
     if (querySnapshot.size > 0) {
       const userData = querySnapshot.docs[0].data();
 
-      //   console.log(userData.watched);
-
       moviesWatched.push(userData.watched);
       moviesQueue.push(userData.queue);
 
@@ -87,7 +83,7 @@ const getLibrary = async (key, user) => {
       }
     } else {
       console.log('No matching documents.');
-      return []; // Возвращаем пустой массив, так как данных для пользователя нет
+      return [];
     }
   } catch (e) {
     console.error('Error adding document: ', e);
@@ -124,12 +120,6 @@ export async function createLibraryCollection(event) {
   const user = auth.currentUser;
   console.log(MovieActiveId);
 
-  //   const watchedCollection = (await getLibrary(key, user)) || [];
-  //   console.log('Watched Collection:', watchedCollection);
-
-  //   const queueCollection = (await getLibrary(key, user)) || [];
-  //   console.log('Queue Collection:', queueCollection);
-
   key = event.target.getAttribute('id');
 
   console.log('key:', key);
@@ -139,29 +129,15 @@ export async function createLibraryCollection(event) {
 
   await getLibrary(key, user);
 
-  //   await getLibrary(key, user).then(data => {
-  //     console.log(data);
-  //   });
-  //   console.log('watched', moviesWatched);
-  //   console.log('queue', moviesQueue);
-  //   refs.buttonQueue.classList.add('active_btn');
-  //   refs.buttonWatched.classList.remove('active_btn');
-
   await FetchApiMovies.fetchMovieDetailsById(MovieActiveId)
     .then(data => {
-      // moviesLibrary = getItemsLocalStorage('library') || [];
       console.log(data);
-      //   moviesLibrary.push(data);
       updateMovieInFirestore(user, key);
-      // setItemsLocalStorage('library', moviesLibrary);
       if (key === 'watched') {
-        // updateMovieInFirestore(key);
         moviesWatched.push(data);
-        // setItemsLocalStorage(key, moviesWatched);
         updateMovieInFirestore(user);
       } else if (key === 'queue') {
         moviesQueue.push(data);
-        // setItemsLocalStorage(key, moviesQueue);
         updateMovieInFirestore(user);
       }
     })
