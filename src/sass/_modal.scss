@@ -35,7 +35,7 @@
   position: relative;
   max-width: 806px;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: $primaryColor;
   padding: 40px 12px;
 }
 
@@ -110,14 +110,14 @@
 }
 
 .average {
-  background-color: #ff6b08;
+  background-color: $accentColor;
   padding: 4px 10px;
-  color: #fff;
+  color: $primaryColor;
   border-radius: 4px;
 }
 
 .count {
-  background-color: #f7f7f7;
+  background-color: $backgroundColor;
   padding: 4px 10px;
   border-radius: 4px;
 }

@@ -1,0 +1,21 @@
+.pageNotFound {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.page-not-found {
+  background-image: url('../images/PageNotFound.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin-left: auto;
+  margin-right: auto;
+  @media (min-device-pixel-ratio: 2),
+    (min-resolution: 192dpi),
+    (min-resolution: 2dppx) {
+    & {
+      background-image: url('../images/PageNotFound.jpg');
+    }
+  }
+}

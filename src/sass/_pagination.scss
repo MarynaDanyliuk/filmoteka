@@ -1,0 +1,23 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pagination_list {
+  display: flex;
+  list-style: none;
+}
+
+.pagination_item {
+  cursor: pointer;
+  padding: 8px;
+  margin: 8px;
+}
+
+.pagination_item--active {
+  color: red;
+  font-weight: bolder;
+}

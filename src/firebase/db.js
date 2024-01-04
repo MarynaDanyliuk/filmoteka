@@ -4,7 +4,7 @@ import { addUserToFirestore, updateMovieInFirestore } from './fb_cloudStore';
 
 import { homePage, libraryPage } from '../js/content-pages';
 
-import { renderGallary, clearPage } from '../js/renderServies';
+import { renderGallary, clearPage, renderUser } from '../js/renderServies';
 import { renderContent } from '../js/routing';
 
 import { MovieActiveId } from '../js/modal';
@@ -36,19 +36,9 @@ export const monitorAuthState = user => {
   onAuthStateChanged(auth, user => {
     if (user !== null) {
       console.log('user logged in', user);
-      refs.signOut.classList.remove('not-visible');
-      const displayName = user.displayName;
-      const email = user.email;
-      const token = user.accessToken;
-      const emailVerified = user.emailVerified;
-      const uid = user.uid;
-      // The user's ID, unique to the Firebase project. Do NOT use
-      // this value to authenticate with your backend server, if
-      // you have one. Use User.getToken() instead.
-
       addUserToFirestore(user);
+      //   renderUser(user);
       renderContent(key, user);
-      clearPage();
       refs.libraryBtn.addEventListener('click', event => {
         if (!user) {
           return;
@@ -59,7 +49,6 @@ export const monitorAuthState = user => {
       });
     } else {
       homePage();
-      refs.signOut.classList.add('not-visible');
       console.log('no user');
     }
   });
@@ -146,6 +135,17 @@ export async function createLibraryCollection(event) {
       alert('фільм додано в бібліотеку');
     });
 }
+
+//   const displayName = user.displayName;
+//   const email = user.email;
+//   const token = user.accessToken;
+//   const emailVerified = user.emailVerified;
+//   const uid = user.uid;
+// The user's ID, unique to the Firebase project. Do NOT use
+// this value to authenticate with your backend server, if
+// you have one. Use User.getToken() instead.
+
+// _______________________________________________________________
 
 //   moviesWatched = moviesWatched.push(userData.watched) || [];
 //   moviesQueue = userData.queue || [];

@@ -12,3 +12,4 @@ import './js/searchByQuery';
 import './js/pagination';
 import './js/genres';
 import './js/modal';
+import './js/burgerMenu';

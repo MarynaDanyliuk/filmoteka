@@ -1,5 +1,8 @@
 import { refs } from './refs';
 import { getGenresMovie } from './genres';
+import { default_User } from '../images/default_User.jpg';
+import default_image_large from '../images/default_image_large.jpg';
+import PageNotFound from '../images/PageNotFound.jpg';
 
 export function renderGallary(movies) {
   const markup = movies
@@ -37,7 +40,7 @@ export function renderMovieImage({ poster_path, original_title }) {
           
         />`
     : `<img
-          src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+          src='${default_image_large}'
           alt="default image"
           class="image"
           style="width: 375px; height: 478px"
@@ -93,6 +96,12 @@ export function renderMovieDescription({
 
 export function clearPage() {
   refs.gallery.innerHTML = '';
+  refs.thumb.innerHTML = '';
+}
+
+export function renderUser(user) {
+  const markup = `<p>${user.email}</p>`;
+  refs.user.insertAdjacentHTML(`beforeend`, markup);
 }
 
 export function renderHomeHeader(user) {
@@ -101,25 +110,29 @@ export function renderHomeHeader(user) {
   refs.libraryBtn.classList.remove('nav_item--current');
   refs.headerNavButtons.classList.add('not-visible');
   refs.form.classList.remove('not-visible');
+  if (!user) {
+    refs.user.innerHTML = '';
+    refs.signOut.classList.add('not-visible');
+  }
 }
 
 export function renderLibraryHeader() {
   refs.homeBtn.classList.remove('nav_item--current');
   refs.libraryBtn.classList.add('nav_item--current');
   refs.buttonWatched.classList.add('active_btn');
-  // refs.signOut.classList.remove('not-visible');
   refs.headerNavButtons.classList.remove('not-visible');
   refs.form.classList.add('not-visible');
 }
 
 export function renderPageNotFound() {
-  const markupPageNotFound = `
-   <img class="page-not-found"
-   src=""
-   alt=""
+  const markup = `
+   <img 
+   src="${PageNotFound}"
+   alt="pageNotFound"
+   class="page-not-found"
  />
    `;
-  refs.content.insertAdjacentHTML(`beforeend`, markupPageNotFound);
+  refs.thumb.insertAdjacentHTML(`beforeend`, markup);
 }
 
 export function MovieCard({
@@ -145,7 +158,6 @@ export function MovieCard({
              src="https://image.tmdb.org/t/p/w500${poster_path}"
              alt="${original_title}"
            
-             loading="lazy"
            />
              <p class="movie_title card">${original_title}</p>
          <div class="movie_describtion">
@@ -282,6 +294,8 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
   // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   // console.log('повертаю Муві');
 }
+
+// "https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
 
 // if (user) {
 //   refs.input.value = '';

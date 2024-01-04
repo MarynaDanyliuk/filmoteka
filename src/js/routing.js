@@ -1,7 +1,6 @@
 import { homePage, libraryPage, notFoundPage } from './content-pages';
 import { refs } from './refs';
 
-
 refs.logo.addEventListener('click', homePage);
 
 export async function renderContent(key, user) {
@@ -13,14 +12,10 @@ export async function renderContent(key, user) {
     console.log(key, user);
     await libraryPage(key, user);
   } else {
+    console.log('rere');
     notFoundPage();
   }
 }
-
-
-
-
-
 
 // import { auth } from '../firebase/fb_config';
 // import { user } from '../firebase/db';

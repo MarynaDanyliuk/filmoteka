@@ -3,15 +3,12 @@ import {
   renderPageNotFound,
   renderHomeHeader,
   renderLibraryHeader,
-  renderGallary,
 } from './renderServies';
 
 // import { renderLibraryCollection } from './libraryCollection';
 import { renderLibraryCollection } from '../firebase/db';
 import { fetchMoviesAndRender, fetchGenresListByIds } from './fetchAndRender';
 import { showButtonLoad, hideButtonLoad } from './pagination';
-
-import { user } from '../firebase/db';
 
 export async function homePage(user) {
   clearPage();

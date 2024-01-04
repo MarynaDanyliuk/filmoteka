@@ -4,6 +4,11 @@ export const refs = {
   input: document.getElementById('search-input'),
   button: document.querySelector(`.search-button`),
 
+  // ________________Burger menu_______________________
+  mobileMenu: document.querySelector('.js-menu-container'),
+  openBurgerBtn: document.getElementById('open_burger_btn'),
+  closeBurgerBtn: document.getElementById('close_burger_btn'),
+
   // ________________Gallery___________________
   gallery: document.querySelector(`.gallery`),
   buttonLoadMore: document.querySelector(`.load-more`),
@@ -19,6 +24,7 @@ export const refs = {
   // _______________Utils___________________
   body: document.querySelector(`body`),
   content: document.getElementById('content'),
+  thumb: document.querySelector('.thumb'),
 
   // ______________Header__________________________
   headerNavLinks: document.querySelectorAll('.nav_item'),
@@ -31,6 +37,7 @@ export const refs = {
   homeBtn: document.getElementById(`home_btn`),
   libraryBtn: document.getElementById(`library_btn`),
   signOut: document.getElementById('auth_btn'),
+  user: document.querySelector('.user'),
 
   // _______________Modal auth__________________________
   modalLogin: document.getElementById(`login`),

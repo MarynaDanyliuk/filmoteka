@@ -1,0 +1,22 @@
+// ________colors_______________________
+$primaryColor: #fff;
+$accentColor: #ff6b01;
+$textColor: black;
+$backgroundColor: #f7f7f7;
+
+// ____________dark theme_______________
+$darkBackground: #212;
+
+// __________transformation______________
+$timingFunction: cubic-bezier(0.4, 0, 0.2, 1);
+$animationDuration: 250ms;
+
+// _________shodow_______________________
+$shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+  0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+
+// ___________break points__________________
+$width-min-allowable: 320px;
+$widthMobile: 440px;
+$widthTablet: 768px;
+$widthDesktop: 1280px;

@@ -1,0 +1,99 @@
+@import '~node_modules/modern-normalize/modern-normalize.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+}
+
+body.lock {
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+}
+
+.not-visible {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: inherit;
+}
+
+.section {
+  margin-bottom: 40px;
+  @media screen and (min-width: $widthTablet) {
+    margin-bottom: 60px;
+  }
+}
+
+.container {
+  padding: 0 20px;
+  @media screen and (min-width: $widthTablet) {
+    padding: 0 32px;
+  }
+}
+
+// .visible {
+//   visibility: visible;
+//   opacity: 1;
+// }
+
+// .not-visible {
+//   display: none;
+// visibility: hidden;
+// opacity: 0;
+// pointer-events: none;
+
+// }
+
+// .visually-hidden {
+//   position: fixed;
+//   width: 1px;
+//   height: 1px;
+//   margin: -1px;
+//   border: 0;
+//   padding: 0;
+//   white-space: nowrap;
+//   clip-path: inset(100%);
+//   clip: rect(0 0 0 0);
+//   overflow: hidden;
+// }

@@ -1,18 +1,18 @@
 .button {
-  border: 1px solid white;
+  border: 1px solid $primaryColor;
   border-radius: 8px;
   width: 148px;
   height: 42px;
   background-color: transparent;
   cursor: pointer;
   min-width: 30px;
-  color: white;
+  color: $primaryColor;
   text-transform: uppercase;
 }
 
 .btn_modal {
-  border: 1px solid black;
-  color: black;
+  border: 1px solid $textColor;
+  color: $textColor;
   margin-right: 15px;
   &:last-child {
     margin-right: 0;
@@ -20,9 +20,9 @@
   &:hover,
   &:focus,
   &:active {
-    border: 1px solid #ff6b01;
-    background-color: #ff6b01;
-    color: white;
+    border: 1px solid $accentColor;
+    background-color: $accentColor;
+    color: $primaryColor;
   }
 }
 
@@ -31,8 +31,8 @@
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  border: 1px solid black;
-  color: black;
+  border: 1px solid $textColor;
+  color: $textColor;
   margin-bottom: 24px;
   &:last-child {
     margin-right: 0;
@@ -40,9 +40,9 @@
   &:hover,
   &:focus,
   &:active {
-    border: 1px solid #ff6b01;
-    background-color: #ff6b01;
-    color: white;
+    border: 1px solid $accentColor;
+    background-color: $accentColor;
+    color: $primaryColor;
   }
 }
 
@@ -50,14 +50,14 @@
   &:hover,
   &:focus,
   &:active {
-    border: 1px solid #ff6b01;
-    background-color: #ff6b01;
-    color: white;
+    border: 1px solid $accentColor;
+    background-color: $accentColor;
+    color: $primaryColor;
   }
 }
 
 .active_btn {
-  border: 1px solid #ff6b01;
-  background-color: #ff6b01;
-  color: white;
+  border: 1px solid $accentColor;
+  background-color: $accentColor;
+  color: $primaryColor;
 }

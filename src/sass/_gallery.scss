@@ -1,11 +1,6 @@
-:root {
-  --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  --animation-duration: 250ms;
-}
-
 .gallery {
   display: grid;
-  width: 100%;
+  // width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   grid-template-rows: auto;
   grid-gap: 32px;
@@ -21,27 +16,42 @@
 
 .gallery_link {
   transition: transform 400ms easy-out;
-}
-
-.gallery_link:hover {
-  transform: scale(1.03);
+  &:hover {
+    transform: scale(1.03);
+  }
 }
 
 .movie_img {
   object-fit: cover;
+  min-width: $width-min-allowable;
   max-width: 100%;
-  height: 635px;
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+  height: 480px;
+  box-shadow: $shadow;
   border-radius: 10px;
+  @media screen and (min-width: $widthTablet) {
+    height: 635px;
+  }
+}
+
+.movie_title.card {
+  font-size: 16px;
+  line-height: 20px;
+  @media screen and (min-width: $widthTablet) {
+    font-size: 20px;
+    line-height: 24px;
+  }
 }
 
 .movie_describtion {
   display: flex;
-  font-size: 20px;
-  line-height: 24px;
-  color: #ff6b08;
+  font-size: 16px;
+  line-height: 20px;
+  color: $accentColor;
   align-items: baseline;
+  @media screen and (min-width: $widthTablet) {
+    font-size: 20px;
+    line-height: 24px;
+  }
 }
 
 .movie_genresList {
@@ -59,108 +69,15 @@
 
     height: 100%;
     width: 2px;
-    background-color: #ff6b08;
+    background-color: $accentColor;
   }
 }
 
 .movie_average {
   font-size: 18px;
   margin-left: 8px;
-  background-color: #ff6b08;
+  background-color: $accentColor;
   padding: 2px 8px;
   color: #fff;
   border-radius: 4px;
 }
-
-// _____________LOAD MORE BUTTON_____________________
-
-.load-more {
-  display: block;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.5;
-  letter-spacing: 0.06em;
-  text-align: center;
-  cursor: pointer;
-  font-family: inherit;
-  border-radius: 4px;
-  padding: 0;
-  border: none;
-  border-color: transparent;
-  margin-left: auto;
-  margin-right: auto;
-
-  padding: 10px 32px;
-  width: 160px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover,
-  &:focus {
-    background-color: rgba(127, 170, 230, 0.5);
-  }
-
-  &:active {
-    background-color: cornflowerblue;
-  }
-}
-
-.visible {
-  visibility: visible;
-  opacity: 1;
-}
-
-.not-visible {
-  display: none;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.pagination_list {
-  display: flex;
-  list-style: none;
-}
-
-.pagination_item {
-  cursor: pointer;
-  padding: 8px;
-  margin: 8px;
-}
-
-.pagination_item--active {
-  color: red;
-  font-weight: bolder;
-}
-
-// .not-visible {
-//   visibility: hidden;
-//   opacity: 0;
-//   pointer-events: none;
-// }
-
-// .info {
-//   display: flex;
-//   justify-content: space-between;
-//   padding: 0 10px;
-// }
-
-// .info__item {
-//   display: flex;
-//   flex-direction: column;
-//   margin-top: 18px;
-//   align-items: center;
-//   font-family: inherit;
-//   font-size: smaller;
-//   color: black;
-// }
-
-// .info__item-name {
-//   font-weight: bold;
-//   margin-bottom: 5px;
-// }

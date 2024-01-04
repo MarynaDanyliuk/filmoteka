@@ -1,7 +1,10 @@
-@import './common';
+@import './base/utils';
+@import './base/common';
 @import './header';
+@import './burger_menu';
 @import './button';
 @import './footer';
 @import './gallery';
+@import './load_more_btn';
 @import './modal';
 @import './form';
