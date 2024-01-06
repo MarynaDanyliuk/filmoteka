@@ -50,13 +50,13 @@ export const monitorAuthState = user => {
       // ____________ Mobile Menu Click on Navigation button_______________
       const navItemMenu = refs.navItemMenu;
       if (navItemMenu) {
-        console.log(navItemMenu);
+        // console.log(navItemMenu);
         for (let i = 0; i < navItemMenu.length; i++) {
           navItemMenu[i].addEventListener('click', event => {
             if (!user) {
               return;
             }
-            refs.mobileMenu.classList.toggle(`open`);
+            refs.mobileMenu.classList.remove(`open`);
             NavBtnActive = event.target.getAttribute(`id`);
             if (NavBtnActive === 'home_btn') {
               homePage(user);
@@ -74,21 +74,6 @@ export const monitorAuthState = user => {
     }
   });
 };
-
-const navItem = refs.navItem;
-if (navItem) {
-  for (let i = 0; i < navItem.length; i++) {
-    navItem[i].addEventListener('click', event => {
-      if (!user) {
-        return;
-      }
-      refs.mobileMenu.classList.toggle(`open`);
-      key = 'watched';
-      event.preventDefault();
-      libraryPage(key, user);
-    });
-  }
-}
 
 const getLibrary = async (key, user) => {
   const userQuery = query(usersRef, where('userId', '==', user.uid));
@@ -171,6 +156,22 @@ export async function createLibraryCollection(event) {
       alert('фільм додано в бібліотеку');
     });
 }
+
+// const navItem = refs.navItem;
+// if (navItem) {
+//   for (let i = 0; i < navItem.length; i++) {
+//     navItem[i].addEventListener('click', event => {
+//       if (!user) {
+//         return;
+//       }
+//       refs.mobileMenu.classList.toggle(`open`);
+//       key = 'watched';
+//       event.preventDefault();
+//       libraryPage(key, user);
+//     });
+//   }
+// }
+// ___________________________________________
 
 //   const displayName = user.displayName;
 //   const email = user.email;

@@ -5,17 +5,17 @@ refs.openBurgerBtn.addEventListener(`click`, toggleBurgerMenu);
 refs.closeBurgerBtn.addEventListener(`click`, toggleBurgerMenu);
 
 function toggleBurgerMenu(event) {
-  console.log('hello');
   event.preventDefault();
   const user = auth.currentUser;
   if (!user) {
     refs.modalLogin.classList.add(`open`);
   } else if (user) {
     refs.mobileMenu.classList.toggle(`open`);
-    // refs.body.classList.add(`lock`);
   }
 }
 
+// refs.body.classList.add(`lock`);
+// __________________________________________
 // function closeBurgerMenu(event) {
 //   event.preventDefault();
 //   refs.mobileMenu.classList.toggle(`open`);
