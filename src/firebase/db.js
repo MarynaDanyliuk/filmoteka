@@ -37,12 +37,20 @@ export const monitorAuthState = user => {
     if (user !== null) {
       console.log('user logged in', user);
       addUserToFirestore(user);
-      //   renderUser(user);
       renderContent(key, user);
       refs.libraryBtn.addEventListener('click', event => {
         if (!user) {
           return;
         }
+        key = 'watched';
+        event.preventDefault();
+        libraryPage(key, user);
+      });
+      refs.libraryBtnMenu.addEventListener('click', event => {
+        if (!user) {
+          return;
+        }
+        refs.mobileMenu.classList.toggle(`open`);
         key = 'watched';
         event.preventDefault();
         libraryPage(key, user);

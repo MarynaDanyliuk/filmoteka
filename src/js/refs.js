@@ -8,6 +8,7 @@ export const refs = {
   mobileMenu: document.querySelector('.menu-container'),
   openBurgerBtn: document.getElementById('open_burger_btn'),
   closeBurgerBtn: document.getElementById('close_burger_btn'),
+  libraryBtnMenu: document.getElementById('library_btn_menu'),
 
   // ________________Gallery___________________
   gallery: document.querySelector(`.gallery`),
