@@ -23,9 +23,9 @@ export const addUserToFirestore = async user => {
   try {
     const querySnapshot = await getDocs(userQuery);
 
-    querySnapshot.forEach(doc => {
-      console.log(doc.id, ' => ', doc.data());
-    });
+    // querySnapshot.forEach(doc => {
+    //   console.log(doc.id, ' => ', doc.data());
+    // });
 
     if (querySnapshot.size > 0) {
       console.log('Пользователь с таким email уже существует');

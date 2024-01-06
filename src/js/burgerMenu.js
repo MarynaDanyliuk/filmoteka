@@ -1,6 +1,5 @@
 import { refs } from './refs';
 import { auth } from '../firebase/fb_config';
-import { libraryPage } from './content-pages';
 
 refs.openBurgerBtn.addEventListener(`click`, toggleBurgerMenu);
 refs.closeBurgerBtn.addEventListener(`click`, toggleBurgerMenu);

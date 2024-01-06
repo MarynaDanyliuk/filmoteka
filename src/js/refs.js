@@ -3,6 +3,7 @@ export const refs = {
   form: document.querySelector(`.form`),
   input: document.getElementById('search-input'),
   button: document.querySelector(`.search-button`),
+  navItemMenu: document.querySelectorAll('.nav_item_menu'),
 
   // ________________Burger menu_______________________
   mobileMenu: document.querySelector('.menu-container'),

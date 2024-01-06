@@ -35,9 +35,10 @@ refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
 export const monitorAuthState = user => {
   onAuthStateChanged(auth, user => {
     if (user !== null) {
-      console.log('user logged in', user);
+      //   console.log('user logged in', user);
       addUserToFirestore(user);
       renderContent(key, user);
+      // _____________Click on Library navigation button_________
       refs.libraryBtn.addEventListener('click', event => {
         if (!user) {
           return;
@@ -46,21 +47,48 @@ export const monitorAuthState = user => {
         event.preventDefault();
         libraryPage(key, user);
       });
-      refs.libraryBtnMenu.addEventListener('click', event => {
-        if (!user) {
-          return;
+      // ____________ Mobile Menu Click on Navigation button_______________
+      const navItemMenu = refs.navItemMenu;
+      if (navItemMenu) {
+        console.log(navItemMenu);
+        for (let i = 0; i < navItemMenu.length; i++) {
+          navItemMenu[i].addEventListener('click', event => {
+            if (!user) {
+              return;
+            }
+            refs.mobileMenu.classList.toggle(`open`);
+            NavBtnActive = event.target.getAttribute(`id`);
+            if (NavBtnActive === 'home_btn') {
+              homePage(user);
+            } else {
+              key = 'watched';
+              event.preventDefault();
+              libraryPage(key, user);
+            }
+          });
         }
-        refs.mobileMenu.classList.toggle(`open`);
-        key = 'watched';
-        event.preventDefault();
-        libraryPage(key, user);
-      });
+      }
     } else {
       homePage();
       console.log('no user');
     }
   });
 };
+
+const navItem = refs.navItem;
+if (navItem) {
+  for (let i = 0; i < navItem.length; i++) {
+    navItem[i].addEventListener('click', event => {
+      if (!user) {
+        return;
+      }
+      refs.mobileMenu.classList.toggle(`open`);
+      key = 'watched';
+      event.preventDefault();
+      libraryPage(key, user);
+    });
+  }
+}
 
 const getLibrary = async (key, user) => {
   const userQuery = query(usersRef, where('userId', '==', user.uid));
