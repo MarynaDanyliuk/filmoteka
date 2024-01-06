@@ -17,11 +17,3 @@ export async function renderContent(key, user) {
     notFoundPage();
   }
 }
-
-function redirectPage(event) {
-  event.preventDefault();
-  console.log('helllllo');
-  libraryPage(user);
-  refs.mobileMenu.classList.toggle(`open`);
-}
-
