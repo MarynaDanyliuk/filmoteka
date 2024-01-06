@@ -5,7 +5,7 @@ export const refs = {
   button: document.querySelector(`.search-button`),
 
   // ________________Burger menu_______________________
-  mobileMenu: document.querySelector('.js-menu-container'),
+  mobileMenu: document.querySelector('.menu-container'),
   openBurgerBtn: document.getElementById('open_burger_btn'),
   closeBurgerBtn: document.getElementById('close_burger_btn'),
 

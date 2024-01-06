@@ -1,3 +1,39 @@
+.form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#search-input {
+  height: 30px;
+  width: 394px;
+  background-color: transparent;
+  border: transparent;
+  border-bottom: solid 1px $primaryColor;
+  color: $primaryColor;
+  font-size: 18px;
+
+  &:focus {
+    background-color: transparent;
+    outline: 0;
+    color: $primaryColor;
+  }
+
+  &::placeholder {
+    opacity: 1;
+  }
+}
+
+.search-button {
+  border: transparent;
+  border-bottom: 1px solid white;
+  background-color: transparent;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  color: $primaryColor;
+}
+
 .form_auth {
   display: flex;
   flex-direction: column;
