@@ -1,6 +1,5 @@
 import { refs } from './refs';
 import { getGenresMovie } from './genres';
-import { default_User } from '../images/default_User.jpg';
 import default_image_large from '../images/default_image_large.jpg';
 import PageNotFound from '../images/PageNotFound.jpg';
 
