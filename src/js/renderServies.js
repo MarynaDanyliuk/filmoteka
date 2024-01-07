@@ -132,6 +132,7 @@ export function renderPageNotFound() {
    alt="pageNotFound"
    class="page-not-found"
    loading="lazy"
+   
  />
    `;
   refs.thumb.insertAdjacentHTML(`beforeend`, markup);
@@ -159,7 +160,7 @@ export function MovieCard({
              class="movie_img"
              src="https://image.tmdb.org/t/p/w500${poster_path}"
              alt="${original_title}"
-           
+           loading="lazy"
            />
              <p class="movie_title card">${original_title}</p>
          <div class="movie_describtion">
@@ -180,6 +181,7 @@ export function MovieCard({
              src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
              alt="${original_title}"
              loading="lazy"
+    
            />
           <p class="movie_title card">${original_title}</p>
          <div class="movie_describtion">
