@@ -32,18 +32,19 @@ export function renderGallary(movies) {
 }
 
 export function renderMovieImage({ poster_path, original_title }) {
+  const url = `https://image.tmdb.org/t/p/w500${poster_path}`;
   const movieImageMarkup = poster_path
     ? `<img
-          src="https://image.tmdb.org/t/p/w500${poster_path}"
+          src=${url}
           alt=${original_title}
           class="image"
-          
+          loading="lazy"
         />`
     : `<img
           src='${default_image_large}'
           alt="default image"
           class="image"
-          style="width: 375px; height: 478px"
+          loading="lazy"
         />`;
   refs.movieImage.insertAdjacentHTML(`beforeend`, movieImageMarkup);
 }
@@ -130,6 +131,7 @@ export function renderPageNotFound() {
    src="${PageNotFound}"
    alt="pageNotFound"
    class="page-not-found"
+   loading="lazy"
  />
    `;
   refs.thumb.insertAdjacentHTML(`beforeend`, markup);
@@ -294,3 +296,5 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
   // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
   // console.log('повертаю Муві');
 }
+
+//  style = 'width: 375px; height: 478px';
