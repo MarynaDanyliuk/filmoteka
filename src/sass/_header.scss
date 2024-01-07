@@ -1,26 +1,35 @@
 .header {
-  background-image: url('../images/abstract-background-with-red-lines_1x.jpg');
+  background-image: url('../images/abstract-background-with-red-lines_mob_1x.jpg');
   background-position: center;
   background-size: cover;
 
-  padding: 20px 0 35px;
+  padding: 40px 0 92px;
 
   @media (min-device-pixel-ratio: 2),
     (min-resolution: 192dpi),
     (min-resolution: 2dppx) {
-    background-image: url('../images/abstract-background-with-red-lines_2x.jpg');
+    background-image: url('../images/abstract-background-with-red-lines_mob_2x.jpg');
   }
 
   @media screen and (min-width: $widthTablet) {
-    padding: 40px 0 60px;
+    background-image: url('../images/abstract-background-with-red-lines_tab_1x.jpg');
+    padding: 40px 0 82px;
+
+    @media (min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi),
+      (min-resolution: 2dppx) {
+      background-image: url('../images/abstract-background-with-red-lines_tab_2x.jpg');
+    }
   }
 }
 
 .nav_wrapper {
   display: flex;
+  // margin-bottom: 60px;
 }
 
 .logo {
+  display: flex;
   color: $primaryColor;
   font-weight: 600;
   font-size: 18px;
@@ -28,9 +37,23 @@
   text-transform: uppercase;
 }
 
+.logo-name {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  @media screen and (min-width: $widthTablet) {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
 .navigation {
   margin-left: auto;
-  margin-bottom: 20px;
+  @media (max-width: $widthTablet) {
+    margin-bottom: 20px;
+  }
 }
 
 .nav_list {
