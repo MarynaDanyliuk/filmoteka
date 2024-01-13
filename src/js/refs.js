@@ -17,11 +17,11 @@ export const refs = {
 
   // _______________Modal___________
   modal: document.querySelector(`.modal`),
-  modalContent: document.querySelector(`.modal_data`),
-  movieImage: document.querySelector('.movie_image'),
-  movieDescr: document.querySelector('.movie_descr'),
-  buttonClose: document.querySelectorAll(`.modal_close`),
-  modalBackdrop: document.querySelectorAll(`.modal_body`),
+  modalContent: document.querySelector(`.modal-data`),
+  movieImage: document.querySelector('.image-wrap'),
+  movieDescr: document.querySelector('.movie-descr'),
+  buttonClose: document.querySelectorAll(`.modal-close`),
+  modalBackdrop: document.querySelectorAll(`.modal-body`),
 
   // _______________Utils___________________
   body: document.querySelector(`body`),
@@ -33,7 +33,7 @@ export const refs = {
   headerNavButtons: document.querySelector('.nav_list_button'),
   buttonWatched: document.getElementById('watched'),
   buttonQueue: document.getElementById('queue'),
-  butttonsLibrary: document.querySelector('.modal_nav'),
+  butttonsLibrary: document.querySelector('.modal-nav'),
   buttonHeaderNav: document.querySelector('.nav_list_button'),
   logo: document.querySelector('.logo'),
   homeBtn: document.getElementById(`home_btn`),

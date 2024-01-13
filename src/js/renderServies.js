@@ -30,19 +30,75 @@ export function renderGallary(movies) {
   refs.gallery.insertAdjacentHTML(`beforeend`, markup);
 }
 
+export function MovieCard({
+  poster_path,
+  original_title,
+  id,
+  genre_ids,
+  genres,
+  release_date,
+  vote_average,
+}) {
+  const releaseYear = new Date(release_date).getFullYear();
+
+  const markupMovieCard = poster_path
+    ? `<li class="gallery_card">
+         <a
+           class="gallery_link"
+          href="https://image.tmdb.org/t/p/w500${poster_path}"
+         >
+           <img
+           id="${id}"
+             class="movie_img"
+             src="https://image.tmdb.org/t/p/w500${poster_path}"
+             alt="${original_title}"
+           loading="lazy"
+           />
+             <p class="movie-title card">${original_title}</p>
+         <div class="movie_describtion">
+          <ul class="movie_genresList">${renderGenres(genres, genre_ids)}</ul>
+           <p>${releaseYear}</p>
+           <p class="movie_average">${vote_average.toFixed(1)}</p>
+         </div>
+         </a>      
+  </li>`
+    : `<li class="gallery_card">
+         <a
+           class="gallery__link"
+          href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+         >
+           <img
+           id="${id}"
+            class="movie_img"
+             src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+             alt="${original_title}"
+             loading="lazy"
+    
+           />
+          <p class="movie-title card">${original_title}</p>
+         <div class="movie_describtion">
+           <ul>${renderGenres(genres, genre_ids)}</ul>
+           <p>${releaseYear}</p>
+           <p class="movie_average">${vote_average.toFixed(1)}</p>
+         </div>
+         </a>
+      </li>`;
+  refs.gallery.insertAdjacentHTML(`beforeend`, markupMovieCard);
+}
+
 export function renderMovieImage({ poster_path, original_title }) {
   const url = `https://image.tmdb.org/t/p/w500${poster_path}`;
   const movieImageMarkup = poster_path
     ? `<img
           src=${url}
           alt=${original_title}
-          class="image"
+          class="modal-image"
           loading="lazy"
         />`
     : `<img
           src='${default_image_large}'
           alt="default image"
-          class="image"
+          class="modal-image"
           loading="lazy"
         />`;
   refs.movieImage.insertAdjacentHTML(`beforeend`, movieImageMarkup);
@@ -62,30 +118,30 @@ export function renderMovieDescription({
     })
     .join(', ');
   const movieDescrMarkup = `
-        <div class="movie_descr">
-          <h1 class="movie_title">${original_title}</h1>
-          <table class="movie_inform">
+        <div>
+          <h1 class="movie-title">${original_title}</h1>
+          <table class="movie-table">
             <tr class="movie_info_item">
-              <td class="list_category">Vote/Votes</td>
-              <td class="list_data"><span class="average">${vote_average.toFixed(
+              <td class="list-category">Vote/Votes</td>
+              <td class="list-data"><span class="average">${vote_average.toFixed(
                 1
               )}</span> / <span class="count">${vote_count}</span></td>
             </tr>
             <tr class="movie_info_item">
-              <td class="list_category">Popularity</td>
-              <td class="list_data">${popularity.toFixed(1)}</td>
+              <td class="list-category">Popularity</td>
+              <td class="list-data">${popularity.toFixed(1)}</td>
             </tr>
             <tr class="movie_info_item">
-              <td class="list_category">Original Title</td>
-              <td class="list_data" style="text-transform: uppercase">${original_title}</td>
+              <td class="list-category">Original Title</td>
+              <td class="list-data" style="text-transform: uppercase">${original_title}</td>
             </tr>
             <tr class="movie_info_item">
-              <td class="list_category">Genre</td>
-              <td class="list_data genres">${genresList}</td>
+              <td class="list-category">Genre</td>
+              <td class="list-data genres">${genresList}</td>
             </tr>
           </table>
-          <p class="movie_title about">About</p>
-          <p class="movie_about">
+          <p class="movie-title about">About</p>
+          <p class="movie-about">
           ${overview}
           </p>
         </div>
@@ -135,62 +191,6 @@ export function renderPageNotFound() {
  />
    `;
   refs.thumb.insertAdjacentHTML(`beforeend`, markup);
-}
-
-export function MovieCard({
-  poster_path,
-  original_title,
-  id,
-  genre_ids,
-  genres,
-  release_date,
-  vote_average,
-}) {
-  const releaseYear = new Date(release_date).getFullYear();
-
-  const markupMovieCard = poster_path
-    ? `<li class="gallery_card">
-         <a
-           class="gallery_link"
-          href="https://image.tmdb.org/t/p/w500${poster_path}"
-         >
-           <img
-           id="${id}"
-             class="movie_img"
-             src="https://image.tmdb.org/t/p/w500${poster_path}"
-             alt="${original_title}"
-           loading="lazy"
-           />
-             <p class="movie_title card">${original_title}</p>
-         <div class="movie_describtion">
-          <ul class="movie_genresList">${renderGenres(genres, genre_ids)}</ul>
-           <p>${releaseYear}</p>
-           <p class="movie_average">${vote_average.toFixed(1)}</p>
-         </div>
-         </a>      
-  </li>`
-    : `<li class="gallery_card">
-         <a
-           class="gallery__link"
-          href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-         >
-           <img
-           id="${id}"
-            class="movie_img"
-             src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-             alt="${original_title}"
-             loading="lazy"
-    
-           />
-          <p class="movie_title card">${original_title}</p>
-         <div class="movie_describtion">
-           <ul>${renderGenres(genres, genre_ids)}</ul>
-           <p>${releaseYear}</p>
-           <p class="movie_average">${vote_average.toFixed(1)}</p>
-         </div>
-         </a>
-      </li>`;
-  refs.gallery.insertAdjacentHTML(`beforeend`, markupMovieCard);
 }
 
 export const renderGenres = (genres, genre_ids) => {

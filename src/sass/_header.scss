@@ -73,10 +73,9 @@
   font-size: 18px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+
   @media (max-width: $widthTablet) {
-    & {
-      display: none;
-    }
+    display: none;
   }
 }
 
@@ -108,17 +107,13 @@ svg:not(:root) {
 
 #open_burger_btn {
   @media (min-width: $widthTablet) {
-    & {
-      display: none;
-    }
+    display: none;
   }
 }
 
 #auth_btn {
   @media (min-width: $widthTablet) {
-    & {
-      margin-top: 12px;
-    }
+    margin-top: 12px;
   }
 }
 
@@ -128,11 +123,12 @@ svg:not(:root) {
   gap: 12px;
 }
 
-// .user {
-//   color: $primaryColor;
-//   font-size: 18px;
-// }
-
-// .content-thumb {
-//   color: $primaryColor;
-// }
+.nav_button {
+  width: 130px;
+  @media (min-width: $widthTablet) {
+    width: 152px;
+  }
+  @media (min-width: $widthDesktop) {
+    width: 152px;
+  }
+}

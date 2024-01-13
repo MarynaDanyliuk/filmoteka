@@ -2,8 +2,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-
-  align-items: center;
+  justify-content: center;
   gap: 16px;
 
   // display: grid;
@@ -15,33 +14,30 @@
   @media screen and (min-width: $widthTablet) {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 32px 16px;
+    gap: 32px;
     align-items: flex-start;
-    justify-content: center;
+
+    // max-width: fit-content;
     // grid-template-columns: repeat(auto-fit, minmax(336px, 1fr));
     // grid-gap: 16px;
   }
   @media screen and (min-width: $widthDesktop) {
     // grid-template-columns: repeat(auto-fit, minmax(395px, 1fr));
-    // grid-gap: 16px;
+    gap: 32px 16px;
   }
 }
 
 // ____________gallery card_________________
 
 .gallery_card {
-  // display: flex;
-  // justify-content: center;
+  display: flex;
+  justify-content: center;
 
-  // // align-self: center;
-
-  @media screen and (min-width: $widthTablet) {
-    // max-width: 336px;
-    // align-self: center;
-  }
+  // @media screen and (min-width: $widthTablet) {
+  //   // max-width: 336px;
+  // }
   // @media screen and (max-width: $widthDesktop) {
-  //   // max-width: 395px;
-  //   // align-self: center;
+  //   // max-width: 394px;
   // }
 }
 
@@ -49,6 +45,14 @@
   transition: transform 400ms easy-out;
   &:hover {
     transform: scale(1.03);
+  }
+  max-width: 280px;
+
+  @media screen and (min-width: $widthTablet) {
+    max-width: 335px;
+  }
+  @media screen and (min-width: ($widthDesktop)) {
+    max-width: 394px;
   }
 }
 
@@ -62,7 +66,6 @@
     max-width: 335px;
   }
   @media screen and (min-width: ($widthDesktop)) {
-    width: 100%;
     max-width: 394px;
   }
 }

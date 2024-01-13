@@ -65,3 +65,12 @@
   height: 100%;
   padding: 48px 40px;
 }
+
+.mobile-menu__item {
+  color: $primaryColor;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
