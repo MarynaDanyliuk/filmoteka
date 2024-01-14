@@ -11,7 +11,6 @@ export async function renderContent(key, user) {
   } else if (route === '/library') {
     console.log(key, user);
     await libraryPage(key, user);
-    // refs.mobileMenu.classList.toggle(`open`);
   } else {
     console.log('rere');
     notFoundPage();

@@ -45,7 +45,7 @@ export function MovieCard({
     ? `<li class="gallery_card">
          <a
            class="gallery_link"
-          href=""
+          href="https://image.tmdb.org/t/p/w500${poster_path}"
          >
          <div class="wrap-movie-img">
             <img
@@ -68,7 +68,7 @@ export function MovieCard({
     : `<li class="gallery_card">
          <a
            class="gallery__link"
-          href=""
+          href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
          >
            <img
            id="${id}"
@@ -158,11 +158,6 @@ export function clearPage() {
   refs.thumb.innerHTML = '';
 }
 
-export function renderUser(user) {
-  const markup = `<p>${user.email}</p>`;
-  refs.user.insertAdjacentHTML(`beforeend`, markup);
-}
-
 export function renderHomeHeader(user) {
   refs.input.value = '';
   refs.homeBtn.classList.add('nav_item--current');
@@ -216,91 +211,3 @@ export const renderGenres = (genres, genre_ids) => {
 };
 
 // _________________________________________________________
-
-export function renderGallaryCard(movies) {
-  const markup = movies
-    .map(({ poster_path, original_title, id }) => {
-      return poster_path
-        ? `<li class="galery__card">
-        <a
-          class="gallery__link"
-          href="https://image.tmdb.org/t/p/w500${poster_path}"
-        >
-          <img
-            id="${id}"
-            class="details__img"
-            src="https://image.tmdb.org/t/p/w500${poster_path}"
-          alt=${original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
-      </li>`
-        : `<li class="galery__card">
-        <a
-          class="gallery__link modal_open"
-          href='../src/images/default_image_large.jpg'
-        >
-          <img
-                id="${id}"
-            class="details__img"
-            src="../src/images/default_image_large.jpg"
-          alt=${original_title}
-            width="300px"
-            height="450px"
-            loading="lazy"
-          />
-        </a>
-      </li>`;
-    })
-    .join(``);
-  // refs.gallery.insertAdjacentHTML(`beforeend`, markup);
-}
-
-export function renderModalMovieDetails({ poster_path, original_title }) {
-  const movieCardMarkup = `
-  <div class="movie_card">
-        <img
-          src="https://image.tmdb.org/t/p/w500${poster_path}"
-          alt=${original_title}
-          class="image"
-        />
-        <div class="movie_descr">
-          <p class="movie_title">${original_title}</p>
-          <table class="movie_info">
-            <tr class="movie_info_item">
-              <td>11</td>
-              <td>12</td>
-            </tr>
-            <tr class="movie_info_item">
-              <td>21</td>
-              <td>22</td>
-            </tr>
-            <tr class="movie_info_item">
-              <td>31</td>
-              <td>32</td>
-            </tr>
-            <tr class="movie_info_item">
-              <td>41</td>
-              <td>42</td>
-            </tr>
-          </table>
-          <p>About</p>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus
-            nostrum inventore sint, consectetur i ncidunt rerum, adipisci
-            suscipit fugit at similique sequi explicabo tempora provident harum
-            eaque dolorem dignissimos, praesentium architecto!
-          </p>
-        
-        </div>
-        </div>
-      `;
-  // refs.modalContent.insertAdjacentHTML(`beforeend`, movieCardMarkup);
-  // console.log('повертаю Муві');
-}
-
-//  style = 'width: 375px; height: 478px';
-
-// https://image.tmdb.org/t/p/w500${poster_path}
