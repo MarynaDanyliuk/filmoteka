@@ -13,3 +13,4 @@ import './js/pagination';
 import './js/genres';
 import './js/modal';
 import './js/burgerMenu';
+import './js/lazyLoading';

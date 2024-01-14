@@ -13,6 +13,7 @@ export const refs = {
 
   // ________________Gallery___________________
   gallery: document.querySelector(`.gallery`),
+  image: document.querySelectorAll('.movie_img'),
   buttonLoadMore: document.querySelector(`.load-more`),
 
   // _______________Modal___________

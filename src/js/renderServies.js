@@ -45,15 +45,18 @@ export function MovieCard({
     ? `<li class="gallery_card">
          <a
            class="gallery_link"
-          href="https://image.tmdb.org/t/p/w500${poster_path}"
+          href=""
          >
-           <img
+         <div class="wrap-movie-img">
+            <img
            id="${id}"
              class="movie_img"
-             src="https://image.tmdb.org/t/p/w500${poster_path}"
+            src="https://image.tmdb.org/t/p/w500${poster_path}"
              alt="${original_title}"
            loading="lazy"
            />
+         </div>
+        
              <p class="movie-title card">${original_title}</p>
          <div class="movie_describtion">
           <ul class="movie_genresList">${renderGenres(genres, genre_ids)}</ul>
@@ -65,7 +68,7 @@ export function MovieCard({
     : `<li class="gallery_card">
          <a
            class="gallery__link"
-          href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
+          href=""
          >
            <img
            id="${id}"
@@ -299,3 +302,5 @@ export function renderModalMovieDetails({ poster_path, original_title }) {
 }
 
 //  style = 'width: 375px; height: 478px';
+
+// https://image.tmdb.org/t/p/w500${poster_path}
