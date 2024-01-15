@@ -14,7 +14,7 @@
   @media screen and (min-width: $widthTablet) {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 32px;
+    gap: 32px 16px;
     align-items: flex-start;
 
     // max-width: fit-content;
@@ -29,16 +29,9 @@
 
 // ____________gallery card_________________
 
-.gallery_card {
+.gallery-card {
   display: flex;
   justify-content: center;
-
-  // @media screen and (min-width: $widthTablet) {
-  //   // max-width: 336px;
-  // }
-  // @media screen and (max-width: $widthDesktop) {
-  //   // max-width: 394px;
-  // }
 }
 
 .gallery_link {
@@ -46,6 +39,7 @@
   &:hover {
     transform: scale(1.03);
   }
+
   max-width: 280px;
 
   @media screen and (min-width: $widthTablet) {
@@ -54,24 +48,12 @@
   @media screen and (min-width: ($widthDesktop)) {
     max-width: 394px;
   }
-}
-
-.wrap-movie-img {
-  background-image: url('../images/default_image_large.jpg');
 }
 
 .movie_img {
   width: 100%;
   box-shadow: $shadow;
   border-radius: 10px;
-  max-width: 280px;
-
-  @media screen and (min-width: $widthTablet) {
-    max-width: 335px;
-  }
-  @media screen and (min-width: ($widthDesktop)) {
-    max-width: 394px;
-  }
 }
 
 .movie_title.card {

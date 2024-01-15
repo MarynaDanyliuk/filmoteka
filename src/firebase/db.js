@@ -47,6 +47,7 @@ export const monitorAuthState = user => {
         event.preventDefault();
         libraryPage(key, user);
       });
+
       // ____________ Mobile Menu Click on Navigation button_______________
       const navItemMenu = refs.navItemMenu;
       if (navItemMenu) {

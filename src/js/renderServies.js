@@ -4,9 +4,17 @@ import default_image_large from '../images/default_image_large.jpg';
 import PageNotFound from '../images/PageNotFound.jpg';
 
 export function renderGallary(movies) {
-  const markup = movies
-    .map(
-      ({
+  const markup = movies.map(
+    ({
+      poster_path,
+      original_title,
+      id,
+      genre_ids,
+      genres,
+      release_date,
+      vote_average,
+    }) => {
+      return MovieCard({
         poster_path,
         original_title,
         id,
@@ -14,20 +22,11 @@ export function renderGallary(movies) {
         genres,
         release_date,
         vote_average,
-      }) => {
-        return MovieCard({
-          poster_path,
-          original_title,
-          id,
-          genre_ids,
-          genres,
-          release_date,
-          vote_average,
-        });
-      }
-    )
-    .join('');
-  refs.gallery.insertAdjacentHTML(`beforeend`, markup);
+      });
+    }
+  );
+
+  refs.gallery.insertAdjacentHTML(`beforeend`, markup.join(''));
 }
 
 export function MovieCard({
@@ -42,12 +41,12 @@ export function MovieCard({
   const releaseYear = new Date(release_date).getFullYear();
 
   const markupMovieCard = poster_path
-    ? `<li class="gallery_card">
+    ? `<li class="gallery-card">
          <a
            class="gallery_link"
           href="https://image.tmdb.org/t/p/w500${poster_path}"
          >
-         <div class="wrap-movie-img">
+      
             <img
            id="${id}"
              class="movie_img"
@@ -55,7 +54,7 @@ export function MovieCard({
              alt="${original_title}"
            loading="lazy"
            />
-         </div>
+   
         
              <p class="movie-title card">${original_title}</p>
          <div class="movie_describtion">
@@ -65,7 +64,7 @@ export function MovieCard({
          </div>
          </a>      
   </li>`
-    : `<li class="gallery_card">
+    : `<li class="gallery-card">
          <a
            class="gallery__link"
           href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
@@ -86,7 +85,8 @@ export function MovieCard({
          </div>
          </a>
       </li>`;
-  refs.gallery.insertAdjacentHTML(`beforeend`, markupMovieCard);
+  return markupMovieCard;
+  // refs.gallery.insertAdjacentHTML(`beforeend`, markupMovieCard);
 }
 
 export function renderMovieImage({ poster_path, original_title }) {

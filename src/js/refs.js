@@ -13,7 +13,7 @@ export const refs = {
 
   // ________________Gallery___________________
   gallery: document.querySelector(`.gallery`),
-  // image: document.querySelectorAll('.movie_img'),
+  // image: document.querySelectorAll('.gallery-card'),
   buttonLoadMore: document.querySelector(`.load-more`),
 
   // _______________Modal___________
@@ -45,10 +45,10 @@ export const refs = {
   // _______________Modal auth__________________________
   modalLogin: document.getElementById(`login`),
   modalRegister: document.getElementById(`register`),
-  formsAuth: document.querySelectorAll(`.form_auth`),
-  registerLink: document.getElementById(`register_link`),
+  formsAuth: document.querySelectorAll(`.form-auth`),
+  registerLink: document.getElementById(`register-link`),
   loginLink: document.getElementById(`login_link`),
-  loginButton: document.getElementById(`login_btn`),
+  loginButton: document.getElementById(`login-btn`),
   registerButton: document.getElementById(`register_btn`),
   txtEmail: document.getElementById(`txtEmail`),
   txtPassword: document.getElementById(`txtPassword`),

@@ -34,17 +34,19 @@
   color: $primaryColor;
 }
 
-.form_auth {
+.form-auth {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  max-width: 280px;
   font-size: 14px;
-
   align-items: center;
+  @media (min-width: $widthTablet) {
+    max-width: 394px;
+  }
 }
 
-.form_auth input {
-  width: 340px;
+.form-auth input {
+  width: 240px;
   height: 42px;
   margin-bottom: 24px;
   border-radius: 4px;
@@ -56,9 +58,13 @@
     border: solid 2px $accentColor;
     outline: none;
   }
+
+  @media (min-width: $widthTablet) {
+    width: 354px;
+  }
 }
 
-#register_link,
+#register-link,
 #login_link {
   &:hover {
     color: $accentColor;
