@@ -37,16 +37,24 @@
 .form-auth {
   display: flex;
   flex-direction: column;
-  max-width: 280px;
   font-size: 14px;
   align-items: center;
-  @media (min-width: $widthTablet) {
-    max-width: 394px;
+
+  max-width: 100%;
+  @media (max-width: $widthMobile) {
+    width: 280px;
+  }
+
+  @media (max-width: $widthDesktop) {
+    width: 320px;
+  }
+  @media (min-width: $widthDesktop) {
+    width: 320px;
   }
 }
 
 .form-auth input {
-  width: 240px;
+  background-color: aqua;
   height: 42px;
   margin-bottom: 24px;
   border-radius: 4px;
@@ -58,9 +66,16 @@
     border: solid 2px $accentColor;
     outline: none;
   }
+  max-width: 100%;
 
-  @media (min-width: $widthTablet) {
-    width: 354px;
+  @media (max-width: $widthTablet) {
+    width: 280px;
+  }
+  @media (max-width: $widthDesktop) {
+    width: 320px;
+  }
+  @media (min-width: $widthDesktop) {
+    width: 320px;
   }
 }
 
