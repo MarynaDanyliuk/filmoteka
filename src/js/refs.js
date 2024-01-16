@@ -13,7 +13,6 @@ export const refs = {
 
   // ________________Gallery___________________
   gallery: document.querySelector(`.gallery`),
-  // image: document.querySelectorAll('.gallery-card'),
   buttonLoadMore: document.querySelector(`.load-more`),
 
   // _______________Modal___________
@@ -47,16 +46,12 @@ export const refs = {
   modalRegister: document.getElementById(`register`),
   formsAuth: document.querySelectorAll(`.form-auth`),
   registerLink: document.getElementById(`register-link`),
-  loginLink: document.getElementById(`login_link`),
+  loginLink: document.getElementById(`login-link`),
   loginButton: document.getElementById(`login-btn`),
-  registerButton: document.getElementById(`register_btn`),
+  registerButton: document.getElementById(`register-btn`),
   txtEmail: document.getElementById(`txtEmail`),
   txtPassword: document.getElementById(`txtPassword`),
   regEmail: document.getElementById(`regEmail`),
   regPassword: document.getElementById(`regPassword`),
   regPassword_: document.getElementById(`regPassword_`),
-  // popupLinks: document.querySelectorAll(`.popup_link`),
-  // modalRegister: document.querySelector(`.modal_register`),
-  // genresList: document.getElementById(`genres`),
-  // galleryCard: document.querySelector('.gallery_card'),
 };

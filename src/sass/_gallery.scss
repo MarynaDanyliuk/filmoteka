@@ -54,6 +54,17 @@
   width: 100%;
   box-shadow: $shadow;
   border-radius: 10px;
+
+  max-height: 398px;
+
+  @media screen and (min-width: $widthTablet) {
+    width: 336px;
+    max-height: 455px;
+  }
+  @media screen and (min-width: ($widthDesktop)) {
+    width: 394px;
+    max-height: 574px;
+  }
 }
 
 .movie_title.card {
