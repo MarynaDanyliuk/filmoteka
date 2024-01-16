@@ -6,6 +6,7 @@
   width: 100vw;
   height: 100vh;
   background-color: transparent;
+
   opacity: 0;
   visibility: hidden;
   overflow-y: auto;
@@ -28,17 +29,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  // padding: 20px;
+  padding: 20px;
 }
 
 .modal-content {
   position: relative;
-  width: calc(100% - 40px);
   border-radius: 8px;
   padding: 40px 20px;
 
   background-color: $primaryColor;
-  max-width: fit-content;
+  width: 100%;
+  max-width: 280px;
+
+  @media (min-width: $widthTablet) {
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    max-width: 704px;
+  }
+  @media (min-width: $widthDesktop) {
+    max-width: 806px;
+  }
 }
 
 .modal-close {
@@ -48,47 +59,26 @@
   top: 0;
 }
 
-.modal-data {
-  max-width: 280px;
-  @media (min-width: $widthTablet) {
-    display: flex;
-    flex-direction: row;
-    max-width: 704px;
-  }
-  @media (min-width: $widthDesktop) {
-    max-width: 806px;
-  }
-}
-
-.image-wrap {
-  display: flex;
-  justify-content: center;
-  justify-items: center;
-  max-width: 100%;
-}
-
 .modal-image {
   width: 100%;
-  max-width: 280px;
+  max-width: 240px;
+  height: 357px;
   border-radius: 10px;
   margin-bottom: 16px;
+  object-fit: cover;
 
   @media (min-width: $widthTablet) {
+    min-width: 264px;
+    height: 373px;
+
     margin-bottom: 0;
-    margin-right: 12px;
-    width: 264px;
+    margin-right: 18px;
   }
   @media (min-width: $widthDesktop) {
-    width: 375px;
-  }
-}
+    min-width: 375px;
+    height: 478px;
 
-.info-wrap {
-  @media (min-width: $widthTablet) {
-    width: 265px;
-  }
-  @media (min-width: $widthDesktop) {
-    width: 391px;
+    margin-right: 18px;
   }
 }
 
@@ -162,3 +152,49 @@
 }
 
 // .modal_auth
+
+// display: flex;
+// align-items: center;
+// justify-content: center;
+
+// width: calc(100% - 40px);
+
+// .modal-data {
+//   max-width: 280px;
+//   @media (min-width: $widthTablet) {
+//     display: flex;
+//     flex-direction: row;
+//     max-width: 704px;
+//   }
+//   @media (min-width: $widthDesktop) {
+//     max-width: 806px;
+//   }
+// }
+
+// .image-wrap {
+//   display: flex;
+//   justify-content: center;
+//   justify-items: center;
+//   max-width: 100%;
+// }
+
+// __________EXample_______________
+// width: 100%;
+// max-height: 398px;
+
+// @media screen and (min-width: $widthTablet) {
+//   width: 336px;
+//   max-height: 455px;
+// }
+// @media screen and (min-width: ($widthDesktop)) {
+//   width: 394px;
+//   max-height: 574px;
+
+// .info-wrap {
+//   @media (min-width: $widthTablet) {
+//     width: 265px;
+//   }
+//   @media (min-width: $widthDesktop) {
+//     width: 391px;
+//   }
+// }

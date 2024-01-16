@@ -39,22 +39,20 @@
   flex-direction: column;
   font-size: 14px;
   align-items: center;
-
+  // background-color: blueviolet;
   max-width: 100%;
-  @media (max-width: $widthMobile) {
-    width: 280px;
+
+  @media (min-width: $widthMobile) {
+    width: 240px;
   }
 
-  @media (max-width: $widthDesktop) {
-    width: 320px;
-  }
-  @media (min-width: $widthDesktop) {
+  @media (min-width: $widthTablet) {
     width: 320px;
   }
 }
 
 .form-auth input {
-  background-color: aqua;
+  // background-color: aqua;
   height: 42px;
   margin-bottom: 24px;
   border-radius: 4px;
@@ -66,15 +64,13 @@
     border: solid 2px $accentColor;
     outline: none;
   }
-  max-width: 100%;
+  width: 100%;
 
-  @media (max-width: $widthTablet) {
-    width: 280px;
+  @media (min-width: $widthMobile) {
+    width: 240px;
   }
-  @media (max-width: $widthDesktop) {
-    width: 320px;
-  }
-  @media (min-width: $widthDesktop) {
+
+  @media (min-width: $widthTablet) {
     width: 320px;
   }
 }
@@ -91,3 +87,32 @@
   align-items: baseline;
   gap: 16px;
 }
+
+// max-width: 100%;
+// @media (max-width: $widthMobile) {
+//   max-width: 280px;
+// }
+
+// @media (max-width: $widthDesktop) {
+//   width: 320px;
+// }
+// @media (min-width: $widthDesktop) {
+//   width: 320px;
+// }
+
+// ________________________
+// @media (min-width: $widthTablet) {
+//   width: 320px;
+// }
+// @media (max-width: $widthDesktop) {
+//   width: calc(100% - 40px);
+// }
+// @media (min-width: $widthDesktop) {
+//   width: 320px;
+// }
+
+// max-width: 240px;
+
+// @media (max-width: $width-min-allowable) {
+//   max-width: 240px;
+// }
