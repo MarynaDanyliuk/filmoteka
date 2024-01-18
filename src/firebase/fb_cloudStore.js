@@ -71,14 +71,31 @@ export const updateMovieInFirestore = async (user, key) => {
     }
 
     if (fieldToUpdate && valueToAdd) {
-      await updateDoc(ref, {
-        [fieldToUpdate]: arrayUnion(valueToAdd),
-      });
-    }
+      // Перевірка, чи фільм вже є в масиві перед додаванням
+      const existingMovies = querySnapshot.docs[0].data()[fieldToUpdate];
 
-    console.log('document updated');
+      console.log(existingMovies);
+      if (!existingMovies.some(movie => movie.id === data.id)) {
+        // Якщо фільм ще не додано, виконати додавання
+        await updateDoc(ref, {
+          [fieldToUpdate]: arrayUnion(valueToAdd),
+        });
+        // console.log('Document updated');
+        alert('Film added to library! Document updated');
+      } else {
+        // console.log('Film already in the library');
+        alert('Film already in the library');
+      }
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
+// if (fieldToUpdate && valueToAdd) {
+//   await updateDoc(ref, {
+//     [fieldToUpdate]: arrayUnion(valueToAdd),
+//   });
+// }
+
+// console.log('document updated');

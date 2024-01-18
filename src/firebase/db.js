@@ -151,9 +151,10 @@ export async function createLibraryCollection(event) {
         moviesQueue.push(data);
         updateMovieInFirestore(user);
       }
+      // alert('фільм додано в бібліотеку');
     })
-    .catch(error => console.log(error.message))
-    .finally(() => {
-      alert('фільм додано в бібліотеку');
-    });
+    .catch(error => console.log(error.message));
+  // .finally(() => {
+  //   alert('фільм додано в бібліотеку');
+  // });
 }
