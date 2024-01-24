@@ -18,6 +18,8 @@ import { auth } from '../firebase/fb_config';
 
 import { deleteMovieInFirestore } from '../firebase/fb_cloudStore';
 
+// import { renderLibraryCollection } from '../firebase/db';
+
 export async function openModal(event) {
   event.preventDefault();
   const user = auth.currentUser;
@@ -107,7 +109,6 @@ export async function openModalDelete(event) {
 
   refs.approveActionButton.addEventListener('click', event => {
     event.preventDefault();
-
     deleteMovieInFirestore(user, key, data);
   });
 }
