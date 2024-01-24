@@ -1,9 +1,14 @@
 import { refs } from './refs';
-import { getGenresMovie } from './genres';
+
 import default_image_large from '../images/default_image_large.jpg';
 import PageNotFound from '../images/PageNotFound.jpg';
+import icons from '../images/icons.svg';
 
-export function renderGallary(movies) {
+import { getGenresMovie } from './genres';
+import { openModalDelete } from './modal';
+
+export function renderGallary(movies, user) {
+  // console.log(movies);
   const markup = movies.map(
     ({
       poster_path,
@@ -27,6 +32,20 @@ export function renderGallary(movies) {
   );
 
   refs.gallery.insertAdjacentHTML(`beforeend`, markup.join(''));
+  refs.buttonDelete = refs.gallery.querySelectorAll('.delete-button');
+
+  const btnDelete = refs.buttonDelete;
+
+  if (btnDelete) {
+    for (let i = 0; i < btnDelete.length; i++) {
+      btnDelete[i].addEventListener('click', openModalDelete);
+    }
+  }
+  if (user) {
+    btnDelete.forEach(button => {
+      button.classList.remove('not-visible');
+    });
+  }
 }
 
 export function MovieCard({
@@ -46,17 +65,23 @@ export function MovieCard({
            class="gallery_link"
           href="https://image.tmdb.org/t/p/w500${poster_path}"
          >
-      
-            <img
+         <div class="wrapper">
+             <img
            id="${id}"
              class="movie_img"
             src="https://image.tmdb.org/t/p/w500${poster_path}"
              alt="${original_title}"
            loading="lazy"
            />
-   
-        
+      <button  type="submit" class="delete-button not-visible">
+          <svg class="icon">   
+              <use href="${icons}#icon-bin"></use>
+          </svg>
+      </button>
+         </div>
+
              <p class="movie-title card">${original_title}</p>
+
          <div class="movie_describtion">
           <ul class="movie_genresList">${renderGenres(genres, genre_ids)}</ul>
            <p>${releaseYear}</p>
@@ -74,8 +99,7 @@ export function MovieCard({
             class="movie_img"
              src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
              alt="${original_title}"
-             loading="lazy"
-    
+             loading="lazy"   
            />
           <p class="movie-title card">${original_title}</p>
          <div class="movie_describtion">
@@ -85,6 +109,7 @@ export function MovieCard({
          </div>
          </a>
       </li>`;
+
   return markupMovieCard;
   // refs.gallery.insertAdjacentHTML(`beforeend`, markupMovieCard);
 }

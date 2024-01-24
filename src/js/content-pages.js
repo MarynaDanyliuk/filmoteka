@@ -16,7 +16,6 @@ export async function homePage(user) {
 
   await fetchGenresListByIds();
   await fetchMoviesAndRender();
-
   showButtonLoad();
 }
 

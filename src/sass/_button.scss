@@ -80,3 +80,26 @@
   background-color: $accentColor;
   color: $primaryColor;
 }
+
+.search-button {
+  border: transparent;
+  border-bottom: 1px solid $primaryColor;
+  background-color: transparent;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+}
+
+.delete-button {
+  border: transparent;
+  background-color: $accentColor;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  position: absolute;
+  top: 93%;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}

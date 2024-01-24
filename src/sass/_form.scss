@@ -24,22 +24,11 @@
   }
 }
 
-.search-button {
-  border: transparent;
-  border-bottom: 1px solid white;
-  background-color: transparent;
-  cursor: pointer;
-  width: 30px;
-  height: 30px;
-  color: $primaryColor;
-}
-
 .form-auth {
   display: flex;
   flex-direction: column;
   font-size: 14px;
   align-items: center;
-  // background-color: blueviolet;
   max-width: 100%;
 
   @media (min-width: $widthMobile) {
@@ -52,7 +41,6 @@
 }
 
 .form-auth input {
-  // background-color: aqua;
   height: 42px;
   margin-bottom: 24px;
   border-radius: 4px;
@@ -87,3 +75,22 @@
   align-items: baseline;
   gap: 16px;
 }
+
+// .search-button {
+//   border: transparent;
+//   border-bottom: 1px solid $primaryColor;
+//   background-color: transparent;
+//   cursor: pointer;
+//   width: 30px;
+//   height: 30px;
+//   // color: $primaryColor;
+// }
+
+// .delete {
+//   border-bottom: none;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   -ms-transform: translate(-50%, -50%);
+// }

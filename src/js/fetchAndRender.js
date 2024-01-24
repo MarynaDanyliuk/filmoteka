@@ -13,7 +13,6 @@ import { setItemsLocalStorage } from './localStorageService';
 export async function fetchMoviesAndRender() {
   try {
     await FetchApiMovies.fetchMovies().then(movies => {
-      // console.log(movies);
       renderGallary(movies);
     });
   } catch (error) {
@@ -63,3 +62,19 @@ export async function fetchGenresListByIds() {
     console.log(error.message);
   }
 }
+
+// ______________________________________________________
+// export async function fetchMoviesAndRender(user) {
+//   try {
+//     if (user) {
+//       await FetchApiMovies.fetchMovies().then(movies => {
+//         renderGallary(movies, user);
+//       });
+//     } else
+//       await FetchApiMovies.fetchMovies().then(movies => {
+//         renderGallary(movies);
+//       });
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// }

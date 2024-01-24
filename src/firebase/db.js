@@ -1,43 +1,49 @@
 import { collection, getDocs, query, where } from 'firebase/firestore';
+
 import { onAuthStateChanged } from 'firebase/auth';
-import { addUserToFirestore, updateMovieInFirestore } from './fb_cloudStore';
+
+import {
+  addUserToFirestore,
+  updateMovieInFirestore,
+  deleteMovieInFirestore,
+  readUserCollections,
+} from './fb_cloudStore';
 
 import { homePage, libraryPage } from '../js/content-pages';
 
-import { renderGallary, clearPage, renderUser } from '../js/renderServies';
+import { renderGallary, clearPage } from '../js/renderServies';
 import { renderContent } from '../js/routing';
 
-import { MovieActiveId } from '../js/modal';
+import { MovieActiveId, closeModal, MovieActiveId } from '../js/modal';
 import { refs } from '../js/refs';
 import { auth, db } from './fb_config';
 
 import fetchApiMovies from '../js/apiService';
 const FetchApiMovies = new fetchApiMovies();
 
-let key = 'watched';
-let moviesWatched = [];
-let moviesQueue = [];
+let key = '';
 
+// ____________firebase/auth_________
 const user = auth.currentUser;
+
+// _____________firestore____________
 const usersRef = collection(db, 'users');
 
+// ______________eventListeners___________
 refs.homeBtn.addEventListener('click', homePage);
-
-refs.buttonHeaderNav.addEventListener(
-  'click',
-  onButtonsHeaderNavClickRenderLibrary
-);
-
 refs.logo.addEventListener('click', homePage);
-
+refs.buttonHeaderNav.addEventListener('click', onHeaderNavClick);
 refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
 
+// _______________DB realization_______________-
 export const monitorAuthState = user => {
   onAuthStateChanged(auth, user => {
     if (user !== null) {
+      key = 'watched';
       //   console.log('user logged in', user);
       addUserToFirestore(user);
       renderContent(key, user);
+
       // _____________Click on Library navigation button_________
       refs.libraryBtn.addEventListener('click', event => {
         if (!user) {
@@ -51,7 +57,6 @@ export const monitorAuthState = user => {
       // ____________ Mobile Menu Click on Navigation button_______________
       const navItemMenu = refs.navItemMenu;
       if (navItemMenu) {
-        // console.log(navItemMenu);
         for (let i = 0; i < navItemMenu.length; i++) {
           navItemMenu[i].addEventListener('click', event => {
             if (!user) {
@@ -62,7 +67,6 @@ export const monitorAuthState = user => {
             if (NavBtnActive === 'home_btn') {
               homePage(user);
             } else {
-              key = 'watched';
               event.preventDefault();
               libraryPage(key, user);
             }
@@ -76,22 +80,18 @@ export const monitorAuthState = user => {
   });
 };
 
+monitorAuthState(user);
+
+// __________________Library functions_________________
 const getLibrary = async (key, user) => {
-  const userQuery = query(usersRef, where('userId', '==', user.uid));
   try {
+    const userQuery = query(usersRef, where('userId', '==', user.uid));
     const querySnapshot = await getDocs(userQuery);
 
     if (querySnapshot.size > 0) {
       const userData = querySnapshot.docs[0].data();
 
-      moviesWatched.push(userData.watched);
-      moviesQueue.push(userData.queue);
-
-      if (key === 'watched') {
-        return userData.watched;
-      } else if (key === 'queue') {
-        return userData.queue;
-      }
+      return userData[key];
     } else {
       console.log('No matching documents.');
       return [];
@@ -103,14 +103,13 @@ const getLibrary = async (key, user) => {
 };
 
 export async function renderLibraryCollection(key, user) {
-  getLibrary(key, user).then(list => {
-    renderGallary(list);
+  getLibrary(key, user).then(movies => {
+    renderGallary(movies, user);
+    readUserCollections(user, key);
   });
 }
 
-monitorAuthState(user);
-
-export async function onButtonsHeaderNavClickRenderLibrary(event) {
+export async function onHeaderNavClick(event) {
   clearPage();
   const user = auth.currentUser;
   key = event.target.getAttribute('id');
@@ -133,28 +132,13 @@ export async function createLibraryCollection(event) {
 
   key = event.target.getAttribute('id');
 
-  console.log('key:', key);
   if (event.target.nodeName !== `BUTTON`) {
     return;
   }
 
-  await getLibrary(key, user);
-
   await FetchApiMovies.fetchMovieDetailsById(MovieActiveId)
     .then(data => {
-      console.log(data);
-      updateMovieInFirestore(user, key);
-      if (key === 'watched') {
-        moviesWatched.push(data);
-        updateMovieInFirestore(user);
-      } else if (key === 'queue') {
-        moviesQueue.push(data);
-        updateMovieInFirestore(user);
-      }
-      // alert('фільм додано в бібліотеку');
+      updateMovieInFirestore(user, key, data);
     })
     .catch(error => console.log(error.message));
-  // .finally(() => {
-  //   alert('фільм додано в бібліотеку');
-  // });
 }

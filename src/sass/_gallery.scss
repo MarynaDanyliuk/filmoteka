@@ -43,6 +43,7 @@
 .gallery-card {
   display: flex;
   justify-content: center;
+  // background-color: aqua;
 }
 
 .gallery_link {
@@ -75,6 +76,10 @@
     width: 394px;
     max-height: 574px;
   }
+}
+
+.wrapper {
+  position: relative;
 }
 
 .movie_title.card {
@@ -126,3 +131,16 @@
   color: #fff;
   border-radius: 4px;
 }
+
+// .delete-button {
+//   border: transparent;
+//   background-color: transparent;
+//   cursor: pointer;
+//   width: 30px;
+//   height: 30px;
+//   position: absolute;
+//   top: 90%;
+//   left: 90%;
+//   transform: translate(-50%, -50%);
+//   -ms-transform: translate(-50%, -50%);
+// }

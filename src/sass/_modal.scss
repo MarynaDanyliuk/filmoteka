@@ -14,10 +14,15 @@
   transition: all cubic-bezier(0.86, 0, 0.07, 1);
 }
 
-.modal.open {
+.open {
   opacity: 1;
   visibility: visible;
 }
+
+// .modal.open {
+//   opacity: 1;
+//   visibility: visible;
+// }
 
 .hidden {
   opacity: 0;

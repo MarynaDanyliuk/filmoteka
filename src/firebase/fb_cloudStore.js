@@ -1,36 +1,33 @@
 import {
   collection,
   getDocs,
+  getDoc,
   addDoc,
   doc,
   query,
   where,
   updateDoc,
+  deleteDoc,
   arrayUnion,
 } from 'firebase/firestore';
 
 import { db } from './fb_config';
 
-import { MovieActiveId } from '../js/modal';
-
 import fetchApiMovies from '../js/apiService';
 const FetchApiMovies = new fetchApiMovies();
 
-export const usersRef = collection(db, 'users');
+// _____________firestore____________
+const usersRef = collection(db, 'users');
 
 export const addUserToFirestore = async user => {
   const userQuery = query(usersRef, where('userId', '==', user.uid));
   try {
     const querySnapshot = await getDocs(userQuery);
 
-    // querySnapshot.forEach(doc => {
-    //   console.log(doc.id, ' => ', doc.data());
-    // });
-
     if (querySnapshot.size > 0) {
       console.log('Пользователь с таким email уже существует');
     } else {
-      const docRef = await addDoc(collection(db, 'users'), {
+      const docRef = await addDoc(usersRef, {
         userId: user.uid,
         email: user.email,
         watched: [],
@@ -44,46 +41,34 @@ export const addUserToFirestore = async user => {
   }
 };
 
-export const updateMovieInFirestore = async (user, key) => {
+export const readUserCollections = async (user, key) => {
+  const userQuery = query(usersRef, where('userId', '==', user.uid));
+  const querySnapshot = await getDocs(userQuery);
+
+  querySnapshot.forEach(doc => {
+    console.log(key, ' => ', doc.data()[key]);
+  });
+};
+
+export const updateMovieInFirestore = async (user, key, data) => {
   try {
     const userQuery = query(usersRef, where('userId', '==', user.uid));
     const querySnapshot = await getDocs(userQuery);
 
-    console.log(querySnapshot.docs[0].id);
-
     const refId = querySnapshot.docs[0].id;
     const ref = doc(db, 'users', refId);
-    console.log(ref);
 
-    const data = await FetchApiMovies.fetchMovieDetailsById(MovieActiveId);
+    const valueToAdd = data;
 
-    console.log(data);
+    if (key && valueToAdd) {
+      const existingMovies = querySnapshot.docs[0].data()[key];
 
-    let fieldToUpdate;
-    let valueToAdd;
-
-    if (key === 'watched') {
-      fieldToUpdate = 'watched';
-      valueToAdd = data;
-    } else if (key === 'queue') {
-      fieldToUpdate = 'queue';
-      valueToAdd = data;
-    }
-
-    if (fieldToUpdate && valueToAdd) {
-      // Перевірка, чи фільм вже є в масиві перед додаванням
-      const existingMovies = querySnapshot.docs[0].data()[fieldToUpdate];
-
-      console.log(existingMovies);
       if (!existingMovies.some(movie => movie.id === data.id)) {
-        // Якщо фільм ще не додано, виконати додавання
         await updateDoc(ref, {
-          [fieldToUpdate]: arrayUnion(valueToAdd),
+          [key]: arrayUnion(valueToAdd),
         });
-        // console.log('Document updated');
         alert('Film added to library! Document updated');
       } else {
-        // console.log('Film already in the library');
         alert('Film already in the library');
       }
     }
@@ -92,10 +77,46 @@ export const updateMovieInFirestore = async (user, key) => {
   }
 };
 
-// if (fieldToUpdate && valueToAdd) {
-//   await updateDoc(ref, {
-//     [fieldToUpdate]: arrayUnion(valueToAdd),
-//   });
-// }
+// ___________________Delete from firestore___________________________
 
-// console.log('document updated');
+export const deleteMovieInFirestore = async (user, key, data) => {
+  try {
+    const userQuery = query(usersRef, where('userId', '==', user.uid));
+    const querySnapshot = await getDocs(userQuery);
+
+    if (querySnapshot.empty) {
+      console.log('User not found.');
+      return;
+    }
+    const refId = querySnapshot.docs[0].id;
+    const ref = doc(db, 'users', refId);
+
+    const refIdSub = data;
+
+    // console.log(refIdSub, key, ref);
+
+    const subDocRef = doc(collection(ref, key), refIdSub);
+
+    // console.log('SubDocRef ID before deletion:', subDocRef);
+    // console.log('userID:', refId, 'key:', key, 'data:', data);
+
+    const userDocRef = doc(db, 'users', refId);
+    const subcollectionDocRef = doc(collection(userDocRef, key), data);
+
+    const deleteResult = await deleteDoc(subcollectionDocRef);
+    console.log('Document deleted:', deleteResult);
+
+    const docSnapshot = await getDoc(subcollectionDocRef);
+    console.log(docSnapshot);
+    if (!docSnapshot.exists()) {
+      console.log('Document successfully deleted.');
+    } else {
+      console.error('Failed to delete document:', docSnapshot.data());
+    }
+
+    console.log((await getDoc(ref)).data());
+    alert('Film removed from library! Document updated');
+  } catch (error) {
+    console.log(error);
+  }
+};

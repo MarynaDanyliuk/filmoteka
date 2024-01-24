@@ -14,6 +14,7 @@ export const refs = {
   // ________________Gallery___________________
   gallery: document.querySelector(`.gallery`),
   buttonLoadMore: document.querySelector(`.load-more`),
+  buttonDelete: document.querySelector('.delete-button'),
 
   // _______________Modal___________
   modal: document.querySelector(`.modal`),
@@ -54,4 +55,9 @@ export const refs = {
   regEmail: document.getElementById(`regEmail`),
   regPassword: document.getElementById(`regPassword`),
   regPassword_: document.getElementById(`regPassword_`),
+
+  // _______________Modal delete__________________________
+  modalDelete: document.getElementById(`delete`),
+  approveActionButton: document.getElementById('approve'),
+  removeActionButton: document.getElementById('remove'),
 };

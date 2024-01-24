@@ -16,6 +16,8 @@ import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
 
 import { auth } from '../firebase/fb_config';
 
+import { deleteMovieInFirestore } from '../firebase/fb_cloudStore';
+
 export async function openModal(event) {
   event.preventDefault();
   const user = auth.currentUser;
@@ -27,7 +29,7 @@ export async function openModal(event) {
   } else if (user) {
     MovieActiveId = event.target.getAttribute(`id`);
     FetchApiMovies.movieId = MovieActiveId;
-    console.log(MovieActiveId);
+    // console.log(MovieActiveId);
     await fetchMovieDetailsByIdAndRender(MovieActiveId);
     refs.modal.classList.add(`open`);
     refs.body.classList.add(`lock`);
@@ -51,14 +53,16 @@ if (modalBackdrops) {
 }
 
 export function closeModal(event) {
+  event.preventDefault();
   refs.modal.classList.remove(`open`);
   if (event.target.nodeName === `A`) {
+    event.target.closest('.modal').classList.remove('open');
+  } else if (event.target.nodeName === `BUTTON`) {
     event.target.closest('.modal').classList.remove('open');
   }
 
   refs.body.classList.remove(`lock`);
   clearModal();
-  event.preventDefault();
 }
 
 function clearModal() {
@@ -84,4 +88,26 @@ function openModalAuth(event) {
     refs.modalRegister.classList.toggle(`open`);
     refs.modalLogin.classList.toggle(`open`);
   }
+}
+
+// _________________Modal Delete___________________
+
+export async function openModalDelete(event) {
+  event.preventDefault();
+
+  window.location.assign('#/library');
+  refs.modalDelete.classList.add(`open`);
+
+  const wrapperEl = event.target.closest('.wrapper');
+  MovieActiveId = wrapperEl.querySelector('.movie_img').id;
+
+  const user = auth.currentUser;
+  const data = MovieActiveId;
+  const key = 'watched';
+
+  refs.approveActionButton.addEventListener('click', event => {
+    event.preventDefault();
+
+    deleteMovieInFirestore(user, key, data);
+  });
 }

@@ -2,10 +2,6 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
-  // connectAuthEmulator,
-  // onAuthStateChanged,
-  // updateProfile,
-  // deleteUser,
 } from 'firebase/auth';
 
 import { refs } from '../js/refs';
