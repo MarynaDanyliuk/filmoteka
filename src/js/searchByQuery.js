@@ -52,3 +52,5 @@ export async function onButtonLoadMoreClick(event) {
   console.log('AFTER FETCH', FetchApiMovies);
 }
 
+
+

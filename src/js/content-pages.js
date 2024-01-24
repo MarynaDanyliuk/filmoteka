@@ -24,7 +24,7 @@ export async function libraryPage(key, user) {
   renderLibraryHeader();
   renderLibraryCollection(key, user);
 
-  showButtonLoad();
+  hideButtonLoad();
 }
 
 export function notFoundPage() {

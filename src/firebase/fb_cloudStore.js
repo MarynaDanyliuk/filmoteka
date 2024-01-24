@@ -79,6 +79,23 @@ export const updateMovieInFirestore = async (user, key, data) => {
 
 // ___________________Delete from firestore___________________________
 
+// export const getUserLibrary = async (user, key) => {
+//      const userQuery = query(usersRef, where('userId', '==', user.uid));
+//      const querySnapshot = await getDocs(userQuery);
+
+//      if (querySnapshot.empty) {
+//        console.log('User not found.');
+//        return;
+//      }
+
+//      const refId = querySnapshot.docs[0].id;
+//      const ref = doc(db, 'users', refId);
+
+//      const userData = (await getDoc(ref)).data();
+
+//      console.log(userData);
+// }
+
 export const deleteMovieInFirestore = async (user, key, data) => {
   try {
     const userQuery = query(usersRef, where('userId', '==', user.uid));
@@ -88,20 +105,15 @@ export const deleteMovieInFirestore = async (user, key, data) => {
       console.log('User not found.');
       return;
     }
+
     const refId = querySnapshot.docs[0].id;
     const ref = doc(db, 'users', refId);
 
-    const refIdSub = data;
+    const userData = (await getDoc(ref)).data();
 
-    // console.log(refIdSub, key, ref);
+    console.log(userData);
 
-    const subDocRef = doc(collection(ref, key), refIdSub);
-
-    // console.log('SubDocRef ID before deletion:', subDocRef);
-    // console.log('userID:', refId, 'key:', key, 'data:', data);
-
-    const userDocRef = doc(db, 'users', refId);
-    const subcollectionDocRef = doc(collection(userDocRef, key), data);
+    const subcollectionDocRef = doc(collection(ref, key), data);
 
     const deleteResult = await deleteDoc(subcollectionDocRef);
     console.log('Document deleted:', deleteResult);
@@ -114,9 +126,16 @@ export const deleteMovieInFirestore = async (user, key, data) => {
       console.error('Failed to delete document:', docSnapshot.data());
     }
 
-    console.log((await getDoc(ref)).data());
+    // console.log((await getDoc(ref)).data());
     alert('Film removed from library! Document updated');
   } catch (error) {
     console.log(error);
   }
 };
+
+// const refIdSub = data;
+// const subDocRef = doc(collection(ref, key), refIdSub);
+
+// console.log('SubDocRef ID before deletion:', subDocRef);
+// console.log('userID:', refId, 'key:', key, 'data:', data);
+// const userDocRef = doc(db, 'users', refId);

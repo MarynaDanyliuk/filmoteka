@@ -73,6 +73,16 @@ export const monitorAuthState = user => {
           });
         }
       }
+
+      // _______________on load more button click______________
+      // refs.buttonLoadMore.addEventListener('click', event => {
+      //   if (!user) {
+      //     return;
+      //   }
+      //   key = 'watched';
+      //   event.preventDefault();
+      //   renderLibraryCollection(key, user);
+      // });
     } else {
       homePage();
       console.log('no user');
@@ -141,4 +151,10 @@ export async function createLibraryCollection(event) {
       updateMovieInFirestore(user, key, data);
     })
     .catch(error => console.log(error.message));
+}
+// ___________________Load more LIBRARY button_________________
+
+export async function onButtonLoadMoreLibraryClick(event) {
+  event.preventDefault();
+  renderLibraryCollection(key, user);
 }
