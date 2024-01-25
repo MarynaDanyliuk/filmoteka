@@ -16,7 +16,6 @@ import { fetchMovieDetailsByIdAndRender } from './fetchAndRender';
 
 import { auth } from '../firebase/fb_config';
 
-import { deleteMovieInFirestore } from '../firebase/fb_cloudStore';
 
 // import { renderLibraryCollection } from '../firebase/db';
 
@@ -107,8 +106,5 @@ export async function openModalDelete(event) {
   const data = MovieActiveId;
   const key = 'watched';
 
-  refs.approveActionButton.addEventListener('click', event => {
-    event.preventDefault();
-    deleteMovieInFirestore(user, key, data);
-  });
+  return MovieActiveId;
 }

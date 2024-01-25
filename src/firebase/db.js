@@ -14,14 +14,14 @@ import { homePage, libraryPage } from '../js/content-pages';
 import { renderGallary, clearPage } from '../js/renderServies';
 import { renderContent } from '../js/routing';
 
-import { MovieActiveId, closeModal, MovieActiveId } from '../js/modal';
+import { MovieActiveId } from '../js/modal';
 import { refs } from '../js/refs';
 import { auth, db } from './fb_config';
 
 import fetchApiMovies from '../js/apiService';
 const FetchApiMovies = new fetchApiMovies();
 
-let key = '';
+key = 'watched';
 
 // ____________firebase/auth_________
 const user = auth.currentUser;
@@ -39,7 +39,6 @@ refs.butttonsLibrary.addEventListener('click', createLibraryCollection);
 export const monitorAuthState = user => {
   onAuthStateChanged(auth, user => {
     if (user !== null) {
-      key = 'watched';
       //   console.log('user logged in', user);
       addUserToFirestore(user);
       renderContent(key, user);
@@ -74,15 +73,13 @@ export const monitorAuthState = user => {
         }
       }
 
-      // _______________on load more button click______________
-      // refs.buttonLoadMore.addEventListener('click', event => {
-      //   if (!user) {
-      //     return;
-      //   }
-      //   key = 'watched';
-      //   event.preventDefault();
-      //   renderLibraryCollection(key, user);
-      // });
+      // _________________________________________________________
+      refs.approveActionButton.addEventListener('click', async event => {
+        event.preventDefault();
+        await deleteMovieInFirestore(user, key, MovieActiveId);
+        clearPage();
+        await renderLibraryCollection(key, user);
+      });
     } else {
       homePage();
       console.log('no user');
@@ -151,10 +148,4 @@ export async function createLibraryCollection(event) {
       updateMovieInFirestore(user, key, data);
     })
     .catch(error => console.log(error.message));
-}
-// ___________________Load more LIBRARY button_________________
-
-export async function onButtonLoadMoreLibraryClick(event) {
-  event.preventDefault();
-  renderLibraryCollection(key, user);
 }

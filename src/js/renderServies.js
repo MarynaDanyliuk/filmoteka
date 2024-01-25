@@ -8,7 +8,6 @@ import { getGenresMovie } from './genres';
 import { openModalDelete } from './modal';
 
 export function renderGallary(movies, user) {
-  // console.log(movies);
   const markup = movies.map(
     ({
       poster_path,
@@ -114,26 +113,6 @@ export function MovieCard({
          </div>
          </a>      
   </li>`;
-  // : `<li class="gallery-card">
-  //      <a
-  //        class="gallery__link"
-  //       href="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-  //      >
-  //        <img
-  //        id="${id}"
-  //         class="movie_img"
-  //          src="https://raw.githubusercontent.com/MarynaDanyliuk/goit-react-hw-05-movies/main/src/img/default_image_large.jpg"
-  //          alt="${original_title}"
-  //          loading="lazy"
-  //        />
-  //       <p class="movie-title card">${original_title}</p>
-  //      <div class="movie_describtion">
-  //        <ul>${renderGenres(genres, genre_ids)}</ul>
-  //        <p>${releaseYear}</p>
-  //        <p class="movie_average">${vote_average.toFixed(1)}</p>
-  //      </div>
-  //      </a>
-  //   </li>`;
 
   return markupMovieCard;
   // refs.gallery.insertAdjacentHTML(`beforeend`, markupMovieCard);
@@ -259,5 +238,3 @@ export const renderGenres = (genres, genre_ids) => {
       : `<li class="movie_gnr">${genresList}</li>`;
   }
 };
-
-// _________________________________________________________

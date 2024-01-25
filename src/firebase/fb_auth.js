@@ -22,7 +22,7 @@ async function loginEmailAndPassword() {
       email,
       password
     );
-    // console.log(userCredential.user);
+    console.log(userCredential.user);
     refs.signOut.classList.remove('not-visible');
     clearForm();
   } catch (error) {

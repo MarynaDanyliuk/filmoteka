@@ -63,18 +63,3 @@ export async function fetchGenresListByIds() {
   }
 }
 
-// ______________________________________________________
-// export async function fetchMoviesAndRender(user) {
-//   try {
-//     if (user) {
-//       await FetchApiMovies.fetchMovies().then(movies => {
-//         renderGallary(movies, user);
-//       });
-//     } else
-//       await FetchApiMovies.fetchMovies().then(movies => {
-//         renderGallary(movies);
-//       });
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// }
