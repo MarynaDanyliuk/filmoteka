@@ -21,7 +21,7 @@ import { auth, db } from './fb_config';
 import fetchApiMovies from '../js/apiService';
 const FetchApiMovies = new fetchApiMovies();
 
-key = 'watched';
+let key = 'watched';
 
 // ____________firebase/auth_________
 const user = auth.currentUser;
