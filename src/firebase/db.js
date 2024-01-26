@@ -44,13 +44,14 @@ export const monitorAuthState = user => {
       renderContent(key, user);
 
       // _____________Click on Library navigation button_________
-      refs.libraryBtn.addEventListener('click', event => {
+      refs.libraryBtn.addEventListener('click', async event => {
         if (!user) {
           return;
         }
         key = 'watched';
         event.preventDefault();
-        libraryPage(key, user);
+        clearPage();
+        await libraryPage(key, user);
       });
 
       // ____________ Mobile Menu Click on Navigation button_______________
