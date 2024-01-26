@@ -15,8 +15,7 @@ import {
 import { db } from './fb_config';
 
 import fetchApiMovies from '../js/apiService';
-// import {clearPage } from '../js/renderServies';
-// import { renderLibraryCollection } from './db';
+
 const FetchApiMovies = new fetchApiMovies();
 
 // _____________firestore____________
@@ -48,9 +47,9 @@ export const readUserCollections = async (user, key) => {
   const userQuery = query(usersRef, where('userId', '==', user.uid));
   const querySnapshot = await getDocs(userQuery);
 
-  querySnapshot.forEach(doc => {
-    console.log(key, ' => ', doc.data()[key]);
-  });
+  // querySnapshot.forEach(doc => {
+  //   console.log(key, ' => ', doc.data()[key]);
+  // });
 };
 
 export const updateMovieInFirestore = async (user, key, data) => {

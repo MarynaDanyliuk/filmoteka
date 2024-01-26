@@ -203,6 +203,7 @@ export function renderLibraryHeader() {
   refs.homeBtn.classList.remove('nav_item--current');
   refs.libraryBtn.classList.add('nav_item--current');
   refs.buttonWatched.classList.add('active_btn');
+  refs.buttonQueue.classList.remove('active_btn');
   refs.headerNavButtons.classList.remove('not-visible');
   refs.form.classList.add('not-visible');
 }

@@ -22,7 +22,7 @@ export async function homePage(user) {
 export async function libraryPage(key, user) {
   clearPage();
   renderLibraryHeader();
-  renderLibraryCollection(key, user);
+  await renderLibraryCollection(key, user);
 
   hideButtonLoad();
 }

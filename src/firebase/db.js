@@ -50,7 +50,6 @@ export const monitorAuthState = user => {
         }
         key = 'watched';
         event.preventDefault();
-        clearPage();
         await libraryPage(key, user);
       });
 
